@@ -1,0 +1,601 @@
+// Tooltip for the chartist chart charts
+.chartist-tooltip {
+	position: absolute;
+	display: inline-block;
+	opacity: 0;
+	border-radius: 20px;
+	padding: 5px 20px;
+	background: rgba(0, 0, 0, 0.7);
+	color: $white;
+	ext-align: center;
+	pointer-events: none;
+	z-index: 1;
+	-webkit-transition: opacity 0.2s linear;
+	-moz-transition: opacity 0.2s linear;
+	-o-transition: opacity 0.2s linear;
+	transition: opacity 0.2s linear;
+}
+
+.chartist-tooltip:before {
+	content: '';
+	position: absolute;
+	top: 100%;
+	left: 50%;
+	width: 0;
+	height: 0;
+	margin-left: -5px;
+	border: 5px solid transparent;
+	border-top-color: rgba(0, 0, 0, 0.7);
+}
+
+.chartist-tooltip.tooltip-show {
+	opacity: 1;
+}
+
+.ct-area,
+.ct-line {
+	pointer-events: none;
+}
+
+.c3-chart-arcs-title {
+	fill: $text-muted;
+}
+
+.c3 line,
+.c3 path {
+	stroke: $gray-200;
+}
+
+.c3-chart-arc path {
+	stroke: transparent;
+}
+
+.popover-product {
+	position: relative;
+
+	.popover-item {
+		border-radius: 2px;
+		border: 2px solid $white;
+		display: inline-block;
+		height: 40px;
+		width: 40px;
+		box-shadow: 2px 0px 8px rgba(53, 53, 86, 0.2);
+
+		img {
+			width: 100%;
+			height: 100%;
+		}
+
+		&.item-2,
+		&.item-3 {
+			margin-left: -15px;
+		}
+	}
+
+	.more-product {
+		position: absolute;
+		top: 8px;
+		left: 55px;
+	}
+}
+
+// Custom select
+.custom-select {
+	-moz-appearance: none;
+	-webkit-appearance: none;
+	-o-appearance: none;
+	background-size: auto;
+}
+
+.title-dropdown {
+	.dropdown-toggle {
+		&:after {
+			display: none;
+		}
+	}
+}
+
+.select2-container--classic .select2-selection--single,
+.select2-container--default .select2-selection--single,
+.select2-container--default .select2-selection--single .select2-selection__rendered,
+.select2-container--default .select2-selection--single .select2-selection__arrow,
+.select2-container--default .select2-selection--multiple {
+	border-color: $border-color;
+	height: 40px;
+	color: $body-color;
+	line-height: 40px;
+}
+
+.select2-container--default .select2-selection--multiple {
+	line-height: 27px;
+}
+
+.select2-container--classic .select2-selection--multiple .select2-selection__choice,
+.select2-container--default .select2-selection--multiple .select2-selection__choice,
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+	background-color: $info;
+	border-color: $info;
+	color: $white;
+}
+
+//font-awesome icon
+.f-icon,
+.w-icon {
+	cursor: pointer;
+	padding: 13px 15px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+
+	&:hover {
+		background-color: $gray-100;
+	}
+}
+
+// This is for the datatable
+.table.dataTable {
+	border-collapse: collapse !important;
+}
+
+.dataTables_wrapper {
+	padding: 0px;
+}
+
+.note-editor.note-frame,
+.dropzone {
+	border-color: $border-color;
+}
+
+.note-toolbar-wrapper {
+	height: 33px !important;
+}
+
+.dropzone {
+	border-style: dotted;
+}
+
+.note-toolbar {
+	z-index: 1;
+
+	.note-btn {
+		color: $dark;
+	}
+}
+
+.dropzone {
+	border-style: dotted;
+}
+
+// custom-input
+
+.custom-input {
+	position: relative;
+
+	.form-control {
+		background-color: $gray-100;
+		border: none;
+		border-radius: 18px;
+		padding: 0.5rem 2.8rem 0.5rem 0.875rem;
+	}
+
+	.form-control-icon {
+		position: absolute;
+		top: 8px;
+		right: 17px;
+		height: 20px;
+		width: 20px;
+	}
+
+	&.icon-left {
+		.form-control {
+			padding: 0.5rem 0.875rem 0.5rem 2.8rem;
+		}
+
+		.form-control-icon {
+			right: auto;
+			left: 17px;
+		}
+	}
+}
+
+// rounded input
+
+.rounded-input {
+	.input-group {
+
+		>.form-control,
+		>.custom-select {
+			border-radius: 25px;
+
+			&:not(:last-child) {
+				@include border-right-radius(0);
+			}
+
+			&:not(:first-child) {
+				@include border-left-radius(0);
+			}
+		}
+
+		.input-group-text {
+			border-radius: 25px;
+		}
+
+		.custom-select {
+			border: none;
+			background-color: transparent;
+			height: calc(#{$input-height-inner} - 1rem);
+			padding: 0;
+			width: 100px;
+			font-size: 15px;
+		}
+	}
+
+	.input-group-lg {
+		.custom-select {
+			height: calc(#{$input-height-inner-lg} - 1.5rem);
+		}
+	}
+
+	.input-group-sm {
+		.custom-select {
+			height: calc(#{$input-height-inner-sm} - 0.5rem);
+		}
+	}
+
+	.input-group-lg>.form-control,
+	.input-group-lg>.custom-select,
+	.input-group-lg>.input-group-prepend>.input-group-text,
+	.input-group-lg>.input-group-append>.input-group-text,
+	.input-group-lg>.input-group-prepend>.btn,
+	.input-group-lg>.input-group-append>.btn,
+	.input-group-sm>.form-control,
+	.input-group-sm>.custom-select,
+	.input-group-sm>.input-group-prepend>.input-group-text,
+	.input-group-sm>.input-group-append>.input-group-text,
+	.input-group-sm>.input-group-prepend>.btn,
+	.input-group-sm>.input-group-append>.btn {
+		border-radius: 25px;
+	}
+
+	.input-group>.input-group-prepend>.btn,
+	.input-group>.input-group-prepend>.input-group-text,
+	.input-group>.input-group-append:not(:last-child)>.btn,
+	.input-group>.input-group-append:not(:last-child)>.input-group-text,
+	.input-group>.input-group-append:last-child>.btn:not(:last-child):not(.dropdown-toggle),
+	.input-group>.input-group-append:last-child>.input-group-text:not(:last-child) {
+		@include border-right-radius(0);
+	}
+
+	.input-group>.input-group-append>.btn,
+	.input-group>.input-group-append>.input-group-text,
+	.input-group>.input-group-prepend:not(:first-child)>.btn,
+	.input-group>.input-group-prepend:not(:first-child)>.input-group-text,
+	.input-group>.input-group-prepend:first-child>.btn:not(:first-child),
+	.input-group>.input-group-prepend:first-child>.input-group-text:not(:first-child) {
+		@include border-left-radius(0);
+	}
+}
+
+// this is for custom pills
+.nav-pills.custom-pills {
+	.nav-item {
+		&:first-child {
+			.nav-link {
+				border-top-left-radius: 20px;
+				border-bottom-left-radius: 20px;
+			}
+		}
+
+		&:last-child {
+			.nav-link {
+				border-top-right-radius: 20px;
+				border-bottom-right-radius: 20px;
+			}
+		}
+
+		.nav-link {
+			background-color: $gray-100;
+			color: $dark;
+			font-weight: $font-weight-medium;
+
+			&.active {
+				color: $white;
+			}
+		}
+	}
+
+	&.success-pills {
+		.nav-item {
+			.nav-link {
+				&.active {
+					background-color: $success;
+				}
+			}
+		}
+	}
+
+	&.primary-pills {
+		.nav-item {
+			.nav-link {
+				&.active {
+					background-color: $primary;
+				}
+			}
+		}
+	}
+
+	&.danger-pills {
+		.nav-item {
+			.nav-link {
+				&.active {
+					background-color: $danger;
+				}
+			}
+		}
+	}
+
+	&.warning-pills {
+		.nav-item {
+			.nav-link {
+				&.active {
+					background-color: $warning;
+				}
+			}
+		}
+	}
+
+	&.info-pills {
+		.nav-item {
+			.nav-link {
+				&.active {
+					background-color: $info;
+				}
+			}
+		}
+	}
+
+	&.dark-pills {
+		.nav-item {
+			.nav-link {
+				&.active {
+					background-color: $dark;
+				}
+			}
+		}
+	}
+}
+
+// Form row Separator
+label {
+	font-weight: $font-weight-medium;
+}
+
+.r-separator .form-group {
+	border-bottom: 1px solid $border-color;
+
+	&:last-child {
+		border-bottom: none;
+	}
+}
+
+.striped-rows .row:nth-child(odd) {
+	background-color: $gray-100;
+}
+
+.b-form .row {
+	border-bottom: 1px solid $border-color;
+	margin-bottom: 0;
+	padding: 15px 0;
+
+	&:last-child {
+		border-bottom: none;
+	}
+}
+
+.b-label {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+}
+
+// Custom validation Classes
+.error {
+	.form-control {
+		border-color: $danger;
+	}
+
+	.help-block {
+		color: $danger;
+	}
+}
+
+.validate {
+	.form-control {
+		border-color: $success;
+	}
+
+	.help-block {
+		color: $success;
+	}
+}
+
+@media (min-height: 33.875em) {
+	.picker--opened .picker__frame {
+		top: 30%;
+		bottom: auto;
+	}
+}
+
+.dtp>.dtp-content>.dtp-date-view>header.dtp-header {
+	background: #1d50de;
+}
+
+.dtp div.dtp-date,
+.dtp div.dtp-time,
+.dtp table.dtp-picker-days tr>td>a.selected {
+	background: $info;
+}
+
+.dtp .p10>a {
+	color: $white;
+}
+
+.datepicker .day,
+.datepicker .dow {
+	padding: 5px 10px;
+}
+
+.docs-buttons .btn,
+.docs-data .input-group {
+	margin-bottom: 5px;
+}
+
+// scrollbar
+.scrollable {
+	position: relative;
+}
+
+.error-box {
+	height: 100%;
+	position: fixed;
+	background: url(../..//mendy-admin-template/mendy-admin/package/assets/images/background/error-bg.jpg) no-repeat center center #fff;
+	width: 100%;
+
+	.error-body {
+		padding-top: 5%;
+	}
+
+	.error-title {
+		font-size: 210px;
+		font-weight: 900;
+		text-shadow: 4px 4px 0 #fff, 6px 6px 0 $dark;
+		line-height: 210px;
+	}
+}
+
+.price-label {
+	position: absolute;
+	top: -10px;
+	margin: 0 auto;
+	left: 0;
+	right: 0;
+	width: 100px;
+	padding: 5px 10px;
+}
+
+.price-sign {
+	position: absolute;
+	font-size: 15px;
+	top: 5px;
+	margin-left: -10px;
+}
+
+/*******************/
+
+/*Guage chart*/
+
+/*******************/
+
+.gaugejs-box {
+	position: relative;
+	margin: 0 auto;
+}
+
+.gaugejs-box canvas.gaugejs {
+	width: 100% !important;
+	height: auto !important;
+}
+
+.user-progress-bg {
+	background-color: rgba(0, 0, 0, 0.1);
+}
+
+.jvectormap-zoomin,
+.jvectormap-zoomout,
+.jvectormap-goback {
+	background: $gray-300;
+}
+
+/*******************
+Footable Table
+******************/
+
+#demo-foo-accordion .open>.dropdown-menu {
+	display: block;
+}
+
+#demo-foo-accordion2 .open>.dropdown-menu {
+	display: block;
+}
+
+#footable-addrow .open>.dropdown-menu {
+	display: block;
+}
+
+table.footable {
+	thead {
+		tr.footable-filtering {
+			th {
+				ul.dropdown-menu {
+					li {
+						a.checkbox {
+							padding-left: 0;
+						}
+
+						a.checkbox input[type='checkbox'] {
+							position: relative;
+							margin-right: 10px;
+							margin-left: -20px;
+							left: 0;
+							opacity: 1;
+						}
+
+						.checkbox label::before {
+							display: none;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+.footable .pagination {
+	li {
+		a {
+			position: relative;
+			display: block;
+			padding: 0.5rem 0.75rem;
+			margin-left: -1px;
+			line-height: 1.25;
+			color: #0275d8;
+			background-color: $white;
+			border: 1px solid #ddd;
+		}
+
+		&.active a {
+			z-index: 2;
+			color: #fff;
+			background-color: #0275d8;
+			border-color: #0275d8;
+		}
+	}
+
+	li.disabled {
+		a {
+			color: #636c72;
+			pointer-events: none;
+			cursor: not-allowed;
+			background-color: $white;
+			border-color: #ddd;
+		}
+	}
+
+	li:first-child {
+		a {
+			margin-left: 0;
+			border-bottom-left-radius: 0.25rem;
+			border-top-left-radius: 0.25rem;
+		}
+	}
+}

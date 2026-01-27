@@ -1,0 +1,49 @@
+// Variables;
+@import '../../variable';
+
+.crypto-sales {
+    .cc {
+        font-size: 40px;
+    }
+}
+
+.crypto-table {
+    .pagination {
+        .page-link {
+            border: none;
+        }
+
+        .page-item:not(:first-child):not(:last-child) {
+            .page-link {
+                background: $light;
+                margin: 0 5px;
+                border-radius: 20px;
+                color: $dark;
+            }
+
+            &.active,
+            &:hover {
+                .page-link {
+                    background: $primary-gradient;
+                    color: $white;
+                }
+            }
+        }
+
+        .page-item:first-child {
+            margin-right: 10px;
+
+            .page-link {
+                color: $body-color;
+            }
+        }
+
+        .page-item:last-child {
+            margin-left: 10px;
+
+            .page-link {
+                color: $body-color;
+            }
+        }
+    }
+}

@@ -1,0 +1,53 @@
+﻿<header class="topbar">
+    <nav class="navbar top-navbar navbar-expand-md navbar-dark">
+        <div class="navbar-header">
+            <a class="nav-toggler d-block d-md-none" href="javascript:void(0)">
+                <i class="ti-menu ti-close"></i>
+            </a>
+            <div class="navbar-brand">
+                <a href="/Dahboard/Index" class="logo">
+                    <b class="logo-icon">
+                        <img src="/mendy-admin-template/mendy-admin/package/assets/images/logo-icon.png" alt="homepage" class="dark-logo" />
+                        <img src="/mendy-admin-template/mendy-admin/package/assets/images/logo-light-icon.png" alt="homepage" class="light-logo" />
+                    </b>
+                    <span class="logo-text">
+                        <img src="/mendy-admin-template/mendy-admin/package/assets/images/logo-text.png" alt="homepage" class="dark-logo" />
+                        <img src="/mendy-admin-template/mendy-admin/package/assets/images/logo-light-text.png" class="light-logo" alt="homepage" />
+                    </span>
+                </a>
+                <a class="sidebartoggler d-none d-lg-block" href="javascript:void(0)" data-sidebartype="mini-sidebar">
+                    <i data-feather="menu"></i>
+                </a>
+            </div>
+            <a class="topbartoggler d-block d-md-none" href="javascript:void(0)" data-toggle="collapse"
+               data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+               aria-label="Toggle navigation">
+                <i class="ti-more"></i>
+            </a>
+        </div>
+
+        <!-- ============================================================== -->
+        <!--Search -->
+        <!-- ============================================================== -->
+        <div class="navbar-collapse collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav float-left mr-auto">
+                <li class="nav-item dropdown">
+                </li>
+                <li class="nav-item dropdown mega-dropdown">
+                </li>
+                <li class="nav-item search-box">
+                    <a class="nav-link waves-effect waves-dark" href="javascript:void(0)">
+                        <i data-feather="search"></i>
+                    </a>
+                    <form class="app-search position-absolute">
+                        <input type="text" class="form-control" placeholder="Search &amp; enter">
+                        <a class="srh-btn">
+                            <i class="ti-close"></i>
+                        </a>
+                    </form>
+                </li>
+            </ul>
+            @await Component.InvokeAsync("AdminLayoutNavbar")
+        </div>
+    </nav>
+</header>

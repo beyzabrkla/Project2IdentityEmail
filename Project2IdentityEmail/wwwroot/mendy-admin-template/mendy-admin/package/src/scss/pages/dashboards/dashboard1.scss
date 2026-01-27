@@ -1,0 +1,90 @@
+@import '../../variable';
+
+/*******************
+ sales chart
+*******************/
+.sales {
+	position: relative;
+	height: 270px;
+	-webkit-filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.2));
+	filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.2));
+
+	.ct-series-a .ct-area {
+		fill-opacity: 0;
+		fill: transparent;
+	}
+
+	.ct-series-a .ct-line,
+	.ct-series-a .ct-point {
+		stroke: $info;
+		stroke-width: 1px;
+	}
+
+	.ct-series-b .ct-area {
+		fill: transparent;
+		fill-opacity: 0;
+	}
+
+	.ct-series-b .ct-line,
+	.ct-series-b .ct-point {
+		stroke: $warning;
+		stroke-width: 1px;
+	}
+
+	.ct-series-c .ct-area {
+		fill-opacity: 0;
+		fill: transparent;
+	}
+
+	.ct-series-c .ct-line,
+	.ct-series-c .ct-point {
+		stroke: $purple;
+		stroke-width: 1px;
+	}
+
+	.ct-series-d .ct-area {
+		fill-opacity: 0;
+		fill: transparent;
+	}
+
+	.ct-series-d .ct-line,
+	.ct-series-d .ct-point {
+		stroke: $danger;
+		stroke-width: 1px;
+	}
+
+	.ct-series-a .ct-point,
+	.ct-series-b .ct-point,
+	.ct-series-c .ct-point,
+	.ct-series-d .ct-point {
+		stroke-width: 5px;
+	}
+
+	.ct-grid {
+		stroke-width: 0.5px;
+
+		&.ct-horizontal {
+			stroke-dasharray: 0px;
+		}
+	}
+}
+
+.sales-details {
+	.feather {
+		width: 48px;
+		height: 40px;
+	}
+}
+
+#blog-carousel {
+	.overlaybg {
+		height: 472px;
+		overflow: hidden;
+		background-color: $gray-800;
+		border-radius: 20px;
+
+		img {
+			width: 100%;
+		}
+	}
+}

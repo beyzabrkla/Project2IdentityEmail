@@ -1,0 +1,132 @@
+﻿<div class="container-fluid">
+    <div class="email-app">
+        <div class="left-part bg-white">
+            <a class="ti-menu ti-close btn btn-success show-left-part d-block d-md-none" href="javascript:void(0)"></a>
+            <div class="scrollable" style="height:100%;">
+                <div class="p-15">
+                    <button type="button" class="btn waves-effect waves-light btn-rounded btn-primary">Yeni Mesaj</button>
+
+                </div>
+                <div class="divider"></div>
+                <ul class="list-group">
+                    <li>
+                        <small class="p-15 grey-text text-lighten-1 db">Klasörler</small>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="/Mail/Inbox" class="active list-group-item-action">
+                            <i class="mdi mdi-inbox"></i>
+                            Gelen Kutusu <span class="label label-success float-right">6</span>
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="/Mail/Starred" class="list-group-item-action">
+                            <i class="mdi mdi-star"></i>
+                            Yıldızlı
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="/Mail/DraftsMesssage" class="list-group-item-action">
+                            <i class="mdi mdi-send"></i>
+                            Taslaklar <span class="label label-danger float-right">3</span>
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="/Mail/Sendbox" class="list-group-item-action">
+                            <i class="mdi mdi-email"></i>
+                            Gönderilenler
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="/Mail/Spam" class="list-group-item-action d-flex align-items-center">
+                            <i class="mdi mdi-alert-octagon mr-2 font-18"></i>
+                            Spam
+                        </a>
+                    </li>
+
+                    <li class="list-group-item">
+                        <a href="/Mail/Trash" class="list-group-item-action d-flex align-items-center">
+                            <i class="mdi mdi-delete mr-2 font-18"></i>
+                            Çöp Kutusu
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <hr>
+                    </li>
+                    <li>
+                        <small class="p-15 grey-text text-lighten-1 db">Etiketler</small>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="javascript:void(0)" class="list-group-item-action d-flex align-items-center">
+                            <i class="text-danger mdi mdi-checkbox-blank-circle mr-2"></i> İş Dünyası
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="javascript:void(0)" class="list-group-item-action d-flex align-items-center">
+                            <i class="text-cyan mdi mdi-checkbox-blank-circle mr-2"></i> Projeler
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="javascript:void(0)" class="list-group-item-action d-flex align-items-center">
+                            <i class="text-warning mdi mdi-checkbox-blank-circle mr-2"></i> Kişisel
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="javascript:void(0)" class="list-group-item-action d-flex align-items-center">
+                            <i class="text-info mdi mdi-checkbox-blank-circle mr-2"></i> Sosyal
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="right-part mail-list bg-white">
+            <!-- Button group part -->
+            <div class="p-15 d-flex align-items-center border-bottom bg-white shadow-sm">
+                <div class="btn-group mr-3">
+                    <button id="btnGroupDrop1" type="button"
+                            class="btn waves-effect waves-light btn-rounded btn-outline-primary dropdown-toggle d-flex align-items-center"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                            style="padding: 7px 20px; font-weight: 500;">
+                        <i data-feather="filter" class="feather-sm mr-2"></i> Filtreler
+                    </button>
+
+                    <div class="dropdown-menu border-0 shadow">
+                        <a class="dropdown-item" href="#"><i class="ti-email mr-2"></i> Okunmamışlar</a>
+                        <a class="dropdown-item" href="#"><i class="ti-star mr-2"></i> Yıldızlılar</a>
+                        <a class="dropdown-item" href="#"><i class="ti-pin-alt mr-2"></i> Önemliler</a>
+                    </div>
+                </div>
+
+                <div class="flex-grow-1 position-relative search-container">
+                    <div class="position-absolute" style="top: 50%; left: 15px; transform: translateY(-50%); z-index: 5; line-height: 0;">
+                        <i data-feather="search" class="text-muted" style="width: 16px; height: 16px;"></i>
+                    </div>
+
+                    @*search işlemi yapılacak*@                   
+                        <input type="text" class="form-control rounded-pill search-input-box shadow-none"
+                           placeholder="Gönderen, konu veya anahtar kelime ara..."
+                           id="mailSearchInput"
+                           style="padding-left: 40px; padding-right: 40px; height: 40px; border: 1px solid #e0e0e0; transition: all 0.3s ease;">
+
+                    <a href="javascript:void(0)" class="position-absolute text-muted" id="clearSearch"
+                       style="top: 50%; right: 15px; transform: translateY(-50%); z-index: 5; display: none;">
+                        <i class="ti-close" style="font-size: 12px;"></i>
+                    </a>
+                </div>
+
+                <div class="ml-auto d-flex align-items-center">
+                    <span class="text-muted mr-3 font-12 d-none d-md-block">1-50 / 2,405</span>
+
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-sm waves-effect text-white shadow-sm"
+                                style="background-color: #f158d0; border: none; border-radius: 8px; width: 32px; height: 32px; padding: 0;">
+                            <i class="ti-angle-left" style="font-weight: bold;"></i>
+                        </button>
+
+                        <button type="button" class="btn btn-sm waves-effect text-white shadow-sm ml-1"
+                                style="background-color: #f158d0; border: none; border-radius: 8px; width: 32px; height: 32px; padding: 0;">
+                            <i class="ti-angle-right" style="font-weight: bold;"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- Action part -->

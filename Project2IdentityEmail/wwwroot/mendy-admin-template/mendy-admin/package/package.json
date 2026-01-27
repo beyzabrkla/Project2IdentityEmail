@@ -1,0 +1,56 @@
+{
+  "name": "admin",
+  "version": "1.0.0",
+  "description": "This is the Admin template with the bootstrap 4",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "admin",
+    "templates",
+    "boostrap4",
+    "admin",
+    "dashboard"
+  ],
+  "author": "Mendy",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-minify-css": "^1.2.4",
+    "gulp-npm-dist": "^1.0.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "3.1.0",
+    "gulp-uglify": "^3.0.0"
+  },
+  "dependencies": {
+    "@claviska/jquery-minicolors": "^2.2.6",
+    "block-ui": "^2.70.1",
+    "bootstrap": "^4.2.1",
+    "bootstrap-colorpicker": "^2.5.2",
+    "bootstrap-datepicker": "^1.8.0",
+    "bootstrap-touchspin": "^4.2.3",
+    "chart.js": "^2.7.2",
+    "chartist": "^0.11.0",
+    "chartist-plugin-tooltips": "^0.0.17",
+    "clockpicker": "0.0.7",
+    "cropper": "^4.0.0",
+    "datatables": "^1.10.13",
+    "datatables.net-bs4": "^1.10.16",
+    "daterangepicker": "^3.0.1",
+    "dragula": "^3.7.2",
+    "dropzone": "^5.4.0",
+    "fullcalendar": "^3.9.0",
+    "gmaps": "^0.4.24",
+    "jquery": "^3.3.1",
+    "jquery-sessiontimeout": "^1.1.0",
+    "jvectormap": "^2.0.4",
+    "magnific-popup": "^1.1.0",
+    "moment": "^2.22.1",
+    "natives": "^1.1.6",
+    "perfect-scrollbar": "^0.6.11",
+    "popper.js": "^1.14.3",
+    "select2": "^4.0.6-rc.1",
+    "summernote": "^0.8.10"
+  }
+}

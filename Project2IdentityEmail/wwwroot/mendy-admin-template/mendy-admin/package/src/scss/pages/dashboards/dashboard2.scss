@@ -1,0 +1,20 @@
+// Variables;
+
+@import '../../variable';
+
+.monthly-sale {
+  margin: 0 -6px;
+  li {
+    color: $white;
+    opacity: 0.7;
+    padding: 5px 6px;
+    &:hover,
+    &.active {
+      background-color: $white;
+      color: $purple;
+      opacity: 1;
+      cursor: pointer;
+      border-radius: 17px;
+    }
+  }
+}

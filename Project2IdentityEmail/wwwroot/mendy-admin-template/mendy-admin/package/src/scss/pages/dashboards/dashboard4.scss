@@ -1,0 +1,145 @@
+@import '../../variable';
+
+/*******************
+ sales chart
+*******************/
+.pro-sales-2 {
+    position: relative;
+    height: 270px;
+    -webkit-filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.2));
+    filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.2));
+
+    .ct-series-a .ct-area {
+        fill-opacity: 0;
+        fill: transparent;
+    }
+
+    .ct-series-a .ct-line,
+    .ct-series-a .ct-point {
+        stroke: $white;
+        stroke-width: 2px;
+    }
+
+    .ct-series-b .ct-area {
+        fill: transparent;
+        fill-opacity: 0;
+    }
+
+    .ct-series-b .ct-line,
+    .ct-series-b .ct-point {
+        stroke: $white;
+        stroke-width: 2px;
+    }
+
+    .ct-series-a .ct-point,
+    .ct-series-b .ct-point {
+        stroke-width: 5px;
+    }
+
+    .ct-grid {
+        stroke-width: 0.5px;
+        stroke: rgba(255, 255, 255, 1);
+
+        &.ct-horizontal {
+            stroke-dasharray: 0px;
+        }
+    }
+
+    .ct-label {
+        color: $white;
+
+        &.ct-horizontal.ct-end {
+            margin-left: -17px;
+        }
+    }
+}
+
+.sales-chart {
+    .stats {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    }
+}
+
+@media (min-width: 992px) {
+    .sales-chart {
+        .chart {
+            border-right: 1px solid rgba(255, 255, 255, 0.3);
+        }
+    }
+}
+
+
+.usage-2 .ct-series-a .ct-line {
+    stroke-width: 3px;
+    stroke: $primary;
+}
+
+.usage-2 .ct-series-a .ct-point {
+    stroke-width: 0;
+}
+
+.usage-2 .ct-series-a .ct-area {
+    fill-opacity: 0;
+}
+
+.jvectormap-zoomout,
+.jvectormap-zoomin {
+    display: none;
+}
+
+.products {
+    margin-top: -30px;
+    position: relative;
+    z-index: 1;
+
+    .table {
+        border-collapse: separate;
+        border-spacing: 0 15px;
+
+        thead {
+            tr {
+                th:first-child {
+                    border-bottom-left-radius: 20px;
+                }
+
+                th:last-child {
+                    border-bottom-right-radius: 20px;
+                }
+            }
+        }
+
+        tbody {
+            tr {
+                background-color: $white;
+
+                td:first-child {
+                    border-top-left-radius: 20px;
+                    border-bottom-left-radius: 20px;
+                }
+
+                td:last-child {
+                    border-top-right-radius: 20px;
+                    border-bottom-right-radius: 20px;
+                }
+            }
+        }
+    }
+}
+
+.social-widget {
+    width: 100%;
+    position: relative;
+
+    .social-user {
+        text-align: center;
+        padding: 0 16px 25px;
+
+        &:first-child {
+            padding-left: 0;
+        }
+
+        &::last-child {
+            padding-right: 0;
+        }
+    }
+}

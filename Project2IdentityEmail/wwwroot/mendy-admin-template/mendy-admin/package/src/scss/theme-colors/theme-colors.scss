@@ -1,0 +1,154 @@
+// Theme colors
+#main-wrapper {
+
+	&[data-layout='vertical'],
+	&[data-layout='horizontal'] {
+
+		/*This is for the logo bg*/
+		.topbar .top-navbar .navbar-header {
+			&[data-logobg='skin1'] {
+				background: $skin1;
+			}
+
+			&[data-logobg='skin2'] {
+				background: $skin2;
+			}
+
+			&[data-logobg='skin3'] {
+				background: $skin3;
+
+				.navbar-brand {
+					.dark-logo {
+						display: inline;
+					}
+
+					.light-logo {
+						display: none;
+					}
+				}
+
+				.nav-toggler,
+				.sidebartoggler {
+					color: $body-color;
+				}
+			}
+		}
+
+		.topbar .navbar-collapse,
+		.topbar {
+			&[data-navbarbg='skin1'] {
+				background: $skin1;
+
+				.pro-name {
+					color: $white;
+
+					span {
+						opacity: 0.5;
+					}
+				}
+			}
+
+			&[data-navbarbg='skin2'] {
+				background: $skin2;
+
+				.pro-name {
+					color: $text-muted;
+
+					span {
+						opacity: 0.5;
+					}
+				}
+			}
+
+			&[data-navbarbg='skin3'] {
+				background: $skin3;
+
+				.pro-name {
+					color: $dark;
+
+					span {
+						opacity: 0.5;
+					}
+				}
+			}
+		}
+
+		/*This is for the sidebar bg*/
+		.left-sidebar {
+			&[data-sidebarbg='skin1'] {
+				background: $skin1;
+			}
+
+			&[data-sidebarbg='skin2'] {
+				background: $skin2;
+
+				.sidebar-nav {
+					ul {
+						.sidebar-item {
+							&.selected {
+								background-color: rgba(0, 0, 0, 0.2);
+							}
+						}
+					}
+				}
+			}
+
+			&[data-sidebarbg='skin3'] {
+				background: $skin3;
+
+				.sidebar-nav {
+					ul {
+						.sidebar-item {
+							.sidebar-link {
+								color: $sidebar-text-dark;
+								opacity: 0.7;
+
+								.feather {
+									color: $sidebar-text-dark;
+								}
+
+								&.active,
+								&:hover {
+									opacity: 1;
+								}
+							}
+
+							&.selected {
+								background-color: rgba(0, 0, 0, 0.05);
+							}
+						}
+					}
+
+					.has-arrow {
+						&::after {
+							border-color: $sidebar-text-dark;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+@media (min-width:768px) {
+
+	// Theme colors
+	#main-wrapper {
+		&[data-layout='horizontal'] {
+
+			.left-sidebar {
+				&[data-sidebarbg='skin1'] ul {
+					background: $skin1;
+				}
+
+				&[data-sidebarbg='skin2'] ul {
+					background: $skin2;
+				}
+
+				&[data-sidebarbg='skin3'] ul {
+					background: $skin3;
+				}
+			}
+		}
+	}
+}

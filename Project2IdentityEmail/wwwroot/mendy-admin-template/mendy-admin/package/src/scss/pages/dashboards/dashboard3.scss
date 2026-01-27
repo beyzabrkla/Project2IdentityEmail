@@ -1,0 +1,15 @@
+// Variables;
+@import '../../variable';
+
+.usage .ct-series-a .ct-line {
+  stroke-width: 3px;
+  stroke: $white;
+}
+
+.usage .ct-series-a .ct-point {
+  stroke-width: 0;
+}
+
+.usage .ct-series-a .ct-area {
+  fill-opacity: 0;
+}

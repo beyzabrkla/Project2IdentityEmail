@@ -1,0 +1,84 @@
+﻿<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+@await Component.InvokeAsync("AdminLayoutHead")
+
+<style>
+    /* 1. Üst Barı Mendy Moru Yap */
+    .topbar, .topbar .top-navbar {
+        background: #3e3c59 !important; /* Mendy Temasının İmzası Olan Mor/Lacivert Tonu */
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+    }
+
+    /* 2. Sidebar Boşluğunu Sıfırla */
+    .page-wrapper {
+        margin-left: 0 !important;
+        background-color: #f3f3f5 !important;
+    }
+
+    /* 3. Sayfa İçeriğini Renkle Uyumlu Yap */
+    .container-fluid {
+        background-color: #f3f3f5 !important;
+    }
+
+    /* 4. Arama İkonunu Kutunun İçine Sabitleme */
+    .search-container i {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #adb5bd;
+        z-index: 10;
+    }
+
+    /* 5. Arama Inputu: Metni ikonun üzerine bindirmemek için pl-5 */
+    .search-input-box {
+        padding-left: 45px !important;
+        border: 1px solid #e9ecef !important;
+        height: 40px !important;
+    }
+
+        .search-input-box:focus {
+            border-color: #3e3c59 !important;
+            background-color: #fff !important;
+            box-shadow: 0 0 0 0.2rem rgba(62, 60, 89, 0.1) !important;
+        }
+
+    /* Feather ikonlarının boyutunu sabitleyelim */
+    .feather-sm {
+        width: 14px;
+        height: 14px;
+    }
+
+    /* Üst barın mor rengini tam kodla sabitleyelim */
+    .topbar {
+        background: #3e3c59 !important;
+    }
+</style>
+
+<body>
+    <div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
+        @await Component.InvokeAsync("MailLayoutHeader")
+
+    @RenderBody()
+    </div>
+    @await Component.InvokeAsync("AdminLayoutFooter")
+
+</body>
+</html>
+@await Component.InvokeAsync("AdminLayoutScripts")
+<script>
+    $(document).ready(function() {
+    $('#mailSearchInput').on('input', function() {
+        if ($(this).val().length > 0) {
+            $('#clearSearch').fadeIn();
+        } else {
+            $('#clearSearch').fadeOut();
+        }
+    });
+
+    $('#clearSearch').on('click', function() {
+        $('#mailSearchInput').val('').trigger('input').focus();
+    });
+});
+</script>

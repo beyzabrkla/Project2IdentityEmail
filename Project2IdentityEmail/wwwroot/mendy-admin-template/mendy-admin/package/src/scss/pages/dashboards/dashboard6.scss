@@ -1,0 +1,46 @@
+@import '../../variable';
+
+/*******************
+ sales chart
+*******************/
+.pro-sales {
+    position: relative;
+    height: 270px;
+    -webkit-filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.2));
+    filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.2));
+
+    .ct-series-a .ct-area {
+        fill-opacity: 0;
+        fill: transparent;
+    }
+
+    .ct-series-a .ct-line,
+    .ct-series-a .ct-point {
+        stroke: $purple;
+        stroke-width: 2px;
+    }
+
+    .ct-series-b .ct-area {
+        fill: transparent;
+        fill-opacity: 0;
+    }
+
+    .ct-series-b .ct-line,
+    .ct-series-b .ct-point {
+        stroke: $primary;
+        stroke-width: 2px;
+    }
+
+    .ct-series-a .ct-point,
+    .ct-series-b .ct-point {
+        stroke-width: 5px;
+    }
+
+    .ct-grid {
+        stroke-width: 0.5px;
+
+        &.ct-horizontal {
+            stroke-dasharray: 0px;
+        }
+    }
+}
