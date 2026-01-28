@@ -1,8 +1,4 @@
 ﻿<ul class="navbar-nav float-right">
-
-    <!-- ============================================================== -->
-    <!-- User profile and search -->
-    <!-- ============================================================== -->
     <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle waves-effect waves-dark pro-pic" href="" data-toggle="dropdown"
            aria-haspopup="true" aria-expanded="false">
@@ -24,173 +20,65 @@
                 </div>
             </div>
             <div class="profile-dis scrollable">
-                <a class="dropdown-item" href="javascript:void(0)">
-                    <i class="ti-user mx-1"></i> My Profile
+                <a class="dropdown-item" href="/Profile/Index">
+                    <i class="ti-user mx-1"></i> Profilim
                 </a>
-                <a class="dropdown-item" href="javascript:void(0)">
-                    <i class="ti-wallet mx-1"></i> My Balance
-                </a>
-                <a class="dropdown-item" href="javascript:void(0)">
-                    <i class="ti-email mx-1"></i> Inbox
+                <a class="dropdown-item" href="/Mail/Inbox">
+                    <i class="ti-email mx-1"></i> Gelen Kutusu
                 </a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="javascript:void(0)">
-                    <i class="ti-settings mx-1"></i> Account Setting
-                </a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="javascript:void(0)">
-                    <i class="fa fa-power-off mx-1"></i> Logout
+                <a class="dropdown-item" href="Login/Logout">
+                    <i class="fa fa-power-off mx-1"></i> Çıkış Yap
                 </a>
             </div>
         </div>
     </li>
 
-    <!-- ============================================================== -->
-    <!-- Notifications -->
-    <!-- ============================================================== -->
-    <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown"
-           aria-haspopup="true" aria-expanded="false">
-            <i data-feather="bell"></i>
-            <span class="badge badge-pill badge-danger noti">5</span>
-        </a>
-        <div class="dropdown-menu dropdown-menu-right mailbox animated bounceInDown">
-            <ul class="list-style-none">
-                <li>
-                    <div class="drop-title bg-light">
-                        <h4 class="mb-0 mt-1">4 new notifications</h4>
-                    </div>
-                </li>
-                <li>
-                    <div class="message-center notifications">
-                        <!-- Message -->
-                        <a href="javascript:void(0)" class="message-item">
-                            <span class="btn btn-danger btn-circle">
-                                <i class="fa fa-link"></i>
-                            </span>
-                            <div class="mail-contnet">
-                                <h5 class="message-title">Luanch Admin</h5>
-                                <span class="mail-desc">Just see the my new admin!</span>
-                                <span class="time">9:30 AM</span>
-                            </div>
-                        </a>
-                        <!-- Message -->
-                        <a href="javascript:void(0)" class="message-item">
-                            <span class="btn btn-success btn-circle">
-                                <i class="ti-calendar"></i>
-                            </span>
-                            <div class="mail-contnet">
-                                <h5 class="message-title">Event today</h5>
-                                <span class="mail-desc">Just a reminder that you have event</span>
-                                <span class="time">9:10 AM</span>
-                            </div>
-                        </a>
-                        <!-- Message -->
-                        <a href="javascript:void(0)" class="message-item">
-                            <span class="btn btn-info btn-circle">
-                                <i class="ti-settings"></i>
-                            </span>
-                            <div class="mail-contnet">
-                                <h5 class="message-title">Settings</h5>
-                                <span class="mail-desc">You can customize this template as you want</span>
-                                <span class="time">9:08 AM</span>
-                            </div>
-                        </a>
-                        <!-- Message -->
-                        <a href="javascript:void(0)" class="message-item">
-                            <span class="btn btn-primary btn-circle">
-                                <i class="ti-user"></i>
-                            </span>
-                            <div class="mail-contnet">
-                                <h5 class="message-title">Pavan kumar</h5>
-                                <span class="mail-desc">Just see the my admin!</span>
-                                <span class="time">9:02 AM</span>
-                            </div>
-                        </a>
-                    </div>
-                </li>
-                <li>
-                    <a class="nav-link text-center m-b-5 text-dark" href="javascript:void(0);">
-                        <strong>Check all notifications</strong>
-                        <i class="fa fa-angle-right"></i>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </li>
-
-
-    <!-- ============================================================== -->
-    <!-- Messages -->
-    <!-- ============================================================== -->
     <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" id="2" data-toggle="dropdown"
            aria-haspopup="true" aria-expanded="false">
             <i data-feather="mail"></i>
+            @if (ViewBag.MessageCount > 0)
+            {
+                <span class="badge badge-pill badge-danger noti">@ViewBag.MessageCount</span>
+            }
         </a>
-        <div class="dropdown-menu dropdown-menu-right mailbox animated bounceInDown"
-             aria-labelledby="2">
+        <div class="dropdown-menu dropdown-menu-right mailbox animated bounceInDown" aria-labelledby="2">
             <ul class="list-style-none">
                 <li>
                     <div class="drop-title bg-light">
-                        <h4 class="mb-0 mt-1">5 new messages</h4>
+                        <h4 class="mb-0 mt-1">@(ViewBag.MessageCount ?? 0) Yeni Mesaj</h4>
                     </div>
                 </li>
                 <li>
                     <div class="message-center message-body">
-                        <!-- Message -->
-                        <a href="javascript:void(0)" class="message-item">
-                            <span class="user-img">
-                                <img src="/mendy-admin-template/mendy-admin/package/assets/images/users/1.jpg" alt="user" class="rounded-circle">
-                                <span class="profile-status online pull-right"></span>
-                            </span>
-                            <div class="mail-contnet">
-                                <h5 class="message-title">Pavan kumar</h5>
-                                <span class="mail-desc">Just see the my admin!</span>
-                                <span class="time">9:30 AM</span>
-                            </div>
-                        </a>
-                        <!-- Message -->
-                        <a href="javascript:void(0)" class="message-item">
-                            <span class="user-img">
-                                <img src="/mendy-admin-template/mendy-admin/package/assets/images/users/2.jpg" alt="user" class="rounded-circle">
-                                <span class="profile-status busy pull-right"></span>
-                            </span>
-                            <div class="mail-contnet">
-                                <h5 class="message-title">Sonu Nigam</h5>
-                                <span class="mail-desc">I've sung a song! See you at</span>
-                                <span class="time">9:10 AM</span>
-                            </div>
-                        </a>
-                        <!-- Message -->
-                        <a href="javascript:void(0)" class="message-item">
-                            <span class="user-img">
-                                <img src="/mendy-admin-template/mendy-admin/package/assets/images/users/3.jpg" alt="user" class="rounded-circle">
-                                <span class="profile-status away pull-right"></span>
-                            </span>
-                            <div class="mail-contnet">
-                                <h5 class="message-title">Arijit Sinh</h5>
-                                <span class="mail-desc">I am a singer!</span>
-                                <span class="time">9:08 AM</span>
-                            </div>
-                        </a>
-                        <!-- Message -->
-                        <a href="javascript:void(0)" class="message-item">
-                            <span class="user-img">
-                                <img src="/mendy-admin-template/mendy-admin/package/assets/images/users/4.jpg" alt="user" class="rounded-circle">
-                                <span class="profile-status offline pull-right"></span>
-                            </span>
-                            <div class="mail-contnet">
-                                <h5 class="message-title">Pavan kumar</h5>
-                                <span class="mail-desc">Just see the my admin!</span>
-                                <span class="time">9:02 AM</span>
-                            </div>
-                        </a>
+                        @if (ViewBag.LastMessages != null)
+                        {
+                            foreach (var msg in ViewBag.LastMessages)
+                            {
+                                <a href="/Messages/Details/@msg.Id" class="message-item">
+                                    <span class="user-img">
+                                        <img src="@(string.IsNullOrEmpty(msg.UserImageUrl) ? "/images/default-user.jpg" : msg.UserImageUrl)" alt="user" class="rounded-circle">
+                                        <span class="profile-status @msg.StatusClass pull-right"></span>
+                                    </span>
+                                    <div class="mail-contnet">
+                                        <h5 class="message-title">@msg.SenderName</h5>
+                                        <span class="mail-desc">@msg.ShortContent</span>
+                                        <span class="time">@msg.SendTime</span>
+                                    </div>
+                                </a>
+                            }
+                        }
+                        else
+                        {
+                            <div class="p-3 text-center">Henüz yeni mesajınız yok.</div>
+                        }
                     </div>
                 </li>
                 <li>
-                    <a class="nav-link text-center link text-dark" href="javascript:void(0);">
-                        <b>See all e-Mails</b>
+                    <a class="nav-link text-center link text-dark" href="/Messages/Index">
+                        <b>Tüm Mesajları Gör</b>
                         <i class="fa fa-angle-right"></i>
                     </a>
                 </li>

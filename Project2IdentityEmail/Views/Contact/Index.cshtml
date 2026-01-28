@@ -1,0 +1,64 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow-sm border-0" style="border-radius: 15px;">
+                <div class="card-body">
+                    <div class="d-flex no-block align-items-center mb-4">
+                        <h4 class="card-title">Kişi Listesi</h4>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table v-middle mb-0">
+                            <thead>
+                                <tr class="text-muted">
+                                    <th class="font-weight-big">Kişi</th>
+                                    <th class="font-weight-big">E-posta</th>
+                                    <th class="font-weight-big">Departman</th>
+                                    <th class="text-right font-weight-big">İşlem</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <img src="~/assets/images/users/1.jpg" alt="user" class="rounded-circle" width="45">
+                                            <div class="ml-3">
+                                                <h5 class="mb-0 font-weight-medium">Hanna Gover</h5>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>hgover@gmail.com</td>
+                                    <td><span class="badge badge-light-info text-info px-3">Tasarım</span></td>
+                                    <td class="text-right">
+                                        <div class="btn-group">
+                                            <a href="/Contact/ComposeFromContact?email=hgover@gmail.com"
+                                               class="btn btn-sm btn-rounded text-white mr-2"
+                                               style="background-color: #f158d0; border: none; padding: 6px 15px;"
+                                               title="Mesaj Gönder">
+                                                <i class="mdi mdi-send mr-1"></i> Mesaj Gönder
+                                            </a>
+
+                                            <a href="/Mail/ChatHistory?email=hgover@gmail.com"
+                                               class="btn btn-sm btn-rounded btn-outline-secondary"
+                                               style="padding: 6px 15px;"
+                                               title="Yazışma Geçmişi">
+                                                <i class="mdi mdi-message-text-outline mr-1"></i> Mesajları Oku
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

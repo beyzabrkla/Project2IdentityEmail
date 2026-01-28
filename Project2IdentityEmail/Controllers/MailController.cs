@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Humanizer;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Project2IdentityEmail.Controllers
 {
@@ -9,30 +10,22 @@ namespace Project2IdentityEmail.Controllers
             return View();
         }
 
-        public IActionResult Sendbox()
+        public IActionResult MailDetails()
         {
             return View();
         }
 
-        public IActionResult DraftsMessage()
+        public IActionResult ComposeMail(string to) //yeni mesaj
         {
+            ViewBag.ReceiverEmail = to;
             return View();
         }
 
-        public IActionResult Details()
+        public IActionResult ChatHistory(string email)
         {
+            // Backend kısmında: select * from Messages where (Sender=@email or Receiver=@email) order by Date desc
+            ViewBag.ChatPartner = email; // Sayfa başlığında kiminle konuştuğunu göstermek için
             return View();
         }
-
-        public IActionResult Spam()
-        {
-            return View();
-        }
-
-        public IActionResult Trash()
-        {
-            return View();
-        }
-
     }
 }

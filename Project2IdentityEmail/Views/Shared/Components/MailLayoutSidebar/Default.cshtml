@@ -4,98 +4,118 @@
             <a class="ti-menu ti-close btn btn-success show-left-part d-block d-md-none" href="javascript:void(0)"></a>
             <div class="scrollable" style="height:100%;">
                 <div class="p-15">
-                    <button type="button" class="btn waves-effect waves-light btn-rounded btn-primary">Yeni Mesaj</button>
-
+                    <a type="button" href="/Mail/ComposeMail" class="btn waves-effect waves-light btn-rounded text-white" style="background-color: #f158d0; width: 100%;">Yeni Mesaj</a>
                 </div>
                 <div class="divider"></div>
                 <ul class="list-group">
                     <li>
-                        <small class="p-15 grey-text text-lighten-1 db">Klasörler</small>
+                        <small class="p-15 grey-text text-lighten-1 db">KLASÖRLER</small>
                     </li>
-                    <li class="list-group-item">
-                        <a href="/Mail/Inbox" class="active list-group-item-action">
-                            <i class="mdi mdi-inbox"></i>
-                            Gelen Kutusu <span class="label label-success float-right">6</span>
+
+                    <li class="list-group-item border-0">
+                        <a href="/Mail/Inbox?folder=inbox" class="list-group-item-action d-flex align-items-center active">
+                            <i class="mdi mdi-inbox mr-2 font-18"></i>
+                            Gelen Kutusu <span class="label label-success ml-auto">6</span>
                         </a>
                     </li>
-                    <li class="list-group-item">
-                        <a href="/Mail/Starred" class="list-group-item-action">
-                            <i class="mdi mdi-star"></i>
+
+                    <li class="list-group-item border-0">
+                        <a href="/Mail/Inbox?folder=starred" class="list-group-item-action d-flex align-items-center">
+                            <i class="mdi mdi-star mr-2 font-18"></i>
                             Yıldızlı
                         </a>
                     </li>
-                    <li class="list-group-item">
-                        <a href="/Mail/DraftsMesssage" class="list-group-item-action">
-                            <i class="mdi mdi-send"></i>
-                            Taslaklar <span class="label label-danger float-right">3</span>
+
+                    <li class="list-group-item border-0">
+                        <a href="/Mail/Inbox?folder=drafts" class="list-group-item-action d-flex align-items-center">
+                            <i class="mdi mdi-file-document mr-2 font-18"></i>
+                            Taslaklar <span class="label label-danger ml-auto">3</span>
                         </a>
                     </li>
-                    <li class="list-group-item">
-                        <a href="/Mail/Sendbox" class="list-group-item-action">
-                            <i class="mdi mdi-email"></i>
+
+                    <li class="list-group-item border-0">
+                        <a href="/Mail/Inbox?folder=sent" class="list-group-item-action d-flex align-items-center">
+                            <i class="mdi mdi-send mr-2 font-18"></i>
                             Gönderilenler
                         </a>
                     </li>
-                    <li class="list-group-item">
-                        <a href="/Mail/Spam" class="list-group-item-action d-flex align-items-center">
+
+                    <li class="list-group-item border-0">
+                        <a href="/Mail/Inbox?folder=spam" class="list-group-item-action d-flex align-items-center">
                             <i class="mdi mdi-alert-octagon mr-2 font-18"></i>
                             Spam
                         </a>
                     </li>
 
-                    <li class="list-group-item">
-                        <a href="/Mail/Trash" class="list-group-item-action d-flex align-items-center">
+                    <li class="list-group-item border-0">
+                        <a href="/Mail/Inbox?folder=trash" class="list-group-item-action d-flex align-items-center">
                             <i class="mdi mdi-delete mr-2 font-18"></i>
                             Çöp Kutusu
                         </a>
                     </li>
-                    <li class="list-group-item">
-                        <hr>
-                    </li>
+
+                    <li class="list-group-item border-0"><hr class="my-2"></li>
+
                     <li>
-                        <small class="p-15 grey-text text-lighten-1 db">Etiketler</small>
+                        <small class="p-15 grey-text text-lighten-1 db">ETİKETLER</small>
                     </li>
-                    <li class="list-group-item">
-                        <a href="javascript:void(0)" class="list-group-item-action d-flex align-items-center">
-                            <i class="text-danger mdi mdi-checkbox-blank-circle mr-2"></i> İş Dünyası
+
+                    <li class="list-group-item border-0">
+                        <a href="/Mail/Inbox?label=business" class="list-group-item-action d-flex align-items-center">
+                            <i class="text-danger mdi mdi-checkbox-blank-circle mr-2 font-10"></i> İş Dünyası
                         </a>
                     </li>
-                    <li class="list-group-item">
-                        <a href="javascript:void(0)" class="list-group-item-action d-flex align-items-center">
-                            <i class="text-cyan mdi mdi-checkbox-blank-circle mr-2"></i> Projeler
+                    <li class="list-group-item border-0">
+                        <a href="/Mail/Inbox?label=projects" class="list-group-item-action d-flex align-items-center">
+                            <i class="text-cyan mdi mdi-checkbox-blank-circle mr-2 font-10"></i> Projeler
                         </a>
                     </li>
-                    <li class="list-group-item">
-                        <a href="javascript:void(0)" class="list-group-item-action d-flex align-items-center">
-                            <i class="text-warning mdi mdi-checkbox-blank-circle mr-2"></i> Kişisel
+                    <li class="list-group-item border-0">
+                        <a href="/Mail/Inbox?label=personal" class="list-group-item-action d-flex align-items-center">
+                            <i class="text-warning mdi mdi-checkbox-blank-circle mr-2 font-10"></i> Kişisel
                         </a>
                     </li>
-                    <li class="list-group-item">
-                        <a href="javascript:void(0)" class="list-group-item-action d-flex align-items-center">
-                            <i class="text-info mdi mdi-checkbox-blank-circle mr-2"></i> Sosyal
+                    <li class="list-group-item border-0">
+                        <a href="/Mail/Inbox?label=social" class="list-group-item-action d-flex align-items-center">
+                            <i class="text-info mdi mdi-checkbox-blank-circle mr-2 font-10"></i> Sosyal
                         </a>
                     </li>
                 </ul>
             </div>
-        </div>
+        </div>       
         <div class="right-part mail-list bg-white">
             <!-- Button group part -->
             <div class="p-15 d-flex align-items-center border-bottom bg-white shadow-sm">
-                <div class="btn-group mr-3">
-                    <button id="btnGroupDrop1" type="button"
-                            class="btn waves-effect waves-light btn-rounded btn-outline-primary dropdown-toggle d-flex align-items-center"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                            style="padding: 7px 20px; font-weight: 500;">
-                        <i data-feather="filter" class="feather-sm mr-2"></i> Filtreler
-                    </button>
+                <div class="d-flex align-items-center mr-3">
+                    <div class="custom-control custom-checkbox mr-3">
+                        <input type="checkbox" class="custom-control-input" id="check-all-mail">
+                        <label class="custom-control-label" for="check-all-mail"></label>
+                    </div>
 
-                    <div class="dropdown-menu border-0 shadow">
-                        <a class="dropdown-item" href="#"><i class="ti-email mr-2"></i> Okunmamışlar</a>
-                        <a class="dropdown-item" href="#"><i class="ti-star mr-2"></i> Yıldızlılar</a>
-                        <a class="dropdown-item" href="#"><i class="ti-pin-alt mr-2"></i> Önemliler</a>
+                    <div class="btn-group">
+                        <button id="btnGroupDrop1" type="button"
+                                class="btn waves-effect waves-light btn-rounded btn-outline-primary dropdown-toggle d-flex align-items-center"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                style="padding: 7px 20px; font-weight: 500; border-color: #f158d0; color: #f158d0;">
+                            <i data-feather="filter" class="feather-sm mr-2"></i> Filtreler
+                        </button>
+                        <div class="dropdown-menu border-0 shadow">
+                            <a class="dropdown-item" href="/Mail/Inbox?filter=unread">
+                                <i class="ti-email mr-2"></i> Okunmamışlar
+                            </a>
+                            <a class="dropdown-item" href="/Mail/Inbox?folder=starred">
+                                <i class="ti-star mr-2"></i> Yıldızlılar
+                            </a>
+                            <a class="dropdown-item" href="/Mail/Inbox?filter=important">
+                                <i class="ti-pin-alt mr-2"></i> Önemliler
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="/Mail/Inbox?filter=hasattachment">
+                                <i class="ti-clip mr-2"></i> Ekli Dosyalar
+                            </a>
+                        </div>
                     </div>
                 </div>
-
                 <div class="flex-grow-1 position-relative search-container">
                     <div class="position-absolute" style="top: 50%; left: 15px; transform: translateY(-50%); z-index: 5; line-height: 0;">
                         <i data-feather="search" class="text-muted" style="width: 16px; height: 16px;"></i>
