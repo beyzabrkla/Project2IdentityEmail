@@ -1,22 +1,33 @@
-﻿<ul class="navbar-nav float-right">
+﻿@model Project2IdentityEmail.Entities.AppUser
+
+<ul class="navbar-nav float-right">
     <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle waves-effect waves-dark pro-pic" href="" data-toggle="dropdown"
            aria-haspopup="true" aria-expanded="false">
             <span class="mr-3 font-normal d-none d-sm-inline-block pro-name">
-                <span>Hello,</span>
-                Mendy Simmons
+                <span>Merhaba,</span>
+                @Model.Name @Model.Surname
             </span>
-            <img src="/mendy-admin-template/mendy-admin/package/assets/images/users/1.jpg" alt="user" class="rounded-circle" width="40">
+            <img src="@(string.IsNullOrEmpty(Model.ImageUrl) ? "/mendy-admin-template/mendy-admin/package/assets/images/users/1.jpg" : "/UserImages/" + Model.ImageUrl)"
+                 alt="user"
+                 class="rounded-circle"
+                 width="40"
+                 height="40"
+                 style="object-fit: cover;">
         </a>
         <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
             <div class="d-flex no-block align-items-center p-3 bg-light mb-2">
                 <div class="">
-                    <img src="/mendy-admin-template/mendy-admin/package/assets/images/users/2.jpg" alt="user" class="rounded-circle"
-                         width="60">
+                    <img src="@(string.IsNullOrEmpty(Model.ImageUrl) ? "/mendy-admin-template/mendy-admin/package/assets/images/users/2.jpg" : "/UserImages/" + Model.ImageUrl)"
+                         alt="user"
+                         class="rounded-circle"
+                         width="60"
+                         height="60"
+                         style="object-fit: cover;">
                 </div>
                 <div class="ml-2">
-                    <h4 class="mb-0">Mendy Simmons</h4>
-                    <p class="mb-0">mendy@gmail.com</p>
+                    <h4 class="mb-0">@Model.Name @Model.Surname</h4>
+                    <p class="mb-0">@Model.Email</p>
                 </div>
             </div>
             <div class="profile-dis scrollable">
@@ -28,7 +39,7 @@
                 </a>
                 <div class="dropdown-divider"></div>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="Login/Logout">
+                <a class="dropdown-item" href="/Login/Logout">
                     <i class="fa fa-power-off mx-1"></i> Çıkış Yap
                 </a>
             </div>
@@ -77,7 +88,7 @@
                     </div>
                 </li>
                 <li>
-                    <a class="nav-link text-center link text-dark" href="/Messages/Index">
+                    <a class="nav-link text-center link text-dark" href="/Mail/Inbox">
                         <b>Tüm Mesajları Gör</b>
                         <i class="fa fa-angle-right"></i>
                     </a>

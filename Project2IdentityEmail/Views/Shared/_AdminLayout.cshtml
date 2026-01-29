@@ -12,17 +12,19 @@
     </div>
     <div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
 
-          @await Component.InvokeAsync("AdminLayoutHeader")
+        @await Component.InvokeAsync("AdminLayoutHeader")
 
         <div class="page-wrapper">
             <div class="page-breadcrumb">
 
-            @RenderBody()
+                @RenderBody()
+
+            </div>
+        </div>
 
         @await Component.InvokeAsync("AdminLayoutFooter")
-        </div>
-    </div>
 
+    </div>
 </body>
 </html>
-    @await Component.InvokeAsync("AdminLayoutScripts")
+@await Component.InvokeAsync("AdminLayoutScripts")

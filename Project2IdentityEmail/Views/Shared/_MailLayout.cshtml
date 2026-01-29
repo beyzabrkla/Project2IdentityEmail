@@ -1,7 +1,55 @@
 ﻿<!DOCTYPE html>
 <html dir="ltr" lang="en">
+<style>
+    /* Ekranın dışına taşmayı her yerden engelle */
+    html, body {
+        height: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: hidden !important;
+    }
 
+    #main-wrapper {
+        height: 100vh !important;
+        display: flex !important;
+        flex-direction: column !important;
+    }
+
+    /* Page-wrapper yüksekliğini 140px düşürerek Footer'a (yaklaşık 60px) kesin yer aç */
+    .page-wrapper {
+        height: calc(100vh - 140px) !important;
+        min-height: auto !important;
+        margin-top: 64px !important; /* Header boyutu */
+        padding: 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        overflow: hidden !important;
+        flex: 1 0 auto !important;
+    }
+
+    /* Sidebar ve İçerik taşıyıcısı */
+    .mail-content-container {
+        display: flex !important;
+        flex: 1 !important;
+        overflow: hidden !important;
+        height: 100% !important;
+    }
+
+    /* Footer'ı yukarı çeken kritik ayar */
+    footer.footer {
+        height: 60px !important;
+        line-height: 30px !important;
+        padding: 15px !important;
+        background: #fff !important;
+        border-top: 1px solid #eee !important;
+        flex: 0 0 auto !important;
+        position: relative !important;
+        z-index: 1000 !important;
+        display: block !important; /* Gizli kalmasını engeller */
+    }
+</style>
 @await Component.InvokeAsync("AdminLayoutHead")
+
 
 <body>
     <div class="preloader">
@@ -10,28 +58,33 @@
             <div class="lds-pos"></div>
         </div>
     </div>
-    <div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
+
+    <div id="main-wrapper"
+         data-layout="vertical"
+         data-navbarbg="skin5"
+         data-sidebartype="full"
+         data-sidebar-position="fixed"
+         data-header-position="fixed"
+         data-boxed-layout="full">
+
         @await Component.InvokeAsync("AdminLayoutHeader")
 
-    @RenderBody()
-    </div>
-    @await Component.InvokeAsync("AdminLayoutFooter")
+        @RenderBody()
 
+        @await Component.InvokeAsync("AdminLayoutFooter")
+    </div>
+
+    @await Component.InvokeAsync("AdminLayoutScripts")
+
+    <script>
+        $(document).ready(function () {
+            $('#mailSearchInput').on('input', function () {
+                $(this).val().length > 0 ? $('#clearSearch').fadeIn() : $('#clearSearch').fadeOut();
+            });
+            $('#clearSearch').on('click', function () {
+                $('#mailSearchInput').val('').trigger('input').focus();
+            });
+        });
+    </script>
 </body>
 </html>
-@await Component.InvokeAsync("AdminLayoutScripts")
-<script>
-    $(document).ready(function() {
-    $('#mailSearchInput').on('input', function() {
-        if ($(this).val().length > 0) {
-            $('#clearSearch').fadeIn();
-        } else {
-            $('#clearSearch').fadeOut();
-        }
-    });
-
-    $('#clearSearch').on('click', function() {
-        $('#mailSearchInput').val('').trigger('input').focus();
-    });
-});
-</script>

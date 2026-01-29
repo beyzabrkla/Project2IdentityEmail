@@ -1,76 +1,106 @@
-﻿
+﻿@model Project2IdentityEmail.DTOs.CreateUserRegisterDTO
 @{
-    ViewData["Title"] = "Register";
+    ViewData["Title"] = "Kayıt Ol";
     Layout = "~/Views/Shared/_LoginLayout.cshtml";
 }
 
-<div class="auth-wrapper d-flex no-block justify-content-center align-items-center" style="background:url(/mendy-admin-template/mendy-admin/package/assets/images/big/auth-bg.jpg) no-repeat center center;">
-    <div class="auth-box">
-        <div>
-            <div class="logo">
-                <span class="d-block"><img src="/mendy-admin-template/mendy-admin/package/assets/images/logo-icon.png" alt="logo" /></span>
-                <h5 class="font-medium mb-3">Sign Up to Mendy Admin</h5>
+
+<div class="auth-wrapper d-flex no-block justify-content-center align-items-center" style="background:linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/mendy-admin-template/mendy-admin/package/assets/images/big/auth-bg.jpg) no-repeat center center; background-size: cover;">
+
+    <div class="auth-box shadow-lg soft-card bg-white col-md-8 col-lg-5 p-5 my-5">
+        <div id="loginform">
+            <div class="logo text-center pb-4">
+                <span class="db"><img src="/mendy-admin-template/mendy-admin/package/assets/images/logo-icon.png" alt="logo" style="width: 60px;" /></span>
+                <h2 class="font-weight-bold mb-1 mt-3 text-dark">Hemen Katıl</h2>
+                <p class="text-muted small">Modern yönetim paneline ilk adımını at.</p>
             </div>
-            <!-- Form -->
-            <div class="row">
-                <div class="col-12">
-                    <form class="form-horizontal">
-                        <div class="form-group row">
-                            <div class="col-12">
-                                <input class="form-control form-control-lg" type="text" required=" "
-                                       placeholder="Name">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-12">
-                                <input class="form-control form-control-lg" type="text" required=" "
-                                       placeholder="Email">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-12">
-                                <input class="form-control form-control-lg" type="password" required=" "
-                                       placeholder="Password">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-12">
-                                <input class="form-control form-control-lg" type="password" required=" "
-                                       placeholder="Confirm Password">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-md-12 ">
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                    <label class="custom-control-label" for="customCheck1">
-                                        I agree to all <a href="javascript:void(0)" class="link">Terms</a>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row form-group text-center">
-                            <div class="col-12">
-                                <button class="btn btn-block btn-lg bg-gradient-primary text-white" type="submit ">
-                                    SIGN
-                                    UP
-                                </button>
-                            </div>
-                        </div>
-                        <div class="row form-group mb-0 mt-2">
-                            <div class="col-12 text-center ">
-                                Already have an account? <a href="authentication-login1.html " class="text-primary ml-1">
-                                    <b>
-                                        Sign
-                                        In
-                                    </b>
-                                </a>
-                            </div>
-                        </div>
-                    </form>
+
+            @if (!ViewData.ModelState.IsValid)
+            {
+                <div class="alert alert-danger soft-card border-0 shadow-sm mb-4 py-2 text-center">
+                    <div asp-validation-summary="All" class="text-danger small font-weight-bold"></div>
                 </div>
-            </div>
+            }
+            <form class="form-horizontal" method="post" action="/Account/Register" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group mb-3">
+                            <label class="font-12 font-weight-bold text-muted ml-2">AD</label>
+                            <input class="form-control form-control-lg soft-input shadow-none" type="text" name="Name" required placeholder="Adınız">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group mb-3">
+                            <label class="font-12 font-weight-bold text-muted ml-2">SOYAD</label>
+                            <input class="form-control form-control-lg soft-input shadow-none" type="text" name="Surname" required placeholder="Soyadınız">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label class="font-12 font-weight-bold text-muted ml-2">KULLANICI ADI</label>
+                    <input class="form-control form-control-lg soft-input shadow-none" type="text" name="Username" required placeholder="Kullanıcı Adınız">
+                </div>
+
+                <div class="form-group mb-3">
+                    <label class="font-12 font-weight-bold text-muted ml-2">E-POSTA</label>
+                    <input class="form-control form-control-lg soft-input shadow-none" type="email" name="Email" required placeholder="Eposta Adresiniz">
+                </div>
+                <div class="form-group mb-3">
+                    <label class="font-12 font-weight-bold text-muted ml-2 text-uppercase">Profil Fotoğrafı</label>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input soft-input" id="ImageFile" name="ImageFile">
+                        <label class="custom-file-label text-muted small" for="ImageFile" style="border-radius: 12px;">Fotoğraf Seç...</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group mb-3">
+                            <label class="font-12 font-weight-bold text-muted ml-2">ŞİFRE</label>
+                            <input class="form-control form-control-lg soft-input shadow-none" type="password" name="Password" required placeholder="••••••">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group mb-3">
+                            <label class="font-12 font-weight-bold text-muted ml-2">TEKRAR</label>
+                            <input class="form-control form-control-lg soft-input shadow-none" type="password" name="ConfirmPassword" required placeholder="••••••">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group text-center">
+                    <button class="btn btn-block btn-lg btn-custom-gradient py-3 text-uppercase" type="submit" id="btnSubmit">
+                        <span id="btnText">Kaydı Tamamla</span>
+                        <span id="btnLoading" style="display:none;">
+                            <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                            Lütfen Bekleyin...
+                        </span>
+                    </button>
+                </div>
+
+                <div class="mt-4 text-center">
+                    <p class="text-muted small">Zaten bir hesabın var mı? <a href="/Account/Login" class="text-primary font-weight-bold ml-1">Giriş Yap</a></p>
+                </div>
+            </form>
         </div>
     </div>
 </div>
 
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // Form post edildiğinde çalışır
+            $("form").on("submit", function () {
+                // 1. Yazıyı gizle, Spinner'ı göster
+                $("#btnText").hide();
+                $("#btnLoading").show();
+
+                // 2. Butonu kilitle (çift tıklamayı engeller)
+                $("#btnSubmit").attr("disabled", true);
+
+                // 3. Mendy temasının kendi yükleme ekranını (preloader) aç
+                $(".preloader").fadeIn();
+            });
+        });
+    </script>
+}

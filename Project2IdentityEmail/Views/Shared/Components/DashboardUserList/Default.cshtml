@@ -1,0 +1,38 @@
+﻿@model List<Project2IdentityEmail.Entities.AppUser>
+<div class="col-md-12 col-lg-8 mb-4">
+    <div class="card bg-gradient-primary oh" style="height: 450px;">
+        <!-- Sabit yükseklik -->
+        <div class="card-body">
+            <div class="d-flex align-items-center">
+                <div>
+                    <h4 class="card-title text-white mb-0">Tanıyor Olabileceğiniz Kişiler</h4>
+                </div>
+            </div>
+            <div class="custom-input icon-left mt-3">
+                <input type="text" class="form-control" placeholder="Ara...">
+                <i class="form-control-icon" data-feather="search"></i>
+            </div>
+        </div>
+        <div class="card-body bg-white" style="overflow-y: auto;">
+            <!-- Overflow eklendi -->
+            <div class="social-widget d-flex flex-wrap">
+                @foreach (var item in Model)
+                {
+                    <div class="social-user">
+                        <img src="@(string.IsNullOrEmpty(item.ImageUrl) ? "/mendy-admin-template/mendy-admin/package/assets/images/users/2.jpg" : "/UserImages/" + item.ImageUrl)"
+                             width="115"
+                             height="115"
+                             style="object-fit: cover;"
+                             class="rounded-circle"
+                             alt="user">
+                        <h6 class="mt-3 mb-0">@item.Name @item.Surname</h6>
+                        <a href="/Mail/SendMessage?id=@item.Id"
+                           class="btn btn-rounded btn-outline-primary-gradient mt-2">
+                            Mesaj Gönder
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

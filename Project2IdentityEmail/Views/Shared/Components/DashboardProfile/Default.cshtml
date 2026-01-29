@@ -1,0 +1,114 @@
+﻿@model Project2IdentityEmail.Entities.AppUser
+
+@if (Model != null)
+{
+    <div class="col-md-12 col-lg-4 mb-4">
+        <div class="card shadow-sm border-0" style="height: 450px; overflow: hidden; border-radius: 15px; display: flex; flex-direction: column;">
+
+            <div class="position-relative" style="height: 140px; flex-shrink: 0;">
+                <img src="/mendy-admin-template/mendy-admin/package/assets/images/big/card-bg.jpg"
+                     class="card-img-top" style="height: 100%; width: 100%; object-fit: cover;" alt="card-bg">
+
+                <div style="position: absolute; bottom: -45px; left: 50%; transform: translateX(-50%); z-index: 10;">
+                    <img src="@(string.IsNullOrEmpty(Model.ImageUrl) ? "/mendy-admin-template/mendy-admin/package/assets/images/users/5.jpg" : "/UserImages/" + Model.ImageUrl)"
+                         style="width: 90px; height: 90px; object-fit: cover; border: 4px solid #fff;"
+                         class="rounded-circle shadow" alt="user">
+                </div>
+            </div>
+
+            <div class="card-body text-center d-flex flex-column" style="padding-top: 50px; overflow: hidden;">
+                <div class="flex-shrink-0">
+                    <h5 class="mb-0" style="font-weight: 700; color: #333;">@Model.Name @Model.Surname</h5>
+                    <p class="text-muted small mb-2">@Model.Email</p>
+
+                    <div class="mb-3">
+                        <a href="/Profile/Index" class="btn-action bg-warning"><i class="ti-settings"></i></a>
+                        <a href="/Mail/Inbox" class="btn-action bg-success"><i class="ti-email"></i></a>
+                    </div>
+                </div>
+
+                <div class="about-scroll-area px-3" style="overflow-y: auto; flex-grow: 1; margin-bottom: 10px;">
+                    @if (!string.IsNullOrEmpty(Model.About))
+                    {
+                        <p class="text-muted" style="font-size: 0.85rem; line-height: 1.5; text-align: justify;">
+                            @Model.About
+                        </p>
+                    }
+                </div>
+            </div>
+
+            <div class="border-top mt-auto" style="background-color: #f9f9f9;">
+                <div class="row no-gutters">
+                    <div class="col-6 border-right">
+                        <a href="/Mail/Inbox" class="profile-bottom-btn d-flex align-items-center justify-content-center">
+                            <i class="ti-email mr-2"></i>
+                            <span>Gelen Kutusu</span>
+                        </a>
+                    </div>
+                    <div class="col-6">
+                        <a href="/Profile/Index" class="profile-bottom-btn d-flex align-items-center justify-content-center">
+                            <i class="ti-user mr-2"></i>
+                            <span>Profilim</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<style>
+    .btn-action {
+        display: inline-flex;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        color: white !important;
+        align-items: center;
+        justify-content: center;
+        margin: 0 3px;
+    }
+    /* İnce ve şık scrollbar tasarımı */
+    .about-scroll-area::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    .about-scroll-area::-webkit-scrollbar-thumb {
+        background: #e0e0e0;
+        border-radius: 10px;
+    }
+
+    .about-scroll-area::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    .profile-bottom-btn {
+        padding: 15px 0;
+        color: #666;
+        font-size: 0.85rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        text-decoration: none !important;
+        width: 100%;
+    }
+
+        .profile-bottom-btn i {
+            font-size: 1.1rem;
+            color: #888;
+            transition: color 0.3s ease;
+        }
+
+        .profile-bottom-btn:hover {
+            background-color: #ffffff; /* Üzerine gelince hafif parlar */
+            color: #f83292; /* Mendy'nin ana pembe tonu */
+        }
+
+            .profile-bottom-btn:hover i {
+                color: #f83292;
+            }
+
+    .no-gutters {
+        margin-right: 0;
+        margin-left: 0;
+    }
+</style>
