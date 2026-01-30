@@ -1,53 +1,62 @@
 ﻿<!DOCTYPE html>
 <html dir="ltr" lang="en">
 <style>
-    /* Ekranın dışına taşmayı her yerden engelle */
-    html, body {
-        height: 100% !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        overflow: hidden !important;
+    /* Okunmamış satır stilleri */
+    .email-table tr.unread {
+        background-color: #f8f9ff !important; /* Çok hafif mavi/gri bir ton */
+        font-weight: 700; /* Yazıları kalınlaştırır */
     }
 
-    #main-wrapper {
-        height: 100vh !important;
-        display: flex !important;
-        flex-direction: column !important;
+        .email-table tr.unread td {
+            color: #3e3c59; /* Daha belirgin yazı rengi */
+        }
+
+    /* Okunmuş satır stilleri */
+    .email-table tr {
+        background-color: #ffffff;
+        font-weight: 400;
+        transition: 0.2s;
     }
 
-    /* Page-wrapper yüksekliğini 140px düşürerek Footer'a (yaklaşık 60px) kesin yer aç */
-    .page-wrapper {
-        height: calc(100vh - 140px) !important;
-        min-height: auto !important;
-        margin-top: 64px !important; /* Header boyutu */
-        padding: 0 !important;
-        display: flex !important;
-        flex-direction: column !important;
-        overflow: hidden !important;
-        flex: 1 0 auto !important;
+        .email-table tr .btn-group {
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .email-table tr:hover .btn-group {
+            opacity: 1;
+        }
+
+    .email-table td {
+        vertical-align: middle !important;
     }
 
-    /* Sidebar ve İçerik taşıyıcısı */
-    .mail-content-container {
-        display: flex !important;
-        flex: 1 !important;
-        overflow: hidden !important;
-        height: 100% !important;
+    .dropdown-menu {
+        z-index: 9999 !important;
+    }
+    /* Üç noktanın sadece hover olunca değil, her zaman görünmesini istersen opacity'yi kaldırabilirsin */
+    .action-menu {
+        opacity: 0.7;
+        transition: 0.3s;
     }
 
-    /* Footer'ı yukarı çeken kritik ayar */
-    footer.footer {
-        height: 60px !important;
-        line-height: 30px !important;
-        padding: 15px !important;
-        background: #fff !important;
-        border-top: 1px solid #eee !important;
-        flex: 0 0 auto !important;
-        position: relative !important;
-        z-index: 1000 !important;
-        display: block !important; /* Gizli kalmasını engeller */
+    tr:hover .action-menu {
+        opacity: 1;
+    }
+
+    /* Tablonun menüyü gizlemesini engeller */
+    .table-responsive {
+        overflow: visible !important;
+    }
+    /* Menü stilini koru */
+    .dropdown-menu.show, .dropdown-menu[style*="display: block"] {
+        display: block !important;
+        opacity: 1;
+        visibility: visible;
     }
 </style>
+
+
 @await Component.InvokeAsync("AdminLayoutHead")
 
 
@@ -84,6 +93,43 @@
             $('#clearSearch').on('click', function () {
                 $('#mailSearchInput').val('').trigger('input').focus();
             });
+        });
+    </script>
+    <script>
+        $(function () {
+            // Üstteki 3 çizgiye basıldığında sidebarı aç
+            $(".nav-toggler").on('click', function () {
+                $("#main-wrapper").toggleClass("show-sidebar");
+            });
+
+            // Sayfada boş bir yere basıldığında menüyü kapat (opsiyonel)
+            $(".page-wrapper").on('click', function () {
+                if ($("#main-wrapper").hasClass("show-sidebar")) {
+                    $("#main-wrapper").removeClass("show-sidebar");
+                }
+            });
+        });
+    </script>
+    <script>
+        function toggleMyMenu(event, id) {
+            // Diğer tüm açık menüleri kapat
+            $('.dropdown-menu').hide();
+
+            // Tıklanan menüyü bul ve aç/kapat yap
+            var menu = $('#menu-' + id);
+            if (menu.is(':visible')) {
+                menu.hide();
+            } else {
+                menu.show();
+            }
+
+            // Tıklamanın dışarı taşmasını engelle
+            event.stopPropagation();
+        }
+
+        // Sayfanın herhangi bir yerine tıklandığında menüyü kapat
+        $(document).on('click', function() {
+            $('.dropdown-menu').hide();
         });
     </script>
 </body>

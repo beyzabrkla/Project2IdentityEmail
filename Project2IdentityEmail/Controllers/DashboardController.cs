@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Project2IdentityEmail.Entities;
 
 namespace Project2IdentityEmail.Controllers
 {
+    [Authorize]
     public class DashboardController : Controller
     {
         private readonly UserManager<AppUser> _userManager;

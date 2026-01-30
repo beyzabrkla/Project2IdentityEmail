@@ -13,9 +13,9 @@
                     </li>
 
                     <li class="list-group-item border-0">
-                        <a href="/Mail/Inbox?folder=inbox" class="list-group-item-action d-flex align-items-center active">
+                        <a href="/Mail/Inbox?folder=inbox" class="list-group-item-action d-flex align-items-center @(ViewBag.CurrentFolder == "inbox" || ViewBag.CurrentFolder == null ? "active" : "")">
                             <i class="mdi mdi-inbox mr-2 font-18"></i>
-                            Gelen Kutusu <span class="label label-success ml-auto">6</span>
+                            Gelen Kutusu
                         </a>
                     </li>
 
@@ -34,14 +34,14 @@
                     </li>
 
                     <li class="list-group-item border-0">
-                        <a href="/Mail/Inbox?folder=sent" class="list-group-item-action d-flex align-items-center">
+                        <a href="/Mail/Outbox" class="list-group-item-action d-flex align-items-center">
                             <i class="mdi mdi-send mr-2 font-18"></i>
                             Gönderilenler
                         </a>
                     </li>
 
                     <li class="list-group-item border-0">
-                        <a href="/Mail/Inbox?folder=spam" class="list-group-item-action d-flex align-items-center">
+                        <a href="/Mail/Inbox?folder=spam" class="list-group-item-action d-flex align-items-center @(ViewBag.CurrentFolder == "spam" ? "active" : "")">
                             <i class="mdi mdi-alert-octagon mr-2 font-18"></i>
                             Spam
                         </a>
@@ -150,3 +150,92 @@
                 </div>
             </div>
             <!-- Action part -->
+            <style>
+                /* Sadece mobilde hamburger menü konumu */
+                @@media (max-width: 991px) {
+                    .show-left-part {
+                        position: fixed !important;
+                        left: 15px !important;
+                        top: 80px !important;
+                        z-index: 1060 !important;
+                        width: 40px !important;
+                        height: 40px !important;
+                        border-radius: 50% !important;
+                        background: linear-gradient(135deg, #f158d0 0%, #a335f3 100%) !important;
+                        display: flex !important;
+                        align-items: center;
+                        justify-content: center;
+                        box-shadow: 0 4px 15px rgba(241, 88, 208, 0.4);
+                    }
+
+                        .show-left-part:hover {
+                            transform: scale(1.1);
+                            box-shadow: 0 6px 20px rgba(241, 88, 208, 0.5);
+                        }
+
+                        .show-left-part i {
+                            color: white !important;
+                            font-size: 20px !important;
+                        }
+                }
+
+                @@media (max-width: 576px) {
+                    .show-left-part {
+                        left: 10px !important;
+                        top: 75px !important;
+                        width: 36px !important;
+                        height: 36px !important;
+                    }
+                }
+
+                /* Sadece mobilde hamburger menü tasarımı */
+                @@media (max-width: 991px) {
+                    .email-app .left-part .show-left-part {
+                        position: fixed !important;
+                        /* Sol alt köşeye sabitleme */
+                        left: 20px !important;
+                        bottom: 30px !important;
+                        top: auto !important; /* Üstteki çakışmaları önler */
+                        /* Modern Görünüm */
+                        width: 55px !important;
+                        height: 55px !important;
+                        border-radius: 50% !important;
+                        background: #f158d0 !important; /* Temandaki pembe tonu */
+                        background: linear-gradient(135deg, #f158d0 0%, #d136b0 100%) !important;
+                        /* Hizalama ve İkon */
+                        display: flex !important;
+                        align-items: center;
+                        justify-content: center;
+                        z-index: 9999 !important;
+                        border: 3px solid #fff !important;
+                        box-shadow: 0 4px 15px rgba(0,0,0,0.3) !important;
+                        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                    }
+                        /* Tıklama efekti */
+                        .email-app .left-part .show-left-part:active {
+                            transform: scale(0.9);
+                        }
+                        /* İkonu bembeyaz ve net yapalım */
+                        .email-app .left-part .show-left-part::before {
+                            content: '\e602'; /* ti-menu kodu */
+                            font-family: 'themify';
+                            color: white !important;
+                            font-size: 22px !important;
+                        }
+                    /* Sidebar açıkken butonu biraz sağa kaydır veya rengini değiştir (opsiyonel) */
+                    .show-sidebar .show-left-part {
+                        background: #2ecc71 !important; /* Açıkken yeşil olabilir */
+                        transform: rotate(90deg);
+                    }
+                }
+
+                /* Çok küçük ekranlar için ufak bir ayar */
+                @@media (max-width: 576px) {
+                    .email-app .left-part .show-left-part {
+                        width: 50px !important;
+                        height: 50px !important;
+                        left: 15px !important;
+                        bottom: 20px !important;
+                    }
+                }
+            </style>

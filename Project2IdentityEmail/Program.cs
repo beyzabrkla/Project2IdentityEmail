@@ -1,5 +1,6 @@
 using Project2IdentityEmail.Context;
 using Project2IdentityEmail.Entities;
+using Project2IdentityEmail.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,7 +9,12 @@ builder.Services.AddDbContext<EMailContext>();
 
 // 2. Identity Servislerinin Eklenmesi (Hatanýn asýl çözümü burasý)
 builder.Services.AddIdentity<AppUser, AppRole>()
-    .AddEntityFrameworkStores<EMailContext>();
+    .AddEntityFrameworkStores<EMailContext>().AddErrorDescriber<CustomIdentityValidator>();
+
+builder.Services.ConfigureApplicationCookie(options => {
+    options.LoginPath = "/Login/Index/";
+    options.AccessDeniedPath = "/Error/AccessDenied/";
+});
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -28,6 +34,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

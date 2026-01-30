@@ -1,5 +1,6 @@
-﻿@{
-    ViewData["Title"] = "MailDetails";
+﻿@model Project2IdentityEmail.Entities.UserMessage
+@{
+    ViewData["Title"] = "Mail Detay";
     Layout = "~/Views/Shared/_MailLayout.cshtml";
 }
 
@@ -8,10 +9,10 @@
         <div class="row align-items-center">
             <div class="col-12">
                 <div class="d-flex align-items-center">
-                    <a href="/Dashboard/Index" class="mr-3 d-flex align-items-center justify-content-center"
-                                   style="width: 40px; height: 40px; background-color: #f3f3f5; border-radius: 50%; transition: 0.3s;"
-                                   onmouseover="this.style.backgroundColor='#e9ecef'"
-                                   onmouseout="this.style.backgroundColor='#f3f3f5'">
+                    <a href="javascript:history.back()" class="mr-3 d-flex align-items-center justify-content-center"
+                       style="width: 40px; height: 40px; background-color: #f3f3f5; border-radius: 50%; transition: 0.3s;"
+                       onmouseover="this.style.backgroundColor='#e9ecef'"
+                       onmouseout="this.style.backgroundColor='#f3f3f5'">
                         <i class="mdi mdi-chevron-left text-primary" style="font-size: 24px;"></i>
                     </a>
 
@@ -36,91 +37,57 @@
     </div>
 
     @await Component.InvokeAsync("MailLayoutSidebar")
-    @* gelen giden mesajın detayı *@ 
-        <div class="card-body">
-            <button type="button" id="back_to_inbox" class="btn btn-outline-secondary font-18 m-r-10">
-                <i class="mdi mdi-arrow-left"></i>
-            </button>
-            <div class="btn-group m-r-10" role="group" aria-label="Button group with nested dropdown">
-                <button type="button" class="btn btn-outline-secondary font-18"><i class="mdi mdi-reply"></i></button>
-                <button type="button" class="btn btn-outline-secondary font-18"><i class="mdi mdi-alert-octagon"></i></button>
-                <button type="button" class="btn btn-outline-secondary font-18"><i class="mdi mdi-delete"></i></button>
+
+
+
+    <div class="card-body border-top border-bottom bg-light">
+        <h4 class="m-b-0 font-weight-bold">@Model.Subject</h4>
+    </div>
+
+    @* GÖNDEREN VE ALICI BİLGİSİ *@
+    <div class="card-body border-bottom">
+        <div class="d-flex no-block align-items-center m-b-40">
+            <div class="m-r-10">
+                @if (Model.Sender != null && !string.IsNullOrEmpty(Model.Sender.ImageUrl))
+                {
+                    <img src="/UserImages/@Model.Sender.ImageUrl" alt="user" class="rounded-circle" width="45" height="45" style="object-fit: cover;">
+                }
+                else
+                {
+                    <div class="rounded-circle d-flex align-items-center justify-content-center text-white font-bold"
+                         style="width: 45px; height: 45px; background-color: #7460ee;">
+                        @(Model.Sender?.Name?[0].ToString().ToUpper() ?? "?")
+                    </div>
+                }
+            </div>
+            <div class="">
+                <h5 class="m-b-0 font-16 font-medium">@Model.Sender?.Name @Model.Sender?.Surname <small> ( @Model.Sender?.Email )</small></h5>
+                <span class="text-muted">
+                    Kime: @Model.Receiver?.Name @Model.Receiver?.Surname (@Model.Receiver?.Email)
+                </span>
+            </div>
+            <div class="ml-auto">
+                <small class="text-muted">@Model.Date.ToString("dd MMMM yyyy HH:mm")</small>
             </div>
         </div>
-        <div class="card-body border-top border-bottom bg-light">
-            <h4 class="m-b-0">Your Message title goes here</h4>
-        </div>
-        <div class="card-body border-bottom">
-            <div class="d-flex no-block align-items-center m-b-40">
-                <div class="m-r-10">
-                    <img src="/mendy-admin-template/mendy-admin/package/assets/images/users/1.jpg" alt="user" class="rounded-circle"
-                                          width="45">
-                </div>
-                <div class="">
-                    <h5 class="m-b-0 font-16 font-medium">Hanna Gover <small> ( hgover@gmail.com )</small></h5><span>
-                        to
-                        Suniljoshi19@gmail.com
-                    </span>
-                </div>
-            </div>
-            <h4 class="m-b-15">Hey Hi,</h4>
-            <p>
-                Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget
-                dolor.
-                Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur
-                ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis,
-                sem.Nulla
-                consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate
-                eget,
-                arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum
-                felis
-                eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi.
-            </p>
-            <p>
-                Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget
-                dolor.
-                Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur
-                ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis,
-                sem.Nulla
-                consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate
-                eget,
-                arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum
-                felis
-                eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi.
-            </p>
-        </div>
-        <div class="card-body">
-            <h4><i class="fa fa-paperclip m-r-10 m-b-10"></i> Attachments <span>(3)</span></h4>
-            <div class="row">
-                <div class="col-md-2">
-                    <a href="javascript:void(0)">
-                        <img class="img-thumbnail img-responsive" alt="attachment"
-                                                src="/mendy-admin-template/mendy-admin/package/assets/images/big/img1.jpg">
-                    </a>
-                </div>
-                <div class="col-md-2">
-                    <a href="javascript:void(0)">
-                        <img class="img-thumbnail img-responsive" alt="attachment"
-                                                src="/mendy-admin-template/mendy-admin/package/assets/images/big/img2.jpg">
-                    </a>
-                </div>
-                <div class="col-md-2">
-                    <a href="javascript:void(0)">
-                        <img class="img-thumbnail img-responsive" alt="attachment"
-                                                src="/mendy-admin-template/mendy-admin/package/assets/images/big/img3.jpg">
-                    </a>
-                </div>
-            </div>
-        <div class="border m-t-20 p-15">
-            <button type="button" class="btn btn-outline-primary btn-rounded mr-2">
-                <i data-feather="message-circle" class="feather-sm"></i> Yanıtla
-            </button>
-            <button type="button" class="btn btn-outline-secondary btn-rounded">
-                <i data-feather="corner-down-left" class="feather-sm"></i> Geri Dön
-            </button>
-        </div>
+
+        @* MESAJ İÇERİĞİ *@
+        <div class="mail-details-content p-t-20" style="color: #455a64; line-height: 24px; min-height: 200px;">
+            @Html.Raw(Model.Content)
         </div>
     </div>
-  </div>
- </div>
+
+    @* BUTONLAR - YANITLA FONKSİYONU EKLENDİ *@
+    <div class="card-body">
+        <div class="m-t-20">
+            @* Yanıtla butonu bilgileri Compose'a QueryString ile gönderir *@
+            <a href="/Mail/ComposeMail?receiverMail=@Model.Sender?.Email&subject=Re: @Model.Subject" class="btn btn-outline-primary btn-rounded mr-2">
+                <i class="mdi mdi-reply"></i> Yanıtla
+            </a>
+            <button type="button" onclick="history.back()" class="btn btn-outline-secondary btn-rounded">
+                <i class="mdi mdi-arrow-left"></i> Geri Dön
+            </button>
+        </div>
+    </div>
+</div>
 </div>
