@@ -1,5 +1,4 @@
 ﻿<script src="/mendy-admin-template/mendy-admin/package/assets/libs/jquery/dist/jquery.min.js"></script>
-
 <script src="/mendy-admin-template/mendy-admin/package/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
 <script src="/mendy-admin-template/mendy-admin/package/dist/js/app.min.js"></script>
@@ -14,73 +13,80 @@
 <script src="/mendy-admin-template/mendy-admin/package/assets/libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
 <script src="/mendy-admin-template/mendy-admin/package/assets/libs/summernote/dist/summernote-bs4.min.js"></script>
 <script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
-
+<script src="/mendy-admin-template/mendy-admin/package/assets/libs/chart.js/dist/Chart.min.js"></script>
+<script src="/mendy-admin-template/mendy-admin/package/assets/libs/chartist/dist/chartist.min.js"></script>
 
 <script>
     $(document).ready(function() {
-        // 1. Feather İkonlarını Aktif Et
+        // --- 1. DROPDOWN FIX (KRİTİK) ---
+        // Dashboard'da basınca açılmama sorununu bu blok çözer.
+        $('body').on('click', '.dropdown-toggle', function (e) {
+            e.preventDefault();
+            var $parent = $(this).parent('.dropdown');
+
+            // Diğer açık menüleri kapat
+            $('.dropdown').not($parent).removeClass('show');
+            $('.dropdown-menu').not($(this).next()).removeClass('show');
+
+            // Mevcut olanı aç/kapat
+            $parent.toggleClass('show');
+            $(this).next('.dropdown-menu').toggleClass('show');
+        });
+
+        // Dışarı tıklandığında menüyü kapat
+        $(document).on('click', function (e) {
+            if (!$(e.target).closest('.dropdown').length) {
+                $('.dropdown, .dropdown-menu').removeClass('show');
+            }
+        });
+
+        // --- 2. FEATHER ICONS ---
         if (typeof feather !== 'undefined') {
             feather.replace();
         }
 
-        // 2. CKEditor'ü Başlat (Summernote yerine bunu kullanıyoruz)
+        // --- 3. SUMMERNOTE (Sadece varsa çalıştır) ---
+        if ($('#summernote').length > 0) {
+            $('#summernote').summernote({
+                placeholder: 'Type your email Here',
+                tabsize: 2,
+                height: 250
+            });
+        }
+
+        // --- 4. CKEDITOR ---
         if (typeof CKEDITOR !== 'undefined' && $('#editor1').length > 0) {
             CKEDITOR.replace('editor1', {
                 height: 350,
-                uiColor: '#ffffff',
-                // Güvenlik uyarısını kodla kapatmak istersen:
                 versionCheck: false
             });
         }
 
-        // 3. Dropzone Ayarı (ID kontrolü ekleyerek hata almanı önleriz)
-        if ($("#dzid").length > 0) {
-            $("#dzid").dropzone({
-                url: "/file/post", // Backend'deki dosya yükleme metodun
-                dictDefaultMessage: "Dosyaları buraya bırakın"
-            });
-        }
-
-        // 4. Datepicker Ayarı
+        // --- 5. DATEPICKER ---
         if ($('.datepicker').length > 0) {
             $('.datepicker').datepicker({
                 autoclose: true,
                 todayHighlight: true
             });
         }
-    });
 
-        $('#summernote').summernote({
-        placeholder: 'Type your email Here',
-        tabsize: 2,
-        height: 250
-    });
-    $("#dzid").dropzone({
-        url: "/file/post"
-    });
-
-    document.getElementById('btn-refresh').addEventListener('click', function() {
-        location.reload();
-    });
-
-    $(document).ready(function() {
-        // Mendy temanın kendi menü butonuna tıklandığında
+        // --- 6. SIDEBAR TOGGLER ---
         $(".nav-toggler, .sidebartoggler").on('click', function () {
             $("#main-wrapper").toggleClass("show-sidebar");
         });
-
-        // Linklerin doğru çalışması için base kontrolü
-        $('.left-sidebar a').each(function() {
-            var href = $(this).attr('href');
-            if (href === "#" || href === "") {
-                // Boş linkleri pasifize et veya düzelt
-            }
-        });
     });
 
-    // Seçilen dosyanın adını ekranda göstermek için basit bir script
+    // Refresh Butonu
+    var refreshBtn = document.getElementById('btn-refresh');
+    if(refreshBtn){
+        refreshBtn.addEventListener('click', function() {
+            location.reload();
+        });
+    }
+
     function updateFileName(input) {
         var fileName = input.files[0] ? input.files[0].name : "Dosya seçilmedi";
-        document.getElementById('fileNameDisplay').innerText = fileName;
+        var display = document.getElementById('fileNameDisplay');
+        if(display) display.innerText = fileName;
     }
 </script>

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Project2IdentityEmail.Context;
 using Project2IdentityEmail.Entities;
 using Project2IdentityEmail.Models;
@@ -9,7 +10,9 @@ builder.Services.AddDbContext<EMailContext>();
 
 // 2. Identity Servislerinin Eklenmesi (Hatanýn asýl çözümü burasý)
 builder.Services.AddIdentity<AppUser, AppRole>()
-    .AddEntityFrameworkStores<EMailContext>().AddErrorDescriber<CustomIdentityValidator>();
+    .AddEntityFrameworkStores<EMailContext>()
+    .AddErrorDescriber<CustomIdentityValidator>()
+    .AddDefaultTokenProviders();
 
 builder.Services.ConfigureApplicationCookie(options => {
     options.LoginPath = "/Login/Index/";

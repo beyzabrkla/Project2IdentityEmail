@@ -21,7 +21,6 @@ namespace Project2IdentityEmail.ViewComponents.Dashboard
             // Giriş yapan kullanıcı hariç diğer kullanıcıları al
             var values = _userManager.Users
                 .Where(u => u.Id != currentUser.Id) // Mevcut kullanıcıyı hariç tut
-                .Take(8)
                 .ToList();
 
             return View(values);

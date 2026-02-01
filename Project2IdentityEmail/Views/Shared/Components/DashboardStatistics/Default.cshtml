@@ -3,66 +3,62 @@
         <div class="card bg-gradient-primary sales-details">
             <div class="card-body">
                 <div class="row">
-                    <div class="col-lg-3 col-md-6">
+                    <div class="col-lg-2 col-md-6">
                         <div class="d-flex p-3">
                             <div>
                                 <i class="text-white op-7" data-feather="mail"></i>
-                                <span class="text-white op-7 d-block my-3">Toplam Mesaj Sayısı</span>
+                                <span class="text-white op-7 d-block my-3">Toplam Mesaj</span>
                                 <h3 class="text-white mb-0">@ViewBag.TotalMessages</h3>
-                            </div>
-                            <div class="ml-auto align-self-end mb-1">
-                                <span class="text-white">
-                                    <i class="fas fa-caret-up text-white mr-1"></i>
-                                    2.41
-                                </span>
                             </div>
                         </div>
                     </div>
 
-                    <div class="col-lg-3 col-md-6">
+                    <div class="col-lg-2 col-md-6">
+                        <div class="d-flex p-3">
+                            <div>
+                                <i class="text-white op-7" data-feather="message-square"></i>
+                                <span class="text-white op-7 d-block my-3">Okunmamış</span>
+                                <h3 class="text-white mb-0">@ViewBag.UnreadMessages</h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2 col-md-6">
+                        <div class="d-flex p-3">
+                            <div>
+                                <i class="text-white op-7" data-feather="download"></i>
+                                <span class="text-white op-7 d-block my-3">Gelen Kutusu</span>
+                                <h3 class="text-white mb-0">@ViewBag.IncomingMessages</h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2 col-md-6">
+                        <div class="d-flex p-3">
+                            <div>
+                                <i class="text-white op-7" data-feather="trash-2"></i>
+                                <span class="text-white op-7 d-block my-3">Silinenler</span>
+                                <h3 class="text-white mb-0">@ViewBag.DeletedMessages</h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2 col-md-6">
                         <div class="d-flex p-3">
                             <div>
                                 <i class="text-white op-7" data-feather="users"></i>
-                                <span class="text-white op-7 d-block my-3">Toplam Kullanıcı Sayısı</span>
+                                <span class="text-white op-7 d-block my-3">Kullanıcılar</span>
                                 <h3 class="text-white mb-0">@ViewBag.TotalUsers</h3>
                             </div>
-                            <div class="ml-auto align-self-end mb-1">
-                                <span class="text-white">
-                                    <i class="fas fa-caret-down text-white mr-1"></i>
-                                    2.41
-                                </span>
-                            </div>
                         </div>
                     </div>
 
-                    <div class="col-lg-3 col-md-6">
+                    <div class="col-lg-2 col-md-6">
                         <div class="d-flex p-3">
                             <div>
-                                <i class="text-white op-7" data-feather="send"></i>
-                                <span class="text-white op-7 d-block my-3">Gelen Mesajlar</span>
-                                <h3 class="text-white mb-0">@ViewBag.IncomingMessages</h3>
-                            </div>
-                            <div class="ml-auto align-self-end mb-1">
-                                <span class="text-white">
-                                    <i class="fas fa-caret-up text-white mr-1"></i>
-                                    2.41
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6">
-                        <div class="d-flex p-3">
-                            <div>
-                                <i class="text-white op-7" data-feather="eye-off"></i>
-                                <span class="text-white op-7 d-block my-3">Okunmamış Mesajlar</span>
-                                <h3 class="text-white mb-0">@ViewBag.UnreadMessages</h3>
-                            </div>
-                            <div class="ml-auto align-self-end mb-1">
-                                <span class="text-white">
-                                    <i class="fas fa-caret-down text-white mr-1"></i>
-                                    2.41
-                                </span>
+                                <i class="text-white op-7" data-feather="grid"></i>
+                                <span class="text-white op-7 d-block my-3">Kategoriler</span>
+                                <h3 class="text-white mb-0">@ViewBag.TotalCategory</h3>
                             </div>
                         </div>
                     </div>
@@ -71,4 +67,3 @@
         </div>
     </div>
 </div>
-

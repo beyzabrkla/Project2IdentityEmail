@@ -2,6 +2,9 @@
 @{
     ViewData["Title"] = "Mail Detay";
     Layout = "~/Views/Shared/_MailLayout.cshtml";
+
+    // Eğer Layout veya Sidebar hala 'null' diyorsa, burada garantiye alıyoruz:
+    if (ViewBag.IsCategoryView == null) { ViewBag.IsCategoryView = false; }
 }
 
 <div class="page-wrapper">
@@ -75,6 +78,43 @@
         <div class="mail-details-content p-t-20" style="color: #455a64; line-height: 24px; min-height: 200px;">
             @Html.Raw(Model.Content)
         </div>
+
+        @if (!string.IsNullOrEmpty(Model.AttachmentUrl))
+        {
+            <hr />
+            <div class="attachments-container p-3 bg-light rounded shadow-sm">
+                <h6 class="mb-3 text-uppercase font-weight-bold text-muted" style="font-size: 12px;">
+                    <i class="mdi mdi-paperclip mr-1"></i> Ekli Dosyalar
+                </h6>
+
+                <div class="file-box d-flex align-items-center justify-content-between p-2 border rounded bg-white" style="max-width: 350px;">
+                    <div class="d-flex align-items-center overflow-hidden">
+                        @* Dosya İkonu *@
+                        <div class="file-icon bg-info text-white rounded p-2 mr-3">
+                            <i class="mdi mdi-file-download" style="font-size: 24px;"></i>
+                        </div>
+
+                        @* Dosya Adı (GUID kısmını temizleyerek gösterir) *@
+                        <div class="file-details">
+                            <p class="mb-0 text-truncate font-weight-bold" style="max-width: 180px; font-size: 13px;" title="@System.IO.Path.GetFileName(Model.AttachmentUrl)">
+                                @{
+                                    var fullFileName = System.IO.Path.GetFileName(Model.AttachmentUrl);
+                                    // Eğer GUID (36 karakter) + alt tire kullanıyorsan temizle, yoksa direkt ismi bas
+                                    var displayName = fullFileName.Length > 37 ? fullFileName.Substring(37) : fullFileName;
+                                }
+                                @displayName
+                            </p>
+                            <small class="text-muted">@System.IO.Path.GetExtension(Model.AttachmentUrl).ToUpper() Dosyası</small>
+                        </div>
+                    </div>
+
+                    @* İndir Butonu *@
+                    <a href="@Model.AttachmentUrl" download class="btn btn-sm btn-outline-info rounded-circle" title="Dosyayı İndir">
+                        <i class="mdi mdi-download"></i>
+                    </a>
+                </div>
+            </div>
+        }
     </div>
 
     @* BUTONLAR - YANITLA FONKSİYONU EKLENDİ *@

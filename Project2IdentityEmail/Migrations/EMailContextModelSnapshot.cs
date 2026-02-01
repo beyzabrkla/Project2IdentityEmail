@@ -263,7 +263,7 @@ namespace Project2IdentityEmail.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("Project2IdentityEmail.Entities.UserMessage", b =>
@@ -322,7 +322,7 @@ namespace Project2IdentityEmail.Migrations
 
                     b.HasIndex("SenderId");
 
-                    b.ToTable("UserMessages");
+                    b.ToTable("UserMessages", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

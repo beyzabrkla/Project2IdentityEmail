@@ -1,33 +1,70 @@
-﻿@model List<Project2IdentityEmail.Entities.AppUser>
+﻿<style>
+    /* Kaydırma alanını her zaman görünür ve belirgin yapıyoruz */
+    .card-body-scroll-area {
+        overflow-x: scroll !important; /* Kaydırma çubuğunu zorunlu hale getirir */
+        overflow-y: hidden;
+        white-space: nowrap;
+        padding: 20px 10px;
+        -webkit-overflow-scrolling: touch; /* Mobil cihazlarda akıcı kaydırma */
+    }
+
+        /* Scrollbar Tasarımı (Chrome, Safari, Edge) */
+        .card-body-scroll-area::-webkit-scrollbar {
+            height: 10px; /* Biraz daha kalın yaparak görünürlüğü artırdık */
+            display: block; /* Gizlenmesini engelledik */
+        }
+
+        .card-body-scroll-area::-webkit-scrollbar-thumb {
+            background: #f158d0; /* Kart başlığındaki pembe tonuyla uyumlu */
+            border-radius: 5px;
+            border: 2px solid #fff; /* Çubuğu daha belirgin yapan iç kenarlık */
+        }
+
+        .card-body-scroll-area::-webkit-scrollbar-track {
+            background: #f8f9fa; /* Arka plan rengi */
+            border-radius: 5px;
+            box-shadow: inset 0 0 5px rgba(0,0,0,0.05);
+        }
+
+    /* Firefox için scrollbar desteği */
+    .card-body-scroll-area {
+        scrollbar-width: auto;
+        scrollbar-color: #f158d0 #f8f9fa;
+    }
+</style>
+
+
+@model List<Project2IdentityEmail.Entities.AppUser>
 <div class="col-md-12 col-lg-8 mb-4">
     <div class="card bg-gradient-primary oh" style="height: 450px;">
-        <!-- Sabit yükseklik -->
         <div class="card-body">
             <div class="d-flex align-items-center">
                 <div>
-                    <h4 class="card-title text-white mb-0">Tanıyor Olabileceğiniz Kişiler</h4>
+                    <h4 class="card-title text-white mb-0">Kişiler</h4>
                 </div>
             </div>
             <div class="custom-input icon-left mt-3">
-                <input type="text" class="form-control" placeholder="Ara...">
+                <input type="text" id="userSearchInput" class="form-control" placeholder="Ara...">
                 <i class="form-control-icon" data-feather="search"></i>
             </div>
         </div>
-        <div class="card-body bg-white" style="overflow-y: auto;">
-            <!-- Overflow eklendi -->
-            <div class="social-widget d-flex flex-wrap">
+
+        @* bg-white kısmında d-flex ve overflow-x-auto kullanarak yana kaymayı sağladık *@
+        @* bg-white kısmını bu sınıf ile güncelledik *@
+        <div class="card-body bg-white card-body-scroll-area">
+            <div class="social-widget d-flex flex-nowrap align-items-center h-100">
                 @foreach (var item in Model)
                 {
-                    <div class="social-user">
+                    <div class="social-user text-center px-3" style="display: inline-block; width: 180px; flex: 0 0 auto;">
                         <img src="@(string.IsNullOrEmpty(item.ImageUrl) ? "/mendy-admin-template/mendy-admin/package/assets/images/users/2.jpg" : "/UserImages/" + item.ImageUrl)"
-                             width="115"
-                             height="115"
-                             style="object-fit: cover;"
-                             class="rounded-circle"
-                             alt="user">
-                        <h6 class="mt-3 mb-0">@item.Name @item.Surname</h6>
-                        <a href="/Mail/SendMessage?id=@item.Id"
-                           class="btn btn-rounded btn-outline-primary-gradient mt-2">
+                             width="115" height="115"
+                             style="object-fit: cover; border: 3px solid #f158d0;"
+                             class="rounded-circle" alt="user">
+
+                        <h6 class="mt-3 mb-0 font-weight-bold" style="white-space: normal;">@item.Name @item.Surname</h6>
+                        <p class="text-muted small mb-2" style="white-space: normal;">@(item.JobTitle ?? "Yazılım Geliştirici")</p>
+
+                        <a href="/Mail/ComposeMail?receiverMail=@item.Email" class="btn btn-sm btn-rounded btn-outline-primary-gradient mt-1">
                             Mesaj Gönder
                         </a>
                     </div>
@@ -36,3 +73,33 @@
         </div>
     </div>
 </div>
+<script>
+    // jQuery yüklene kadar bekleyen özel fonksiyon
+    var checkjQuery = setInterval(function() {
+        if (window.jQuery) {
+            clearInterval(checkjQuery);
+            initializeSearch();
+        }
+    }, 100);
+
+    function initializeSearch() {
+        $(document).on("keyup", "#userSearchInput", function() {
+            var value = $(this).val().toLowerCase();
+
+            $(".social-user").each(function() {
+                // Kartın içindeki metinleri topla
+                var text = $(this).text().toLowerCase();
+
+                if (text.indexOf(value) > -1) {
+                    // Senin CSS yapını bozmamak için orijinal display değerlerini zorluyoruz
+                    $(this).attr('style', 'display: inline-block !important; width: 180px; flex: 0 0 auto;');
+                } else {
+                    // Eşleşmiyorsa tamamen gizle
+                    $(this).attr('style', 'display: none !important;');
+                }
+            });
+        });
+        console.log("Arama motoru aktif!"); // Çalıştığını konsoldan teyit et
+    }
+</script>
+    

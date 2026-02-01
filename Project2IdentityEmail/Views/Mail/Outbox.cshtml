@@ -2,6 +2,8 @@
 @using System.Text.RegularExpressions
 @{
     ViewData["Title"] = "Gönderilen Mail Kutusu";
+    ViewBag.IsCategoryView = ViewBag.IsCategoryView ?? false;
+    ViewBag.CurrentFolder = "outbox";
     Layout = "~/Views/Shared/_MailLayout.cshtml";
 }
 
@@ -58,10 +60,7 @@
                     {
                         @foreach (var item in Model)
                         {
-                            // Outbox'ta genellikle mesajlar 'okundu' kabul edilir veya alıcı bilgisi kritiktir.
-                            // Ancak tasarım birliği için unread class mantığını koruyabilirsin.
-                            string unreadClass = item.IsRead ? "" : "unread";
-
+                            string unreadClass = "";
                             <tr class="@unreadClass" style="cursor: pointer;" onclick="location.href='/Mail/MailDetails/@item.Id'">
                                 <td class="chb" onclick="event.stopPropagation();">
                                     <div class="custom-control custom-checkbox">
@@ -70,7 +69,10 @@
                                     </div>
                                 </td>
                                 <td class="starred" onclick="event.stopPropagation();">
-                                    <i class="@(item.IsStarred ? "fas fa-star text-warning" : "far fa-star")"></i>
+                                    <a href="javascript:void(0)" onclick="toggleStar(this, @item.Id)">
+                                        <i class="@(item.IsStarred ? "fas fa-star text-warning" : "far fa-star")"
+                                           id="star-icon-@item.Id"></i>
+                                    </a>
                                 </td>
 
                                 @* ALICI GÖRSELİ *@
@@ -136,9 +138,9 @@
                                     }
                                 </td>
 
-                                @* SAAT *@
+                                @* SAAT KISMI - DÜZENLENMİŞ *@
                                 <td class="time text-right" style="width: 100px; line-height: 1.2;">
-                                    <div class="@(item.IsRead ? "text-muted" : "text-primary font-weight-bold")" style="font-size: 13px;">
+                                    <div class="text-muted" style="font-size: 13px;">
                                         @item.Date.ToString("HH:mm")
                                     </div>
                                     <div class="text-muted" style="font-size: 11px;">
@@ -153,8 +155,9 @@
                                             <i class="mdi mdi-dots-vertical" style="font-size: 22px;"></i>
                                         </button>
 
-                                        <div id="menu-@item.Id" class="dropdown-menu dropdown-menu-right shadow border" style="display: none; position: absolute; right: 0; z-index: 9999; min-width: 150px;">
+                                        <div id="menu-@item.Id" class="dropdown-menu dropdown-menu-right shadow border" style="display: none; position: absolute; right: 0; z-index: 9999; min-width: 180px;">
 
+                                            @* --- GÖRÜNTÜLEME VE SOHBET --- *@
                                             <a class="dropdown-item" href="/Mail/MailDetails/@item.Id">
                                                 <i class="mdi mdi-eye text-primary mr-2"></i> Görüntüle
                                             </a>
@@ -163,11 +166,53 @@
                                                 <i class="mdi mdi-message-text text-info mr-2"></i> Sohbet Geçmişi
                                             </a>
 
+                                            @* --- KATEGORİYE TAŞIMA BÖLÜMÜ --- *@
                                             <div class="dropdown-divider"></div>
+                                            <h6 class="dropdown-header text-dark font-weight-bold">Kategoriye Taşı</h6>
 
-                                            <a class="dropdown-item text-danger" href="/Mail/MoveToTrash/@item.Id">
-                                                <i class="mdi mdi-delete mr-2"></i> Çöp Kutusuna Taşı
-                                            </a>
+                                            @if (ViewBag.Categories != null)
+                                            {
+                                                foreach (var cat in ViewBag.Categories)
+                                                {
+                                                    <a class="dropdown-item d-flex align-items-center" href="/Mail/AssignCategory?mailId=@item.Id&categoryId=@cat.Id">
+                                                        <i class="mdi mdi-circle mr-2 font-10" style="color: @cat.Color"></i>
+                                                        <span class="small">@cat.CategoryName</span>
+                                                        @if (item.CategoryId == cat.Id)
+                                                        {
+                                                            <i class="mdi mdi-check ml-auto text-success font-12"></i>
+                                                        }
+                                                    </a>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <div class="dropdown-item small text-muted">Kategoriler yüklenemedi</div>
+                                            }
+                                                    @* --- SİLME İŞLEMİ --- *@
+                                            @if (ViewBag.CurrentFolder == "trash")
+                                            {
+                                                <a class="dropdown-item text-success" href="/Mail/RestoreFromTrash/@item.Id">
+                                                    <i class="mdi mdi-undo mr-2"></i> Çöpten Kurtar
+                                                </a>
+                                                <div class="dropdown-divider"></div>
+                                                <a class="dropdown-item text-danger" href="/Mail/HardDelete/@item.Id"
+                                                   onclick="return confirm('Bu mesaj kalıcı olarak silinecektir. Emin misiniz?')">
+                                                    <i class="mdi mdi-delete-forever mr-2"></i> Kalıcı Olarak Sil
+                                                </a>
+                                            }
+                                            else if (ViewBag.CurrentFolder == "outbox")
+                                            {
+                                                @* Giden kutusu için özel silme ikonu *@
+                                                <a class="dropdown-item text-danger" href="/Mail/MoveToTrash/@item.Id">
+                                                    <i class="mdi mdi-email-remove mr-2"></i> Gönderileni Sil
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <a class="dropdown-item text-warning" href="/Mail/MoveToTrash/@item.Id">
+                                                    <i class="mdi mdi-delete mr-2"></i> Çöp Kutusuna Taşı
+                                                </a>
+                                            }
                                         </div>
                                     </div>
                                 </td>
@@ -177,16 +222,7 @@
                 </tbody>
             </table>
 
-            <div class="p-3 border-top bg-white">
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination justify-content-center mb-0">
-                        <li class="page-item"><a class="page-link" href="javascript:void(0)"><</a></li>
-                        <li class="page-item active"><a class="page-link" href="javascript:void(0)">1</a></li>
-                        <li class="page-item"><a class="page-link" href="javascript:void(0)">2</a></li>
-                        <li class="page-item"><a class="page-link" href="javascript:void(0)">></a></li>
-                    </ul>
-                </nav>
-            </div>
+            @await Component.InvokeAsync("MailLayoutPagination")
         </div>
     </div>
 </div>

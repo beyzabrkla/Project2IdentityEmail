@@ -1,0 +1,31 @@
+﻿<form action="@Context.Request.Path" method="get" class="flex-grow-1 position-relative search-container">
+    @* Mevcut klasörü (Inbox/Outbox) korumak için *@
+    @if (Context.Request.Query.ContainsKey("folder"))
+    {
+        <input type="hidden" name="folder" value="@Context.Request.Query["folder"]" />
+    }
+
+
+    <div class="position-absolute" style="top: 50%; left: 15px; transform: translateY(-50%); z-index: 5; line-height: 0;">
+        <i data-feather="search" class="text-muted" style="width: 16px; height: 16px;"></i>
+    </div>
+
+    <input type="text"
+           name="searchTerm" @* Controller bu isimle yakalayacak *@
+           class="form-control rounded-pill search-input-box shadow-none"
+           placeholder="Gönderen, konu veya anahtar kelime ara..."
+           id="mailSearchInput"
+           value="@Context.Request.Query["searchTerm"]" @* Sayfa yenilendiğinde yazı içinde kalsın *@
+           style="padding-left: 40px; padding-right: 40px; height: 40px; border: 1px solid #e0e0e0; transition: all 0.3s ease;">
+
+    @* Arama yapılmışsa temizleme butonunu göster *@
+    @if (Context.Request.Query.ContainsKey("searchTerm"))
+    {
+        <a href="@Context.Request.Path?folder=@Context.Request.Query["folder"]"
+           class="position-absolute text-muted"
+           id="clearSearch"
+           style="top: 50%; right: 15px; transform: translateY(-50%); z-index: 5;">
+            <i class="ti-close" style="font-size: 12px;"></i>
+        </a>
+    }
+</form>

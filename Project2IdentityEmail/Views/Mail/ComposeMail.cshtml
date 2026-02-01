@@ -2,7 +2,11 @@
 @{
     ViewData["Title"] = "Yeni Mesaj";
     Layout = "~/Views/Shared/_MailLayout.cshtml";
+
+    // Sidebar'ın null hatası vermemesi için koruma:
+    if (ViewBag.IsCategoryView == null) { ViewBag.IsCategoryView = false; }
 }
+
 <style>
     /* Editörü Footer'ı itmeyecek şekilde kilitler */
     .cke_chrome {
@@ -53,20 +57,20 @@
 
         <div class="flex-grow-1 bg-white p-4 d-flex flex-column" style="min-height: 0; overflow: hidden;">
             <form class="d-flex flex-column h-100" style="min-height: 0;" asp-action="ComposeMail" asp-controller="Mail" method="post" enctype="multipart/form-data">
-
-                @* ALICI - Yanıtla butonundan gelirse otomatik dolar *@
+                <input type="hidden" asp-for="Id" />
+                @* ALICI *@
                 <div class="form-group mb-2" style="flex: 0 0 auto;">
                     <input type="email" asp-for="ReceiverEmail" class="form-control rounded-pill border-light bg-light px-4"
                            placeholder="Kime (Email):"
-                           value="@ViewBag.ReceiverMail"
                            style="height: 40px; border: 1px solid #e9ecef !important;">
                 </div>
 
-                @* KONU - Yanıtla butonundan gelirse otomatik dolar *@
+                @* KONU *@
                 <div class="form-group mb-2" style="flex: 0 0 auto;">
-                    <input type="text" asp-for="Subject" class="form-control rounded-pill border-light bg-light px-4"
+                    <input type="text" asp-for="Subject"
+                           value="@(Model?.Subject ?? ViewBag.Subject)"
+                           class="form-control rounded-pill border-light bg-light px-4"
                            placeholder="Konu:"
-                           value="@ViewBag.Subject"
                            style="height: 40px; border: 1px solid #e9ecef !important;">
                 </div>
 
@@ -87,7 +91,7 @@
 
                 @* MESAJ İÇERİĞİ *@
                 <div class="form-group mb-2" style="flex: 1; min-height: 0; display: flex; flex-direction: column;">
-                    <textarea id="editor1" asp-for="Content">@ViewBag.Content</textarea>
+                    <textarea id="editor1" asp-for="Content"></textarea>
                 </div>
 
                 @* Dosya Yükleme Alanı *@

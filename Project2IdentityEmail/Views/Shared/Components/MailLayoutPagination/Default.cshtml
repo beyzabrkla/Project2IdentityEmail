@@ -1,0 +1,48 @@
+﻿@{
+    var currentAction = ViewContext.RouteData.Values["action"]?.ToString();
+    // URL'deki ID'yi yakala (Kategori filtreleme için kritik)
+    var currentId = ViewContext.RouteData.Values["id"];
+
+    int currentPage = ViewBag.CurrentPage ?? 1;
+    int totalPages = ViewBag.TotalPages ?? 1;
+    string searchTerm = ViewBag.SearchTerm ?? "";
+    string currentFolder = ViewBag.CurrentFolder?.ToString()?.ToLower() ?? "inbox";
+    bool isCategoryView = ViewBag.IsCategoryView ?? false;
+    string label = isCategoryView ? ViewBag.Title : null;
+}
+
+@if (totalPages > 1)
+{
+    <div class="p-3 border-top bg-white">
+        <nav aria-label="Mail navigation">
+            <ul class="pagination justify-content-center mb-0">
+
+                @* Önceki Sayfa *@
+                <li class="page-item @(currentPage == 1 ? "disabled" : "")">
+                    <a class="page-link" href="@Url.Action(currentAction, "Mail", new { id = currentId, page = currentPage - 1, folder = currentFolder, label = label, searchTerm = searchTerm })">
+                        <i class="ti-angle-left"></i>
+                    </a>
+                </li>
+
+                @* Sayfa Numaraları *@
+                @for (int i = 1; i <= totalPages; i++)
+                {
+                    <li class="page-item @(i == currentPage ? "active" : "")">
+                        <a class="page-link"
+                           style="@(i == currentPage ? "background-color: #f158d0; border-color: #f158d0; color: white;" : "color: #f158d0;")"
+                           href="@Url.Action(currentAction, "Mail", new { id = currentId, page = i, folder = currentFolder, label = label, searchTerm = searchTerm })">
+                            @i
+                        </a>
+                    </li>
+                }
+
+                @* Sonraki Sayfa *@
+                <li class="page-item @(currentPage >= totalPages ? "disabled" : "")">
+                    <a class="page-link" href="@Url.Action(currentAction, "Mail", new { id = currentId, page = currentPage + 1, folder = currentFolder, label = label, searchTerm = searchTerm })">
+                        <i class="ti-angle-right"></i>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+}

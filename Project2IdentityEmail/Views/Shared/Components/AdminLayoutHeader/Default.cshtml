@@ -12,12 +12,14 @@
                 </a>
             </div>
 
+            @* Mobil Görünüm *@
             <div class="d-md-none pr-3">
                 @await Component.InvokeAsync("AdminLayoutNavbar")
             </div>
 
         </div>
 
+        @* Masaüstü Görünüm *@
         <div class="navbar-collapse collapse d-none d-md-flex" id="navbarSupportedContent">
             <ul class="navbar-nav float-right ml-auto">
                 @await Component.InvokeAsync("AdminLayoutNavbar")

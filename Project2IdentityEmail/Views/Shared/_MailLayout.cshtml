@@ -131,6 +131,28 @@
         $(document).on('click', function() {
             $('.dropdown-menu').hide();
         });
+
+
+        //yıldız butonu
+            function toggleStar(element, id) {
+            $.ajax({
+                url: '/Mail/ToggleStar/' + id,
+                type: 'POST',
+                success: function (response) {
+                    if (response.success) {
+                        var icon = $('#star-icon-' + id);
+                        if (response.isStarred) {
+                            icon.removeClass('far fa-star').addClass('fas fa-star text-warning');
+                        } else {
+                            icon.removeClass('fas fa-star text-warning').addClass('far fa-star');
+                        }
+                    }
+                },
+                error: function () {
+                    alert("Yıldız güncellenirken bir hata oluştu.");
+                }
+            });
+        }
     </script>
 </body>
 </html>

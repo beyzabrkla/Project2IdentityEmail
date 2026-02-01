@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using MimeKit;
 using Project2IdentityEmail.DTOs;
 using Project2IdentityEmail.Entities;
 
@@ -88,7 +89,6 @@ namespace Project2IdentityEmail.Controllers
 
             return View();
         }
-
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();

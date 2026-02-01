@@ -2,7 +2,7 @@
 
 <ul class="navbar-nav float-right">
     <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle waves-effect waves-dark pro-pic" href="" data-toggle="dropdown"
+        <a class="nav-link dropdown-toggle waves-effect waves-dark pro-pic" href="javascript:void(0)" data-toggle="dropdown"
            aria-haspopup="true" aria-expanded="false">
             <span class="mr-3 font-normal d-none d-sm-inline-block pro-name">
                 <span>Merhaba,</span>
@@ -47,50 +47,44 @@
     </li>
 
     <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" id="2" data-toggle="dropdown"
-           aria-haspopup="true" aria-expanded="false">
+        <a class="nav-link dropdown-toggle waves-effect waves-dark" href="javascript:void(0)" data-toggle="dropdown">
             <i data-feather="mail"></i>
             @if (ViewBag.MessageCount > 0)
             {
-                <span class="badge badge-pill badge-danger noti">@ViewBag.MessageCount</span>
+                <span class="badge badge-pill badge-danger" style="position: absolute; top: 10px; right: 5px; font-size: 10px;">@ViewBag.MessageCount</span>
             }
         </a>
-        <div class="dropdown-menu dropdown-menu-right mailbox animated bounceInDown" aria-labelledby="2">
+        <div class="dropdown-menu dropdown-menu-right mailbox animated bounceInDown">
             <ul class="list-style-none">
                 <li>
                     <div class="drop-title bg-light">
-                        <h4 class="mb-0 mt-1">@(ViewBag.MessageCount ?? 0) Yeni Mesaj</h4>
+                        <h4 class="mb-0 mt-1">@ViewBag.MessageCount Okunmamış Mesaj</h4>
                     </div>
                 </li>
                 <li>
-                    <div class="message-center message-body">
-                        @if (ViewBag.LastMessages != null)
+                    <div class="message-center message-body" style="max-height: 300px; overflow-y: auto;">
+                        @if (ViewBag.LastMessages != null && ((IEnumerable<dynamic>)ViewBag.LastMessages).Any())
                         {
                             foreach (var msg in ViewBag.LastMessages)
                             {
-                                <a href="/Messages/Details/@msg.Id" class="message-item">
-                                    <span class="user-img">
-                                        <img src="@(string.IsNullOrEmpty(msg.UserImageUrl) ? "/images/default-user.jpg" : msg.UserImageUrl)" alt="user" class="rounded-circle">
-                                        <span class="profile-status @msg.StatusClass pull-right"></span>
-                                    </span>
-                                    <div class="mail-contnet">
-                                        <h5 class="message-title">@msg.SenderName</h5>
-                                        <span class="mail-desc">@msg.ShortContent</span>
-                                        <span class="time">@msg.SendTime</span>
+                                <a href="/Mail/MessageDetails/@msg.Id" class="message-item d-flex align-items-center p-2 border-bottom bg-light">
+                                    <div class="mail-contnet ml-3 w-75">
+                                        <h5 class="message-title mb-0 font-14">@msg.SenderEmail</h5>
+                                        <span class="mail-desc d-block text-truncate text-muted font-12">@msg.Subject</span>
+                                        <small class="time d-block text-muted">@msg.SendTime</small>
                                     </div>
                                 </a>
                             }
                         }
                         else
                         {
-                            <div class="p-3 text-center">Henüz yeni mesajınız yok.</div>
+                            <div class="p-4 text-center text-muted">Okunmamış mesaj yok.</div>
                         }
                     </div>
                 </li>
                 <li>
-                    <a class="nav-link text-center link text-dark" href="/Mail/Inbox">
-                        <b>Tüm Mesajları Gör</b>
-                        <i class="fa fa-angle-right"></i>
+                    <a class="nav-link text-center link text-dark p-3" href="/Mail/Inbox">
+                        <b>Gelen Kutusu</b> <i class="fa fa-angle-right"></i>
                     </a>
                 </li>
             </ul>

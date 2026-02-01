@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Project2IdentityEmail.ViewComponents.Dashboard
+namespace Project2IdentityEmail.ViewComponents.AdminLayout
 {
-    public class DashboardLastMessageViewComponent:ViewComponent
+    public class MailLayoutPaginationViewComponent:ViewComponent
     {
         public IViewComponentResult Invoke()
         {

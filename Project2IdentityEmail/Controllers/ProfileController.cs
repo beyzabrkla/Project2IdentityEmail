@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Project2IdentityEmail.Context;
 using Project2IdentityEmail.Entities;
 
 namespace Project2IdentityEmail.Controllers
@@ -10,11 +11,13 @@ namespace Project2IdentityEmail.Controllers
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly EMailContext _context;
 
-        public ProfileController(UserManager<AppUser> userManager, IWebHostEnvironment webHostEnvironment)
+        public ProfileController(UserManager<AppUser> userManager, IWebHostEnvironment webHostEnvironment, EMailContext context)
         {
             _userManager = userManager;
             _webHostEnvironment = webHostEnvironment;
+            _context = context;
         }
 
         public async Task<IActionResult> Index()
@@ -24,6 +27,14 @@ namespace Project2IdentityEmail.Controllers
             {
                 return RedirectToAction("Login", "Account");
             }
+
+            // Okunmamış gelen mesajlar
+            ViewBag.UnreadCount = _context.UserMessages
+                .Count(x => x.ReceiverId == user.Id && !x.IsRead && !x.IsTrash && !x.IsDraft);
+
+            // Tüm gelen ve giden trafiği (Etkileşim)
+            ViewBag.TotalInteraction = _context.UserMessages
+                .Count(x => x.ReceiverId == user.Id || x.SenderId == user.Id);
 
             return View(user);
         }
