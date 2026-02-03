@@ -6,7 +6,7 @@ using MimeKit;
 using Project2IdentityEmail.Entities;
 using Project2IdentityEmail.Models;
 
-namespace Project2IdentityEmail.Controllers
+namespace Project2IdentityEmail.Controllers.Member
 {
     [AllowAnonymous]
     public class PasswordChangeController : Controller

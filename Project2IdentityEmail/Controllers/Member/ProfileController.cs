@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Project2IdentityEmail.Context;
 using Project2IdentityEmail.Entities;
 
-namespace Project2IdentityEmail.Controllers
+namespace Project2IdentityEmail.Controllers.Member
 {
     [Authorize]
     public class ProfileController : Controller

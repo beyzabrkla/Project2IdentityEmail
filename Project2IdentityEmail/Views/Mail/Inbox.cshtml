@@ -70,7 +70,7 @@
 
                                 <td class="chb" onclick="event.stopPropagation();">
                                     <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="cst-@item.Id">
+                                        <input type="checkbox" class="custom-control-input mail-checkbox" id="cst-@item.Id" value="@item.Id">
                                         <label class="custom-control-label" for="cst-@item.Id">&nbsp;</label>
                                     </div>
                                 </td>
@@ -131,7 +131,24 @@
                                     <a class="link" href="@(currentFolder == "drafts" ? "/Mail/ComposeMail?id=" + item.Id : "/Mail/MailDetails/" + item.Id)">
                                         @if (currentFolder == "trash")
                                         {
-                                            <span class="badge badge-info m-r-10" style="background-color: #007bff; color: white; padding: 4px 8px;">Çöp</span>
+                                            @* Çöp kutusunda nereden geldiğini göster *@
+                                            @if (!string.IsNullOrEmpty(item.OriginalFolder))
+                                            {
+                                                var folderNames = new Dictionary<string, string> {
+                                                                { "inbox", "Gelen Kutusu" },
+                                                                { "outbox", "Gönderilen" },
+                                                                { "drafts", "Taslaklar" },
+                                                                { "spam", "Spam" }
+                                                                };
+                                                var displayName = folderNames.ContainsKey(item.OriginalFolder.ToLower())
+                                                ? folderNames[item.OriginalFolder.ToLower()]
+                                                : item.OriginalFolder;
+                                                <span class="badge badge-info m-r-10" style="background-color: #007bff; color: white; padding: 4px 8px;">@displayName</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge badge-info m-r-10" style="background-color: #007bff; color: white; padding: 4px 8px;">Çöp</span>
+                                            }
                                         }
                                         else if (item.Category != null)
                                         {
@@ -148,7 +165,7 @@
                                         </span>
                                     </a>
                                 </td>
-                                
+
                                 @* ATAÇ KONTROLÜ (DİNAMİK) *@
                                 <td class="clip" style="width: 20px;">
                                     @if (!string.IsNullOrEmpty(item.Content) && (item.Content.Contains("<img") || item.Content.Contains(".pdf") || item.Content.Contains(".doc") || item.Content.Contains(".docx")))

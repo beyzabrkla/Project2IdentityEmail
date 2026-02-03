@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Project2IdentityEmail.Controllers
+namespace Project2IdentityEmail.Controllers.Member
 {
     public class ContactController : Controller
     {

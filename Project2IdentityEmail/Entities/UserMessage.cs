@@ -7,13 +7,14 @@
         public string Content { get; set; }
         public DateTime Date { get; set; }
         public bool IsRead { get; set; }
-
-        // --- Yeni Eklenen Alanlar ---
         public bool IsDraft { get; set; } // Taslaklar için
         public bool IsTrash { get; set; } // Çöp kutusu için
         public bool IsStarred { get; set; } // Yıldızlı mesajlar için
         public bool IsSpam { get; set; } = false; // Varsayılan olarak false
         public string? AttachmentUrl { get; set; }
+
+        public string? OriginalFolder { get; set; } // Çöpe atılmadan önceki klasör bilgisi
+
         // Kategori/Etiket İlişkisi
         public int? CategoryId { get; set; } // Mesajın kategorisi (İş, Sosyal vb.)
         public Category Category { get; set; }

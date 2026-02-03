@@ -96,6 +96,30 @@
                         <input type="checkbox" class="custom-control-input" id="check-all-mail">
                         <label class="custom-control-label" for="check-all-mail"></label>
                     </div>
+
+                    @if (ViewBag.CurrentFolder != "trash")
+                    {
+                        <button type="button" id="delete-selected" class="btn btn-sm btn-outline-danger" style="display: none;">
+                            <i class="mdi mdi-delete-sweep"></i> Sil
+                        </button>
+                    }
+                    else
+                    {
+                        <button type="button" id="restore-selected" class="btn btn-sm btn-outline-success mr-2" style="display: none;">
+                            <i class="mdi mdi-undo"></i> Geri Yükle
+                        </button>
+                        <button type="button" id="hard-delete-selected" class="btn btn-sm btn-danger" style="display: none;">
+                            <i class="mdi mdi-alert-octagon"></i> Kalıcı Sil
+                        </button>
+                    }
+
+                    @if (ViewBag.CurrentFolder == "spam")
+                    {
+                        <button type="button" id="restore-from-spam" class="btn btn-sm btn-outline-success" style="display: none;">
+                            <i class="mdi mdi-email-check"></i> Spam Değil
+                        </button>
+                    }
+
                     <div class="btn-group">
                         <button type="button" class="btn waves-effect waves-light btn-rounded btn-outline-primary dropdown-toggle d-flex align-items-center"
                                 data-toggle="dropdown" style="padding: 7px 20px; font-weight: 500; border-color: #f158d0; color: #f158d0;">
@@ -122,25 +146,9 @@
                             @ViewBag.RangeInfo
                         </span>
                     }
-
-                    <div class="btn-group">
-                        @* Önceki Sayfa *@
-                        <a href="@Url.Action(ViewContext.RouteData.Values["action"].ToString(), "Mail", new { page = ViewBag.CurrentPage - 1, folder = ViewBag.CurrentFolder, label = (ViewBag.IsCategoryView ? ViewBag.Title : null), searchTerm = ViewBag.SearchTerm })"
-                           class="btn btn-sm waves-effect text-white shadow-sm @(ViewBag.CurrentPage <= 1 ? "disabled" : "")"
-                           style="background-color: #f158d0; border-radius: 8px; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; @(ViewBag.CurrentPage <= 1 ? "pointer-events: none; opacity: 0.5;" : "")">
-                            <i class="ti-angle-left" style="font-weight: bold;"></i>
-                        </a>
-
-                        @* Sonraki Sayfa *@
-                        <a href="@Url.Action(ViewContext.RouteData.Values["action"].ToString(), "Mail", new { page = ViewBag.CurrentPage + 1, folder = ViewBag.CurrentFolder, label = (ViewBag.IsCategoryView ? ViewBag.Title : null), searchTerm = ViewBag.SearchTerm })"
-                           class="btn btn-sm waves-effect text-white shadow-sm ml-1 @(ViewBag.CurrentPage >= ViewBag.TotalPages ? "disabled" : "")"
-                           style="background-color: #f158d0; border-radius: 8px; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; @(ViewBag.CurrentPage >= ViewBag.TotalPages ? "pointer-events: none; opacity: 0.5;" : "")">
-                            <i class="ti-angle-right" style="font-weight: bold;"></i>
-                        </a>
-                    </div>
                 </div>
             </div>
-                    
+
             <style>
                 @@media (max-width: 991px) {
                     .show-left-part {
@@ -223,3 +231,84 @@
                     }
                 }
             </style>
+
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    const checkAll = document.getElementById('check-all-mail');
+                    // Hem ID hem sınıf üzerinden tüm mail checkboxlarını bul
+                    const getCheckboxes = () => document.querySelectorAll('.mail-checkbox');
+
+                    const deleteBtn = document.getElementById('delete-selected');
+                    const restoreBtn = document.getElementById('restore-selected');
+                    const hardDeleteBtn = document.getElementById('hard-delete-selected');
+                    const restoreFromSpamBtn = document.getElementById('restore-from-spam');
+
+                    function toggleActionButtons() {
+                        const checkedCount = Array.from(getCheckboxes()).filter(cb => cb.checked).length;
+                        const show = checkedCount > 0;
+                        if (deleteBtn) deleteBtn.style.display = show ? 'inline-block' : 'none';
+                        if (restoreBtn) restoreBtn.style.display = show ? 'inline-block' : 'none';
+                        if (hardDeleteBtn) hardDeleteBtn.style.display = show ? 'inline-block' : 'none';
+                        if (restoreFromSpamBtn) restoreFromSpamBtn.style.display = show ? 'inline-block' : 'none';
+                    }
+
+                    if (checkAll) {
+                        checkAll.addEventListener('change', function () {
+                            getCheckboxes().forEach(cb => cb.checked = this.checked);
+                            toggleActionButtons();
+                        });
+                    }
+
+                    // Checkboxlara tıklanınca butonları göster/gizle
+                    document.addEventListener('change', function(e) {
+                        if (e.target.classList.contains('mail-checkbox')) {
+                            toggleActionButtons();
+                        }
+                    });
+
+                    function performAction(url, confirmMsg) {
+                        const selectedElements = Array.from(getCheckboxes()).filter(cb => cb.checked);
+                        const selectedIds = selectedElements.map(cb => cb.value);
+
+                        if (selectedIds.length === 0) return;
+
+                        if (confirm(selectedIds.length + " mesaj seçildi. " + confirmMsg)) {
+                            const formData = new URLSearchParams();
+                            // BURASI KRİTİK: Controller'daki 'selectedIds' ismiyle birebir aynı olmalı
+                            selectedIds.forEach(id => formData.append('selectedIds', id));
+
+                            fetch(url, {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                                body: formData
+                            })
+                            .then(res => res.json())
+                            .then(data => {
+                                if (data.success) {
+                                    location.reload();
+                                } else {
+                                    alert("İşlem gerçekleştirilemedi.");
+                                }
+                            })
+                            .catch(err => {
+                                console.error("Hata:", err);
+                                alert("Sunucu ile iletişim kurulamadı.");
+                            });
+                        }
+                    }
+
+                    // Buton Tıklamaları - Controller'daki isimlerle eşleştirdik
+                    if (deleteBtn) {
+                        deleteBtn.addEventListener('click', () => performAction('/Mail/DeleteSelectedMessages', "Çöp kutusuna taşımak istediğinize emin misiniz?"));
+                    }
+                    if (restoreBtn) {
+                        restoreBtn.addEventListener('click', () => performAction('/Mail/RestoreMessages', "Seçilenler nereden geldilerse oraya geri taşınacak?"));
+                    }
+                    if (hardDeleteBtn) {
+                        hardDeleteBtn.addEventListener('click', () => performAction('/Mail/HardDeleteMessages', "DİKKAT! Bu işlem geri alınamaz. Kalıcı olarak silinsin mi?"));
+                    }
+                    if (restoreFromSpamBtn) {
+                        restoreFromSpamBtn.addEventListener('click', () => performAction('/Mail/RestoreFromSpamMultiple', "Seçili mesajlar spam değil olarak işaretlenecek?"));
+                    }
+                });
+            </script>

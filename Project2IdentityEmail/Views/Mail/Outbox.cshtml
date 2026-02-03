@@ -64,10 +64,11 @@
                             <tr class="@unreadClass" style="cursor: pointer;" onclick="location.href='/Mail/MailDetails/@item.Id'">
                                 <td class="chb" onclick="event.stopPropagation();">
                                     <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="cst-@item.Id">
+                                        <input type="checkbox" class="custom-control-input mail-checkbox" id="cst-@item.Id" value="@item.Id">
                                         <label class="custom-control-label" for="cst-@item.Id">&nbsp;</label>
                                     </div>
                                 </td>
+
                                 <td class="starred" onclick="event.stopPropagation();">
                                     <a href="javascript:void(0)" onclick="toggleStar(this, @item.Id)">
                                         <i class="@(item.IsStarred ? "fas fa-star text-warning" : "far fa-star")"
@@ -188,7 +189,8 @@
                                             {
                                                 <div class="dropdown-item small text-muted">Kategoriler yüklenemedi</div>
                                             }
-                                                    @* --- SİLME İŞLEMİ --- *@
+                                            @* --- SİLME İŞLEMİ --- *@
+                                            <div class="dropdown-divider"></div>
                                             @if (ViewBag.CurrentFolder == "trash")
                                             {
                                                 <a class="dropdown-item text-success" href="/Mail/RestoreFromTrash/@item.Id">

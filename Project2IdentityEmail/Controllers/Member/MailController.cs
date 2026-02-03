@@ -5,9 +5,10 @@ using Microsoft.EntityFrameworkCore;
 using Project2IdentityEmail.Context;
 using Project2IdentityEmail.DTOs;
 using Project2IdentityEmail.Entities;
+using System;
 using System.Text.RegularExpressions;
 
-namespace Project2IdentityEmail.Controllers
+namespace Project2IdentityEmail.Controllers.Member
 {
     [Authorize]
     public class MailController : Controller
@@ -156,15 +157,123 @@ namespace Project2IdentityEmail.Controllers
             return View(values);
         }
         #endregion
-        
 
-        #region  SİLME VE KURTARMA İŞLEMLERİ
-        // 1. Çöpe Taşı (Soft Delete)
+
+        #region SİLME VE KURTARMA İŞLEMLERİ
+
+        // 1. TOPLU SİLME (ORİJİNAL KLASÖRÜ KAYDET)
+        [HttpPost]
+        public async Task<IActionResult> DeleteSelectedMessages(List<int> selectedIds)
+        {
+            if (selectedIds == null || !selectedIds.Any()) return Json(new { success = false });
+
+            var messages = await _context.UserMessages
+                .Where(m => selectedIds.Contains(m.Id))
+                .ToListAsync();
+
+            foreach (var msg in messages)
+            {
+                // Eğer zaten çöp kutusundaysa kalıcı sil, değilse çöpe taşı
+                if (msg.IsTrash)
+                {
+                    _context.UserMessages.Remove(msg);
+                }
+                else
+                {
+                    // ⭐ ORİJİNAL KLASÖRÜ KAYDET ⭐
+                    if (string.IsNullOrEmpty(msg.OriginalFolder))
+                    {
+                        // SenderId ve ReceiverId'ye bakarak hangi klasörden geldiğini belirle
+                        var currentUserId = (await _userManager.GetUserAsync(User)).Id;
+
+                        if (msg.IsDraft)
+                            msg.OriginalFolder = "drafts";
+                        else if (msg.SenderId == currentUserId && !msg.IsDraft)
+                            msg.OriginalFolder = "outbox";
+                        else if (msg.IsSpam)
+                            msg.OriginalFolder = "spam";
+                        else
+                            msg.OriginalFolder = "inbox";
+                    }
+
+                    msg.IsTrash = true;
+                    msg.IsStarred = false;
+                    msg.IsSpam = false;
+                }
+            }
+
+            await _context.SaveChangesAsync();
+            return Json(new { success = true });
+        }
+
+        // 2. TOPLU GERİ YÜKLEME (ORİJİNAL KLASÖRE DÖN)
+        [HttpPost]
+        public async Task<JsonResult> RestoreMessages(List<int> selectedIds)
+        {
+            if (selectedIds == null || !selectedIds.Any()) return Json(new { success = false });
+
+            var messages = await _context.UserMessages
+                .Where(m => selectedIds.Contains(m.Id))
+                .ToListAsync();
+
+            foreach (var msg in messages)
+            {
+                msg.IsTrash = false;
+
+                // ⭐ ORİJİNAL KLASÖRE GERİ DÖN ⭐
+                if (!string.IsNullOrEmpty(msg.OriginalFolder))
+                {
+                    // Orijinal klasöre özgü ayarları geri yükle
+                    if (msg.OriginalFolder == "spam")
+                        msg.IsSpam = true;
+                    else if (msg.OriginalFolder == "drafts")
+                        msg.IsDraft = true;
+
+                    // OriginalFolder'ı temizle
+                    msg.OriginalFolder = null;
+                }
+            }
+
+            await _context.SaveChangesAsync();
+            return Json(new { success = true });
+        }
+
+        // 3. TOPLU KALICI SİLME
+        [HttpPost]
+        public async Task<JsonResult> HardDeleteMessages(List<int> selectedIds)
+        {
+            if (selectedIds == null || !selectedIds.Any()) return Json(new { success = false });
+
+            var messages = await _context.UserMessages
+                .Where(m => selectedIds.Contains(m.Id))
+                .ToListAsync();
+
+            _context.UserMessages.RemoveRange(messages);
+            await _context.SaveChangesAsync();
+            return Json(new { success = true });
+        }
+
+        // --- TEKLİ İŞLEMLER (Butonlar için) ---
         public async Task<IActionResult> MoveToTrash(int id)
         {
             var value = await _context.UserMessages.FindAsync(id);
             if (value != null)
             {
+                // ⭐ ORİJİNAL KLASÖRÜ KAYDET ⭐
+                if (string.IsNullOrEmpty(value.OriginalFolder))
+                {
+                    var currentUser = await _userManager.GetUserAsync(User);
+
+                    if (value.IsDraft)
+                        value.OriginalFolder = "drafts";
+                    else if (value.SenderId == currentUser.Id && !value.IsDraft)
+                        value.OriginalFolder = "outbox";
+                    else if (value.IsSpam)
+                        value.OriginalFolder = "spam";
+                    else
+                        value.OriginalFolder = "inbox";
+                }
+
                 value.IsTrash = true;
                 value.IsStarred = false;
                 value.IsSpam = false;
@@ -174,19 +283,29 @@ namespace Project2IdentityEmail.Controllers
             return !string.IsNullOrEmpty(returnUrl) ? Redirect(returnUrl) : RedirectToAction("Inbox");
         }
 
-        // 2. Çöpten Kurtar
         public async Task<IActionResult> RestoreFromTrash(int id)
         {
             var value = await _context.UserMessages.FindAsync(id);
             if (value != null)
             {
                 value.IsTrash = false;
+
+                // ⭐ ORİJİNAL KLASÖRE GERİ DÖN ⭐
+                if (!string.IsNullOrEmpty(value.OriginalFolder))
+                {
+                    if (value.OriginalFolder == "spam")
+                        value.IsSpam = true;
+                    else if (value.OriginalFolder == "drafts")
+                        value.IsDraft = true;
+
+                    value.OriginalFolder = null;
+                }
+
                 await _context.SaveChangesAsync();
             }
             return RedirectToAction("Inbox", new { folder = "trash" });
         }
 
-        // 3. KALICI SİL (Hard Delete)
         public async Task<IActionResult> HardDelete(int id)
         {
             var value = await _context.UserMessages.FindAsync(id);
@@ -197,8 +316,8 @@ namespace Project2IdentityEmail.Controllers
             }
             return RedirectToAction("Inbox", new { folder = "trash" });
         }
-        #endregion
 
+        #endregion
 
         #region MAİL DETAY
         public async Task<IActionResult> MailDetails(int id)

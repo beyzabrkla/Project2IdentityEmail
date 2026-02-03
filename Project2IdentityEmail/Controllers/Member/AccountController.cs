@@ -4,7 +4,7 @@ using MimeKit;
 using Project2IdentityEmail.DTOs;
 using Project2IdentityEmail.Entities;
 
-namespace Project2IdentityEmail.Controllers
+namespace Project2IdentityEmail.Controllers.Member
 {
     public class AccountController : Controller
     {
