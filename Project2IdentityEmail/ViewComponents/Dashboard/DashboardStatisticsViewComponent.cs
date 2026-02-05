@@ -30,7 +30,7 @@ namespace Project2IdentityEmail.ViewComponents.Dashboard
 
             ViewBag.DeletedMessages = _context.UserMessages.Count(x => (x.ReceiverId == userId || x.SenderId == userId) && x.IsTrash);
 
-            // Sistemdeki toplam kullanıcı ve kategori sayısı (Bunlar genel bilgi olabilir)
+            // Sistemdeki toplam kullanıcı ve kategori sayısı
             ViewBag.TotalUsers = _context.Users.Count();
             ViewBag.TotalCategory = _context.Categories.Count();
 

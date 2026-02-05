@@ -13,7 +13,6 @@ namespace Project2IdentityEmail.Entities
         public string? ConfirmCode { get; set; }
         public DateTime ConfirmDate { get; set; } = DateTime.Now;
 
-        // Context'teki hatayı çözecek olan kısım:
         public virtual ICollection<UserMessage> SendMessages { get; set; }
         public virtual ICollection<UserMessage> ReceivedMessages { get; set; }
     }

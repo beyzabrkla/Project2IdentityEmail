@@ -3,7 +3,6 @@
     ViewData["Title"] = "Yeni Mesaj";
     Layout = "~/Views/Shared/_MailLayout.cshtml";
 
-    // Sidebar'ın null hatası vermemesi için koruma:
     if (ViewBag.IsCategoryView == null) { ViewBag.IsCategoryView = false; }
 }
 
@@ -99,7 +98,6 @@
                     <label for="fileUpload" class="btn btn-light border mr-2 mb-0" style="border-radius: 12px; cursor: pointer;">
                         <i class="mdi mdi-paperclip mr-1"></i> Dosya Ekle
                     </label>
-                    @* id="fileUpload" olarak kalsın, scripti buna bağlayalım *@
                     <input type="file" id="fileUpload" name="Attachment" style="display: none;">
                     <span id="file-info" class="text-muted small">Dosya seçilmedi</span>
                 </div>

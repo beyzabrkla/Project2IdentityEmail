@@ -20,7 +20,6 @@ namespace Project2IdentityEmail.ViewComponents.Dashboard
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            // Artık hata vermeyecektir
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
 
             var messages = await _context.UserMessages
