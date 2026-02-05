@@ -10,6 +10,7 @@ namespace Project2IdentityEmail.Entities
         public string? About { get; set; }
         public string? City { get; set; }
         public string? JobTitle { get; set; }
+        public string? ConfirmCode { get; set; }
         public DateTime ConfirmDate { get; set; } = DateTime.Now;
 
         // Context'teki hatayı çözecek olan kısım:

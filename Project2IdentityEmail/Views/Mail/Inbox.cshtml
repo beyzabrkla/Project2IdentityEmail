@@ -68,6 +68,7 @@
                             <tr class="@unreadClass" style="cursor: pointer;"
                                 onclick="location.href='@(currentFolder == "drafts" ? "/Mail/ComposeMail?id=" + item.Id : "/Mail/MailDetails/" + item.Id)'">
 
+                                @*checkbox*@
                                 <td class="chb" onclick="event.stopPropagation();">
                                     <div class="custom-control custom-checkbox">
                                         <input type="checkbox" class="custom-control-input mail-checkbox" id="cst-@item.Id" value="@item.Id">
@@ -75,6 +76,7 @@
                                     </div>
                                 </td>
 
+                                @*starred*@
                                 <td class="starred" onclick="event.stopPropagation();">
                                     <a href="javascript:void(0)" onclick="toggleStar(this, @item.Id)">
                                         <i class="@(item.IsStarred ? "fas fa-star text-warning" : "far fa-star")"
@@ -82,11 +84,13 @@
                                     </a>
                                 </td>
 
+                                @* ALICI GÖRSELİ *@
                                 <td class="user-image">
                                     @{
                                         var displayUser = (currentFolder == "outbox") ? item.Receiver : item.Sender;
                                         var bgColor = (currentFolder == "outbox") ? "#fb8c00" : "#7460ee";
                                     }
+
 
                                     @if (currentFolder == "drafts")
                                     {
@@ -108,6 +112,7 @@
                                     }
                                 </td>
 
+                                @* ALICI ADI/SOYADI VEYA TASLAK/KİME *@
                                 <td class="user-name">
                                     <h6 class="m-b-0">
                                         @if (currentFolder == "drafts")
@@ -127,6 +132,7 @@
                                     </h6>
                                 </td>
 
+                                @* KONU VE İÇERİK ÖZETİ *@
                                 <td class="max-texts">
                                     <a class="link" href="@(currentFolder == "drafts" ? "/Mail/ComposeMail?id=" + item.Id : "/Mail/MailDetails/" + item.Id)">
                                         @if (currentFolder == "trash")

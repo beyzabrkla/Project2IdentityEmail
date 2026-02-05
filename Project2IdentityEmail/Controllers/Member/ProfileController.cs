@@ -10,7 +10,7 @@ namespace Project2IdentityEmail.Controllers.Member
     public class ProfileController : Controller
     {
         private readonly UserManager<AppUser> _userManager;
-        private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly IWebHostEnvironment _webHostEnvironment; // Sunucu ortam bilgisi için
         private readonly EMailContext _context;
 
         public ProfileController(UserManager<AppUser> userManager, IWebHostEnvironment webHostEnvironment, EMailContext context)
@@ -87,7 +87,7 @@ namespace Project2IdentityEmail.Controllers.Member
             if (result.Succeeded)
             {
                 TempData["SuccessMessage"] = "Profiliniz başarıyla güncellendi!";
-                return RedirectToAction("Index");
+                return RedirectToAction("Login", "Account");
             }
 
             foreach (var error in result.Errors)

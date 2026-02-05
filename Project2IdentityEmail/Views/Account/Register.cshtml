@@ -86,21 +86,96 @@
     </div>
 </div>
 
+<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content soft-card border-0 shadow-lg">
+            <div class="modal-body p-5 text-center">
+                <div class="mb-4">
+                    <i class="mdi mdi-email-check-outline text-primary" style="font-size: 60px;"></i>
+                </div>
+                <h3 class="font-weight-bold text-dark">Email Doğrulama</h3>
+                <p class="text-muted small mb-4">Lütfen <b id="displayEmail"></b> adresine gönderilen 6 haneli kodu giriniz.</p>
+
+                <div class="form-group">
+                    <input type="text" id="confirmCodeInput" class="form-control form-control-lg text-center font-weight-bold shadow-none soft-input" placeholder="000000" maxlength="6" style="letter-spacing: 10px; font-size: 24px;">
+                </div>
+
+                <button type="button" onclick="verifyCode()" class="btn btn-block btn-custom-gradient py-3 text-uppercase mt-4 shadow-sm">
+                    Hesabı Doğrula
+                </button>
+                <div id="verifyError" class="text-danger small mt-2" style="display:none;">Hatalı kod girdiniz!</div>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section Scripts {
     <script>
         $(document).ready(function () {
-            // Form post edildiğinde çalışır
-            $("form").on("submit", function () {
-                // 1. Yazıyı gizle, Spinner'ı göster
+            $("form").on("submit", function (e) {
+                e.preventDefault(); // Sayfa yenilenmesini engelle
+
+                // 1. Görsel yükleme efektlerini başlat
                 $("#btnText").hide();
                 $("#btnLoading").show();
-
-                // 2. Butonu kilitle (çift tıklamayı engeller)
                 $("#btnSubmit").attr("disabled", true);
+                $(".preloader").fadeIn(); // Temanın kendi preloader'ı
 
-                // 3. Mendy temasının kendi yükleme ekranını (preloader) aç
-                $(".preloader").fadeIn();
+                var formData = new FormData(this);
+
+                // 2. AJAX ile Kayıt (Register)
+                $.ajax({
+                    url: '/Account/Register',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+                        $(".preloader").fadeOut(); // Preloader'ı kapat
+
+                        if (response.success) {
+                            // Kayıt başarılı, Modalı hazırla ve aç
+                            $("#displayEmail").text(response.email);
+                            $("#confirmModal").modal('show');
+                        } else {
+                            // Hata varsa kullanıcıya göster
+                            alert(response.message || "Bir hata oluştu.");
+                            resetButton();
+                        }
+                    },
+                    error: function () {
+                        $(".preloader").fadeOut();
+                        alert("Sunucuyla bağlantı kurulamadı!");
+                        resetButton();
+                    }
+                });
             });
         });
+
+        // 3. Kod Doğrulama Fonksiyonu (Modal içindeki buton)
+        function verifyCode() {
+            var code = $("#confirmCodeInput").val();
+            var email = $("#displayEmail").text();
+
+            if(code.length < 6) {
+                alert("Lütfen 6 haneli kodu giriniz.");
+                return;
+            }
+
+            $.post('/Account/ConfirmEmail', { email: email, code: code }, function (res) {
+                if (res.success) {
+                    window.location.href = "/Account/Login";
+                } else {
+                    $("#verifyError").fadeIn().delay(3000).fadeOut();
+                }
+            });
+        }
+
+        // Butonu eski haline getirme fonksiyonu
+        function resetButton() {
+            $("#btnText").show();
+            $("#btnLoading").hide();
+            $("#btnSubmit").attr("disabled", false);
+        }
     </script>
 }
