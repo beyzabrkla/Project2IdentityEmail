@@ -3,7 +3,6 @@
     ViewData["Title"] = "Mail Detay";
     Layout = "~/Views/Shared/_MailLayout.cshtml";
 
-    // Eğer Layout veya Sidebar hala 'null' diyorsa, burada garantiye alıyoruz:
     if (ViewBag.IsCategoryView == null) { ViewBag.IsCategoryView = false; }
 }
 
@@ -94,7 +93,7 @@
                             <i class="mdi mdi-file-download" style="font-size: 24px;"></i>
                         </div>
 
-                        @* Dosya Adı (GUID kısmını temizleyerek gösterir) *@
+                        @* Dosya Adı *@
                         <div class="file-details">
                             <p class="mb-0 text-truncate font-weight-bold" style="max-width: 180px; font-size: 13px;" title="@System.IO.Path.GetFileName(Model.AttachmentUrl)">
                                 @{
@@ -117,7 +116,7 @@
         }
     </div>
 
-    @* BUTONLAR - YANITLA FONKSİYONU EKLENDİ *@
+    @* BUTONLAR *@
     <div class="card-body">
         <div class="m-t-20">
             @* Yanıtla butonu bilgileri Compose'a QueryString ile gönderir *@
