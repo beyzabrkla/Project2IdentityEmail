@@ -1,0 +1,99 @@
+﻿@model Project2IdentityEmail.DTOs.LoginUserDTO
+@{
+    ViewData["Title"] = "Giriş Yap";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+
+<div class="auth-wrapper d-flex no-block justify-content-center align-items-center" style="background:linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/mendy-admin-template/mendy-admin/package/assets/images/big/auth-bg.jpg) no-repeat center center; background-size: cover;">
+    <div class="auth-box shadow-lg soft-card bg-white col-md-8 col-lg-5 p-5 my-5">
+
+        @* Başarı Mesajı (Register'dan yönlenince çalışır) *@
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success alert-dismissible fade show soft-card border-0 shadow-sm mb-4" role="alert">
+                <i class="ti-check-box mr-2"></i> <strong>Başarılı!</strong> @TempData["SuccessMessage"]
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        }
+
+        <div id="loginform">
+            <div class="logo text-center pb-4">
+                <span class="db"><img src="/mendy-admin-template/mendy-admin/package/assets/images/logo-icon.png" alt="logo" style="width: 60px;" /></span>
+                <h2 class="font-weight-bold mb-1 mt-3 text-dark">Hoş Geldiniz</h2>
+                <p class="text-muted small">Devam etmek için hesabınıza giriş yapın.</p>
+            </div>
+
+            <form class="form-horizontal" method="post" action="/Account/Login" id="mainLoginForm">
+
+                @if (!ViewData.ModelState.IsValid)
+                {
+                    <div class="alert alert-danger soft-card border-0 shadow-sm mb-4 py-2 text-center">
+                        <div asp-validation-summary="All" class="text-danger small font-weight-bold"></div>
+                    </div>
+                }
+
+                <div class="form-group mb-4">
+                    <label class="font-12 font-weight-bold text-muted ml-2 text-uppercase">Kullanıcı Adı</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text bg-transparent border-right-0" style="border-radius: 12px 0 0 12px;"><i class="ti-user"></i></span>
+                        </div>
+                        <input class="form-control form-control-lg soft-input border-left-0 shadow-none" type="text" name="Username" required placeholder="kullanıcı adınız">
+                    </div>
+                </div>
+
+                <div class="form-group mb-4">
+                    <label class="font-12 font-weight-bold text-muted ml-2 text-uppercase">Şifre</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text bg-transparent border-right-0" style="border-radius: 12px 0 0 12px;"><i class="ti-lock"></i></span>
+                        </div>
+                        <input class="form-control form-control-lg soft-input border-left-0 shadow-none" type="password" name="Password" required placeholder="••••••">
+                    </div>
+                </div>
+
+                <div class="form-group row mb-4">
+                    <div class="col-md-12">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="customCheck1" name="RememberMe">
+                            <label class="custom-control-label text-muted small" for="customCheck1">Beni Hatırla</label>
+                            <a href="/PasswordChange/ForgetPassword" id="to-recover" class="text-muted small float-right font-weight-bold">Şifremi Unuttum?</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group text-center">
+                    <button class="btn btn-block btn-lg btn-custom-gradient py-3 text-uppercase" type="submit" id="btnSubmit">
+                        <span id="btnText">Giriş Yap</span>
+                        <span id="btnLoading" style="display:none;">
+                            <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                            Yükleniyor...
+                        </span>
+                    </button>
+                </div>
+
+                <div class="mt-4 text-center">
+                    <p class="text-muted small">Hesabın yok mu? <a href="/Account/Register" class="text-primary font-weight-bold ml-1">Hemen Kayıt Ol</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $("#mainLoginForm").on("submit", function () {
+                $("#btnText").hide();
+                $("#btnLoading").show();
+                $("#btnSubmit").attr("disabled", true);
+
+                if ($(".preloader").length) {
+                    $(".preloader").fadeIn();
+                }
+            });
+        });
+    </script>
+}

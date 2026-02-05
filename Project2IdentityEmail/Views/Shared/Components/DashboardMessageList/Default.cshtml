@@ -1,0 +1,48 @@
+﻿@model List<Project2IdentityEmail.Entities.UserMessage>
+
+<div class="card shadow-sm border-0 mb-0">
+    <div class="card-body">
+        <h4 class="card-title">Mesajlaşmalarım</h4>
+        <h6 class="card-subtitle mb-0">Son etkileşimler ve mesaj detayları</h6>
+    </div>
+    <div class="comment-widgets scrollable" style="height:520px; overflow-y: auto;">
+        @foreach (var item in Model)
+        {
+            <div class="d-flex flex-row comment-row m-t-0 border-bottom p-3">
+                <div class="p-2">
+                    <img src="@(string.IsNullOrEmpty(item.Sender?.ImageUrl) ? "/mendy-admin-template/package/assets/images/users/1.jpg" : "/UserImages/" + item.Sender.ImageUrl)"
+                         width="50" height="50" style="object-fit: cover;" class="rounded-circle">
+                </div>
+                <div class="comment-text w-100 pl-3">
+                    <h6 class="font-medium mb-1">@item.Sender?.Name @item.Sender?.Surname</h6>
+
+                    @* Content: HTML temizleme ve uzunluk artırma *@
+                    <p class="m-b-5 text-muted" style="white-space: normal; font-size: 0.9rem; line-height: 1.4;">
+                        @{
+                            // Mesaj içindeki <p> <h2> gibi kodları temizler
+                            var cleanText = System.Text.RegularExpressions.Regex.Replace(item.Content ?? "", "<.*?>", String.Empty);
+                            var textToShow = cleanText.Length > 350 ? cleanText.Substring(0, 350) + "..." : cleanText;
+                        }
+                        @textToShow
+                    </p>
+
+                    <div class="comment-footer mt-2 d-flex justify-content-between">
+                        <span>
+                            @if (item.IsRead)
+                            {
+                                <span class="label label-rounded label-success">Okundu</span>
+                            }
+                            else
+                            {
+
+                                <span class="label label-rounded label-danger">Yeni Mesaj</span>
+                            }
+                        </span>
+                        <span class="text-muted small">@item.Date.ToString("dd MMM yyyy")</span>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<br />

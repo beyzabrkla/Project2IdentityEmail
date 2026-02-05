@@ -1,0 +1,32 @@
+﻿@media (max-width: 991px) {
+    /* 1. Morluğu ve Siyahlığı Kökten Siliyoruz */
+    .topbar, .topbar .navbar, .topbar .navbar-header, .navbar-collapse {
+        background: #ffffff !important;
+        background-color: #ffffff !important;
+        border-bottom: 1px solid #eee !important;
+    }
+
+    /* 2. Mail Sidebar'ı (Gelen Kutusu menüsü) Ayarı */
+    .left-sidebar {
+        position: fixed !important;
+        top: 64px !important; /* Header'ın bittiği yerden başlar */
+        left: -270px !important; /* Başlangıçta gizli */
+        width: 260px !important;
+        height: 100vh !important;
+        z-index: 1050 !important;
+        background: #fff !important;
+        transition: 0.3s ease-in-out;
+        box-shadow: 5px 0 15px rgba(0,0,0,0.1) !important;
+        display: block !important;
+    }
+
+    /* Sidebar açıldığında buraya class gelecek */
+    #main-wrapper.show-sidebar .left-sidebar {
+        left: 0 !important;
+    }
+
+    /* 3. Eski Yeşil Butonu Gizle (Eğer hala HTML'de duruyorsa) */
+    .mobile-nav-toggle, .btn-success.mobile-toggle {
+        display: none !important;
+    }
+}

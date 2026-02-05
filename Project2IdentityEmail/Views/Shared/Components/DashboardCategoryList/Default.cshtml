@@ -1,0 +1,44 @@
+﻿<div class="card shadow-sm border-0" style="height: 280px;">
+    <div class="card-body">
+        <h4 class="card-title">Kategori Dağılımı</h4>
+        <div style="height:210px; position: relative;">
+            <canvas id="categoryChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<script>
+    window.addEventListener('load', function() {
+        var canvasC = document.getElementById('categoryChart');
+        if (canvasC && typeof Chart !== 'undefined') {
+            var ctxC = canvasC.getContext('2d');
+            // Backend'den gelen verileri güvenli bir şekilde serialize ediyoruz
+            var labels = @Html.Raw(Json.Serialize(ViewBag.CategoryLabels ?? new string[] { "Veri Yok" }));
+            var counts = @Html.Raw(Json.Serialize(ViewBag.CategoryCounts ?? new int[] { 0 }));
+
+            new Chart(ctxC, {
+                type: 'doughnut',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: counts,
+    backgroundColor: [
+        '#6a5acd', // Mendy Moru
+        '#f158d0', // Mendy Pembesi
+        '#ffbd4a', // Altın Sarı
+        '#4fc3f7', // Gökyüzü Mavisi
+        '#aed581', // Fıstık Yeşili
+        '#8d8be5'  // Açık Lavanta
+    ],
+            hoverOffset: 10
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'bottom' } }
+                }
+            });
+        }
+    });
+</script>

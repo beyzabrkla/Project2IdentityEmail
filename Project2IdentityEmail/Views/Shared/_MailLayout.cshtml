@@ -1,84 +1,158 @@
 ﻿<!DOCTYPE html>
 <html dir="ltr" lang="en">
-
-@await Component.InvokeAsync("AdminLayoutHead")
-
 <style>
-    /* 1. Üst Barı Mendy Moru Yap */
-    .topbar, .topbar .top-navbar {
-        background: #3e3c59 !important; /* Mendy Temasının İmzası Olan Mor/Lacivert Tonu */
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+    /* Okunmamış satır stilleri */
+    .email-table tr.unread {
+        background-color: #f8f9ff !important; /* Çok hafif mavi/gri bir ton */
+        font-weight: 700; /* Yazıları kalınlaştırır */
     }
 
-    /* 2. Sidebar Boşluğunu Sıfırla */
-    .page-wrapper {
-        margin-left: 0 !important;
-        background-color: #f3f3f5 !important;
-    }
-
-    /* 3. Sayfa İçeriğini Renkle Uyumlu Yap */
-    .container-fluid {
-        background-color: #f3f3f5 !important;
-    }
-
-    /* 4. Arama İkonunu Kutunun İçine Sabitleme */
-    .search-container i {
-        position: absolute;
-        left: 15px;
-        top: 50%;
-        transform: translateY(-50%);
-        color: #adb5bd;
-        z-index: 10;
-    }
-
-    /* 5. Arama Inputu: Metni ikonun üzerine bindirmemek için pl-5 */
-    .search-input-box {
-        padding-left: 45px !important;
-        border: 1px solid #e9ecef !important;
-        height: 40px !important;
-    }
-
-        .search-input-box:focus {
-            border-color: #3e3c59 !important;
-            background-color: #fff !important;
-            box-shadow: 0 0 0 0.2rem rgba(62, 60, 89, 0.1) !important;
+        .email-table tr.unread td {
+            color: #3e3c59; /* Daha belirgin yazı rengi */
         }
 
-    /* Feather ikonlarının boyutunu sabitleyelim */
-    .feather-sm {
-        width: 14px;
-        height: 14px;
+    /* Okunmuş satır stilleri */
+    .email-table tr {
+        background-color: #ffffff;
+        font-weight: 400;
+        transition: 0.2s;
     }
 
-    /* Üst barın mor rengini tam kodla sabitleyelim */
-    .topbar {
-        background: #3e3c59 !important;
+        .email-table tr .btn-group {
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .email-table tr:hover .btn-group {
+            opacity: 1;
+        }
+
+    .email-table td {
+        vertical-align: middle !important;
+    }
+
+    .dropdown-menu {
+        z-index: 9999 !important;
+    }
+    /* Üç noktanın sadece hover olunca değil, her zaman görünmesini istersen opacity'yi kaldırabilirsin */
+    .action-menu {
+        opacity: 0.7;
+        transition: 0.3s;
+    }
+
+    tr:hover .action-menu {
+        opacity: 1;
+    }
+
+    /* Tablonun menüyü gizlemesini engeller */
+    .table-responsive {
+        overflow: visible !important;
+    }
+    /* Menü stilini koru */
+    .dropdown-menu.show, .dropdown-menu[style*="display: block"] {
+        display: block !important;
+        opacity: 1;
+        visibility: visible;
     }
 </style>
 
+
+@await Component.InvokeAsync("AdminLayoutHead")
+
+
 <body>
-    <div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
-        @await Component.InvokeAsync("MailLayoutHeader")
-
-    @RenderBody()
+    <div class="preloader">
+        <div class="lds-ripple">
+            <div class="lds-pos"></div>
+            <div class="lds-pos"></div>
+        </div>
     </div>
-    @await Component.InvokeAsync("AdminLayoutFooter")
 
+    <div id="main-wrapper"
+         data-layout="vertical"
+         data-navbarbg="skin5"
+         data-sidebartype="full"
+         data-sidebar-position="fixed"
+         data-header-position="fixed"
+         data-boxed-layout="full">
+
+        @await Component.InvokeAsync("AdminLayoutHeader")
+
+        @RenderBody()
+
+        @await Component.InvokeAsync("AdminLayoutFooter")
+    </div>
+
+    @await Component.InvokeAsync("AdminLayoutScripts")
+
+    <script>
+        $(document).ready(function () {
+            $('#mailSearchInput').on('input', function () {
+                $(this).val().length > 0 ? $('#clearSearch').fadeIn() : $('#clearSearch').fadeOut();
+            });
+            $('#clearSearch').on('click', function () {
+                $('#mailSearchInput').val('').trigger('input').focus();
+            });
+        });
+    </script>
+    <script>
+        $(function () {
+            // Üstteki 3 çizgiye basıldığında sidebarı aç
+            $(".nav-toggler").on('click', function () {
+                $("#main-wrapper").toggleClass("show-sidebar");
+            });
+
+            // Sayfada boş bir yere basıldığında menüyü kapat (opsiyonel)
+            $(".page-wrapper").on('click', function () {
+                if ($("#main-wrapper").hasClass("show-sidebar")) {
+                    $("#main-wrapper").removeClass("show-sidebar");
+                }
+            });
+        });
+    </script>
+    <script>
+        function toggleMyMenu(event, id) {
+            // Diğer tüm açık menüleri kapat
+            $('.dropdown-menu').hide();
+
+            // Tıklanan menüyü bul ve aç/kapat yap
+            var menu = $('#menu-' + id);
+            if (menu.is(':visible')) {
+                menu.hide();
+            } else {
+                menu.show();
+            }
+
+            // Tıklamanın dışarı taşmasını engelle
+            event.stopPropagation();
+        }
+
+        // Sayfanın herhangi bir yerine tıklandığında menüyü kapat
+        $(document).on('click', function() {
+            $('.dropdown-menu').hide();
+        });
+
+
+        //yıldız butonu
+            function toggleStar(element, id) {
+            $.ajax({
+                url: '/Mail/ToggleStar/' + id,
+                type: 'POST',
+                success: function (response) {
+                    if (response.success) {
+                        var icon = $('#star-icon-' + id);
+                        if (response.isStarred) {
+                            icon.removeClass('far fa-star').addClass('fas fa-star text-warning');
+                        } else {
+                            icon.removeClass('fas fa-star text-warning').addClass('far fa-star');
+                        }
+                    }
+                },
+                error: function () {
+                    alert("Yıldız güncellenirken bir hata oluştu.");
+                }
+            });
+        }
+    </script>
 </body>
 </html>
-@await Component.InvokeAsync("AdminLayoutScripts")
-<script>
-    $(document).ready(function() {
-    $('#mailSearchInput').on('input', function() {
-        if ($(this).val().length > 0) {
-            $('#clearSearch').fadeIn();
-        } else {
-            $('#clearSearch').fadeOut();
-        }
-    });
-
-    $('#clearSearch').on('click', function() {
-        $('#mailSearchInput').val('').trigger('input').focus();
-    });
-});
-</script>

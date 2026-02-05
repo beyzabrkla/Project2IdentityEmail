@@ -1,0 +1,222 @@
+﻿@model Project2IdentityEmail.Entities.AppUser
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-7 align-self-center">
+        <div class="d-flex align-items-center">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="/Dashboard/Index" class="link">Ana Sayfa</a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">Profilim</li>
+                </ol>
+            </nav>
+        </div>
+        <h4 class="page-title">Profil Bilgilerim</h4>
+    </div>
+    <div class="col-5 align-self-center text-right">
+        <ul class="list-inline mb-0">
+            <li class="list-inline-item">
+                <a href="/Dashboard/Index" class="btn waves-effect waves-light btn-rounded btn-outline-primary" title="Ana Sayfaya Dön">
+                    <i class="fas fa-home"></i> Ana Sayfaya Dön
+                </a>
+            </li>
+            <li class="list-inline-item">
+                <a href="javascript:void(0)" onclick="location.reload();" class="link" title="Sayfayı Yenile">
+                    <i data-feather="refresh-cw"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<br />
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Başarılı!</strong> @TempData["SuccessMessage"]
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Hata!</strong> @TempData["ErrorMessage"]
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+
+<div class="container-fluid">
+    <div class="row d-flex align-items-stretch">
+        <div class="col-lg-4 col-xlg-3 col-md-5 mb-4">
+            <div class="card shadow-sm h-100" style="border-radius: 15px; overflow: hidden; margin-bottom: 0;">
+                <div class="position-relative">
+                    <img src="/mendy-admin-template/mendy-admin/package/assets/images/big/card-bg.jpg"
+                         alt="cover" class="w-100" style="height: 130px; object-fit: cover; display: block;">
+
+                    <div style="position: absolute; bottom: -40px; left: 50%; transform: translateX(-50%);">
+                        <div style="padding: 4px; background: #fff; border-radius: 50%; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+                            <img src="@(string.IsNullOrEmpty(Model.ImageUrl) ? "/mendy-admin-template/mendy-admin/package/assets/images/users/5.jpg" : "/UserImages/" + Model.ImageUrl)"
+                                 class="rounded-circle" width="90" height="90" style="object-fit: cover; display: block;" />
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 45px;"></div>
+
+                <div class="card-body text-center p-b-10">
+                    <h4 class="mb-0 font-weight-bold" style="font-size: 1.1rem;">@Model.Name @Model.Surname</h4>
+                    <p class="text-muted small m-b-10">@(Model.JobTitle ?? "Kullanıcı")</p>
+
+                    <div class="d-flex justify-content-center border-top border-bottom p-v-10 m-b-15">
+                        <div class="px-3 border-right">
+                            <span class="font-medium d-block text-primary">@ViewBag.UnreadCount</span>
+                            <small class="text-muted" style="font-size: 10px;">OKUNMAMIŞ</small>
+                        </div>
+                        <div class="px-3">
+                            <span class="font-medium d-block text-info">@ViewBag.TotalInteraction</span>
+                            <small class="text-muted" style="font-size: 10px;">TOPLAM</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body bg-light-extra p-15">
+                    <div class="row text-center">
+                        <div class="col-12 mb-2">
+                            <small class="text-muted d-block text-uppercase font-weight-bold" style="font-size: 9px; letter-spacing: 1px;">Email Adresi</small>
+                            <h6 class="mb-0" style="font-size: 12px; word-break: break-all;">@Model.Email</h6>
+                        </div>
+                        <div class="col-6 border-right">
+                            <small class="text-muted d-block text-uppercase font-weight-bold" style="font-size: 9px; letter-spacing: 1px;">Telefon</small>
+                            <h6 class="mb-0" style="font-size: 11px;">@(Model.PhoneNumber ?? "-")</h6>
+                        </div>
+                        <div class="col-6">
+                            <small class="text-muted d-block text-uppercase font-weight-bold" style="font-size: 9px; letter-spacing: 1px;">Şehir</small>
+                            <h6 class="mb-0" style="font-size: 11px;">@(Model.City ?? "-")</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-8 col-md-7 mb-4">
+            <div class="card shadow-sm h-100" style="border-radius: 15px; display: flex; flex-direction: column;">
+                <ul class="nav nav-tabs customtab" id="pills-tab" role="tablist" style="border-bottom: 1px solid #eee;">
+                    <li class="nav-item">
+                        <a class="nav-link active py-3" id="pills-profile-tab" data-toggle="pill" href="#last-month"
+                           role="tab" style="font-size: 15px; font-weight: 700;">Profil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link py-3" id="pills-setting-tab" data-toggle="pill" href="#previous-month"
+                           role="tab" style="font-size: 15px; font-weight: 700;">Ayarlar</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link py-3" id="pills-password-tab" data-toggle="pill" href="#password-tab"
+                           role="tab" style="font-size: 15px; font-weight: 700;">Şifre Değiştir</a>
+                    </li>
+                </ul>
+
+                <div class="tab-content flex-grow-1" id="pills-tabContent">
+                    <div class="tab-pane fade show active" id="last-month" role="tabpanel">
+                        <div class="card-body p-4">
+                            <div class="row text-center text-md-left m-b-30">
+                                <div class="col-md-3 col-6 mb-3">
+                                    <small class="text-muted d-block text-uppercase font-weight-bold" style="font-size: 11px;">Ad Soyad</small>
+                                    <span style="font-size: 18px; font-weight: 700; color: #333;">@Model.Name @Model.Surname</span>
+                                </div>
+                                <div class="col-md-3 col-6 mb-3">
+                                    <small class="text-muted d-block text-uppercase font-weight-bold" style="font-size: 11px;">Telefon</small>
+                                    <span style="font-size: 18px; font-weight: 700; color: #333;">@(string.IsNullOrEmpty(Model.PhoneNumber) ? "-" : Model.PhoneNumber)</span>
+                                </div>
+                                <div class="col-md-4 col-12 mb-3">
+                                    <small class="text-muted d-block text-uppercase font-weight-bold" style="font-size: 11px;">Email</small>
+                                    <span style="font-size: 18px; font-weight: 700; color: #333; word-break: break-all;">@Model.Email</span>
+                                </div>
+                                <div class="col-md-2 col-6 mb-3">
+                                    <small class="text-muted d-block text-uppercase font-weight-bold" style="font-size: 11px;">Şehir</small>
+                                    <span style="font-size: 18px; font-weight: 700; color: #333;">@(string.IsNullOrEmpty(Model.City) ? "-" : Model.City)</span>
+                                </div>
+                            </div>
+
+                            <hr class="my-4">
+
+                            <div class="m-b-30">
+                                <h5 class="font-weight-bold text-primary" style="font-size: 18px;">İş Pozisyonu</h5>
+                                <p style="font-size: 17px; color: #444;">@(Model.JobTitle ?? "Belirtilmemiş")</p>
+                            </div>
+
+                            <div>
+                                <h5 class="font-weight-bold text-primary" style="font-size: 18px;">Hakkımda Bilgisi</h5>
+                                <p style="font-size: 17px; color: #666; line-height: 1.8;">
+                                    @(Model.About ?? "Henüz bilgi eklenmedi.")
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="previous-month" role="tabpanel">
+                        <div class="card-body p-3">
+                            <form asp-action="UpdateProfile" method="post" enctype="multipart/form-data" class="form-material">
+                                <div class="row">
+                                    <div class="form-group col-md-6 mb-2">
+                                        <label class="small font-weight-bold">Ad</label>
+                                        <input type="text" asp-for="Name" class="form-control form-control-sm" required>
+                                    </div>
+                                    <div class="form-group col-md-6 mb-2">
+                                        <label class="small font-weight-bold">Soyad</label>
+                                        <input type="text" asp-for="Surname" class="form-control form-control-sm" required>
+                                    </div>
+                                    <div class="form-group col-md-6 mb-2">
+                                        <label class="small font-weight-bold">Telefon</label>
+                                        <input type="text" asp-for="PhoneNumber" class="form-control form-control-sm">
+                                    </div>
+                                    <div class="form-group col-md-6 mb-2">
+                                        <label class="small font-weight-bold">Şehir</label>
+                                        <input type="text" asp-for="City" class="form-control form-control-sm">
+                                    </div>
+                                    <div class="form-group col-12 mb-2">
+                                        <label class="small font-weight-bold">İş Pozisyonu</label>
+                                        <input type="text" asp-for="JobTitle" class="form-control form-control-sm">
+                                    </div>
+                                    <div class="form-group col-12 mb-3">
+                                        <label class="small font-weight-bold">Hakkımda</label>
+                                        <textarea asp-for="About" rows="3" class="form-control form-control-sm"></textarea>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn waves-effect waves-light btn-rounded btn-outline-primary">Güncelle</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="password-tab" role="tabpanel">
+                        <div class="card-body p-3">
+                            <form asp-action="UpdatePassword" method="post" class="form-material" style="max-width: 400px;">
+                                <div class="form-group mb-2">
+                                    <label class="small font-weight-bold">Mevcut Şifre</label>
+                                    <input type="password" name="currentPassword" class="form-control form-control-sm" required>
+                                </div>
+                                <div class="form-group mb-2">
+                                    <label class="small font-weight-bold">Yeni Şifre</label>
+                                    <input type="password" name="newPassword" class="form-control form-control-sm" required>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label class="small font-weight-bold">Yeni Şifre Tekrar</label>
+                                    <input type="password" name="confirmPassword" class="form-control form-control-sm" required>
+                                </div>
+                                <button type="submit" class="btn waves-effect waves-light btn-rounded btn-outline-primary">Şifre Değiştir</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,10 +1,155 @@
-﻿
+﻿@using Microsoft.AspNetCore.Identity
+@inject UserManager<Project2IdentityEmail.Entities.AppUser> UserManager
+@inject RoleManager<Project2IdentityEmail.Entities.AppRole> RoleManager
+
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h1>SEEEEELLLAAAAAAAMMMM
+<div class="row">
+    <div class="col-7 align-self-center">
+        <h4 class="page-title">Yönetim Paneli</h4>
+    </div>
+</div>
 
-</h1>
+<div class="container-fluid">
 
+    @* SADECE ADMİNLERİN GÖRECEĞİ ÖZEL PANEL *@
+    @if (User.IsInRole("Admin"))
+    {
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card border-0 shadow-sm" style="background: linear-gradient(to right, #ffffff, #f8f9ff); border-radius:15px;">
+                    <div class="card-body">
+                        <h5 class="card-title text-primary font-weight-bold mb-4">
+                            <i class="mdi mdi-shield-check-outline mr-2"></i> Yönetici Hızlı İşlem Merkezi
+                        </h5>
+
+                        <div class="row align-items-end mb-4">
+                            <div class="col-md-4">
+                                <label class="small font-weight-bold text-muted">Kullanıcı Seç</label>
+                                <select id="quickUserId" class="form-control border-0 bg-light">
+                                    <option value="">İşlem yapılacak kullanıcı...</option>
+                                    @foreach (var user in UserManager.Users.ToList())
+                                    {
+                                        <option value="@user.Id">@user.Name @user.Surname (@user.Email)</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="small font-weight-bold text-muted">Mevcut Rolü Değiştir</label>
+                                <select id="quickRoleName" class="form-control border-0 bg-light">
+                                    @foreach (var role in RoleManager.Roles.ToList())
+                                    {
+                                        <option value="@role.Name">@role.Name</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="d-flex" style="gap: 5px;">
+                                    <button onclick="assignRoleFast()" class="btn btn-primary flex-fill font-weight-bold shadow-sm" style="background-color: #7460ee; border:none; height: 38px;">
+                                        Yetkiyi Güncelle
+                                    </button>
+                                    <button onclick="removeAdminFast()" class="btn btn-warning flex-fill font-weight-bold text-white shadow-sm" style="border:none; height: 38px;">
+                                        <i class="mdi mdi-account-minus mr-1"></i> Adminliği Al
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row align-items-end pt-3 border-top">
+                            <div class="col-md-9">
+                                <label class="small font-weight-bold text-muted">Sisteme Yeni Rol Tanımla</label>
+                                <input type="text" id="newRoleName" class="form-control border-0 bg-light" placeholder="Örn: Editor, Yazar, Denetmen...">
+                            </div>
+                            <div class="col-md-3">
+                                <button onclick="createNewRole()" class="btn btn-dark btn-block font-weight-bold shadow-sm" style="height: 38px;">
+                                    <i class="mdi mdi-plus-circle mr-1"></i> Rolü Oluştur
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    @await Component.InvokeAsync("DashboardStatistics")
+
+    <div class="row">
+        @await Component.InvokeAsync("DashboardProfile")
+        @await Component.InvokeAsync("DashboardUserList")
+    </div>
+
+    <div class="row">
+        <div class="col-lg-6">
+            @await Component.InvokeAsync("DashboardMessageList")
+        </div>
+        <div class="col-lg-6">
+            <div class="row">
+                <div class="col-md-12 mb-4">
+                    @await Component.InvokeAsync("DashboardReadUnread")
+                </div>
+                <div class="col-md-12">
+                    @await Component.InvokeAsync("DashboardCategoryList")
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // 1. ROL ATAMA (Mevcut Roller Arası Geçiş)
+    function assignRoleFast() {
+        const uId = document.getElementById('quickUserId').value;
+        const rName = document.getElementById('quickRoleName').value;
+        if (!uId) { alert("Lütfen kullanıcı seçin."); return; }
+
+        sendRequest('/Admin/FastAssignRole', { userId: uId, roleName: rName });
+    }
+
+    // 2. ADMİNLİĞİ AL (Sadece Admin Rolünü Siler)
+    function removeAdminFast() {
+        const uId = document.getElementById('quickUserId').value;
+        if (!uId) { alert("Lütfen kullanıcı seçin."); return; }
+        if (!confirm("Seçili kullanıcının admin yetkisini geri almak istediğinize emin misiniz?")) return;
+
+        sendRequest('/Admin/RemoveAdminRole', { userId: uId });
+    }
+
+    // 3. YENİ ROL YAZMA (Sisteme Sıfırdan Rol Ekler)
+    function createNewRole() {
+        const rName = document.getElementById('newRoleName').value;
+        if (!rName) { alert("Lütfen bir rol ismi yazın."); return; }
+
+        sendRequest('/Admin/CreateRole', { roleName: rName });
+    }
+
+    // Ortak Fetch Fonksiyonu
+    function sendRequest(url, data) {
+        const params = new URLSearchParams();
+        for (let key in data) params.append(key, data[key]);
+
+        fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: params
+        })
+        .then(res => res.json())
+        .then(res => {
+            if (res.success) {
+                // Eğer kullanıcı kendi yetkisini aldıysa
+                if (res.isSelfDelete) {
+                    alert(res.message);
+                    window.location.href = "/Account/Login/"; // Login yoluna yönlendir
+                } else {
+                    alert(res.message || "İşlem başarılı.");
+                    location.reload();
+                }
+            } else {
+                alert("Hata: " + res.message);
+            }
+        })
+        .catch(() => alert("Bir bağlantı hatası oluştu!"));
+    }
+</script>

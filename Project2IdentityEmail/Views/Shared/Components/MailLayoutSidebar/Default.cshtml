@@ -4,129 +4,311 @@
             <a class="ti-menu ti-close btn btn-success show-left-part d-block d-md-none" href="javascript:void(0)"></a>
             <div class="scrollable" style="height:100%;">
                 <div class="p-15">
-                    <button type="button" class="btn waves-effect waves-light btn-rounded btn-primary">Yeni Mesaj</button>
-
+                    <a href="/Mail/ComposeMail" class="btn waves-effect waves-light btn-rounded text-white" style="background-color: #f158d0; width: 100%;">Yeni Mesaj</a>
                 </div>
                 <div class="divider"></div>
-                <ul class="list-group">
-                    <li>
-                        <small class="p-15 grey-text text-lighten-1 db">Klasörler</small>
-                    </li>
-                    <li class="list-group-item">
-                        <a href="/Mail/Inbox" class="active list-group-item-action">
-                            <i class="mdi mdi-inbox"></i>
-                            Gelen Kutusu <span class="label label-success float-right">6</span>
-                        </a>
-                    </li>
-                    <li class="list-group-item">
-                        <a href="/Mail/Starred" class="list-group-item-action">
-                            <i class="mdi mdi-star"></i>
-                            Yıldızlı
-                        </a>
-                    </li>
-                    <li class="list-group-item">
-                        <a href="/Mail/DraftsMesssage" class="list-group-item-action">
-                            <i class="mdi mdi-send"></i>
-                            Taslaklar <span class="label label-danger float-right">3</span>
-                        </a>
-                    </li>
-                    <li class="list-group-item">
-                        <a href="/Mail/Sendbox" class="list-group-item-action">
-                            <i class="mdi mdi-email"></i>
-                            Gönderilenler
-                        </a>
-                    </li>
-                    <li class="list-group-item">
-                        <a href="/Mail/Spam" class="list-group-item-action d-flex align-items-center">
-                            <i class="mdi mdi-alert-octagon mr-2 font-18"></i>
-                            Spam
+                <ul class="list-group sidebar-nav">
+                    <li><small class="p-15 grey-text text-lighten-1 db">KLASÖRLER</small></li>
+
+                    <li class="list-group-item border-0">
+                        <a href="/Mail/Inbox?folder=inbox" class="list-group-item-action d-flex align-items-center">
+                            <i class="mdi mdi-inbox mr-2 font-18 text-info"></i> Gelen Kutusu
+                            @if (ViewBag.InboxCount > 0)
+                            {
+                                <span class="badge badge-pill badge-info ml-auto">@ViewBag.InboxCount</span>
+                            }
                         </a>
                     </li>
 
-                    <li class="list-group-item">
-                        <a href="/Mail/Trash" class="list-group-item-action d-flex align-items-center">
-                            <i class="mdi mdi-delete mr-2 font-18"></i>
-                            Çöp Kutusu
+                    <li class="list-group-item border-0">
+                        <a href="/Mail/Inbox?folder=starred" class="list-group-item-action d-flex align-items-center">
+                            <i class="mdi mdi-star mr-2 font-18 text-warning"></i> Yıldızlı
+                            @if (ViewBag.StarredCount > 0)
+                            {
+                                <span class="badge badge-pill badge-warning ml-auto">@ViewBag.StarredCount</span>
+                            }
                         </a>
                     </li>
-                    <li class="list-group-item">
-                        <hr>
-                    </li>
-                    <li>
-                        <small class="p-15 grey-text text-lighten-1 db">Etiketler</small>
-                    </li>
-                    <li class="list-group-item">
-                        <a href="javascript:void(0)" class="list-group-item-action d-flex align-items-center">
-                            <i class="text-danger mdi mdi-checkbox-blank-circle mr-2"></i> İş Dünyası
+
+                    <li class="list-group-item border-0">
+                        <a href="/Mail/Inbox?folder=drafts" class="list-group-item-action d-flex align-items-center">
+                            <i class="mdi mdi-file-document mr-2 font-18 text-danger"></i> Taslaklar
+                            @if (ViewBag.DraftCount > 0)
+                            {
+                                <span class="badge badge-pill badge-danger ml-auto">@ViewBag.DraftCount</span>
+                            }
                         </a>
                     </li>
-                    <li class="list-group-item">
-                        <a href="javascript:void(0)" class="list-group-item-action d-flex align-items-center">
-                            <i class="text-cyan mdi mdi-checkbox-blank-circle mr-2"></i> Projeler
+
+                    <li class="list-group-item border-0">
+                        <a href="/Mail/Outbox" class="list-group-item-action d-flex align-items-center">
+                            <i class="mdi mdi-send mr-2 font-18 text-success"></i> Gönderilenler
+                            @if (ViewBag.OutboxCount > 0)
+                            {
+                                <span class="badge badge-pill badge-success ml-auto">@ViewBag.OutboxCount</span>
+                            }
                         </a>
                     </li>
-                    <li class="list-group-item">
-                        <a href="javascript:void(0)" class="list-group-item-action d-flex align-items-center">
-                            <i class="text-warning mdi mdi-checkbox-blank-circle mr-2"></i> Kişisel
+
+                    <li class="list-group-item border-0">
+                        <a href="/Mail/Inbox?folder=spam" class="list-group-item-action d-flex align-items-center">
+                            <i class="mdi mdi-alert-octagon mr-2 font-18 text-dark"></i> Spam
+                            @if (ViewBag.SpamCount > 0)
+                            {
+                                <span class="badge badge-pill badge-dark ml-auto">@ViewBag.SpamCount</span>
+                            }
                         </a>
                     </li>
-                    <li class="list-group-item">
-                        <a href="javascript:void(0)" class="list-group-item-action d-flex align-items-center">
-                            <i class="text-info mdi mdi-checkbox-blank-circle mr-2"></i> Sosyal
+
+                    <li class="list-group-item border-0">
+                        <a href="/Mail/Inbox?folder=trash" class="list-group-item-action d-flex align-items-center">
+                            <i class="mdi mdi-delete mr-2 font-18 text-secondary"></i> Çöp Kutusu
+                            @if (ViewBag.TrashCount > 0)
+                            {
+                                <span class="badge badge-pill badge-secondary ml-auto">@ViewBag.TrashCount</span>
+                            }
                         </a>
                     </li>
+
+                    <li class="list-group-item border-0"><hr class="my-2"></li>
+                    <li><small class="p-15 grey-text text-lighten-1 db">ETİKETLER</small></li>
+
+                    @if (ViewBag.Categories != null)
+                    {
+                        foreach (var category in ViewBag.Categories)
+                        {
+                            <li class="list-group-item border-0 p-0">
+                                <a href="/Mail/Inbox?label=@category.CategoryName" class="list-group-item-action d-flex align-items-center p-3">
+                                    <i class="mdi mdi-label mr-3 font-18" style="color: @category.Color;"></i>
+                                    <span style="@(ViewBag.Title == category.CategoryName ? "font-weight: bold; color: #f158d0;" : "")">@category.CategoryName</span>
+                                </a>
+                            </li>
+                        }
+                    }
                 </ul>
             </div>
         </div>
-        <div class="right-part mail-list bg-white">
-            <!-- Button group part -->
-            <div class="p-15 d-flex align-items-center border-bottom bg-white shadow-sm">
-                <div class="btn-group mr-3">
-                    <button id="btnGroupDrop1" type="button"
-                            class="btn waves-effect waves-light btn-rounded btn-outline-primary dropdown-toggle d-flex align-items-center"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                            style="padding: 7px 20px; font-weight: 500;">
-                        <i data-feather="filter" class="feather-sm mr-2"></i> Filtreler
-                    </button>
 
-                    <div class="dropdown-menu border-0 shadow">
-                        <a class="dropdown-item" href="#"><i class="ti-email mr-2"></i> Okunmamışlar</a>
-                        <a class="dropdown-item" href="#"><i class="ti-star mr-2"></i> Yıldızlılar</a>
-                        <a class="dropdown-item" href="#"><i class="ti-pin-alt mr-2"></i> Önemliler</a>
+        <div class="right-part mail-list bg-white">
+            <div class="p-15 d-flex align-items-center border-bottom bg-white shadow-sm">
+                <div class="d-flex align-items-center mr-3">
+                    <div class="custom-control custom-checkbox mr-3">
+                        <input type="checkbox" class="custom-control-input" id="check-all-mail">
+                        <label class="custom-control-label" for="check-all-mail"></label>
+                    </div>
+
+                    @if (ViewBag.CurrentFolder != "trash")
+                    {
+                        <button type="button" id="delete-selected" class="btn btn-sm btn-outline-danger" style="display: none;">
+                            <i class="mdi mdi-delete-sweep"></i> Sil
+                        </button>
+                    }
+                    else
+                    {
+                        <button type="button" id="restore-selected" class="btn btn-sm btn-outline-success mr-2" style="display: none;">
+                            <i class="mdi mdi-undo"></i> Geri Yükle
+                        </button>
+                        <button type="button" id="hard-delete-selected" class="btn btn-sm btn-danger" style="display: none;">
+                            <i class="mdi mdi-alert-octagon"></i> Kalıcı Sil
+                        </button>
+                    }
+
+                    @if (ViewBag.CurrentFolder == "spam")
+                    {
+                        <button type="button" id="restore-from-spam" class="btn btn-sm btn-outline-success" style="display: none;">
+                            <i class="mdi mdi-email-check"></i> Spam Değil
+                        </button>
+                    }
+
+                    <div class="btn-group">
+                        <button type="button" class="btn waves-effect waves-light btn-rounded btn-outline-primary dropdown-toggle d-flex align-items-center"
+                                data-toggle="dropdown" style="padding: 7px 20px; font-weight: 500; border-color: #f158d0; color: #f158d0;">
+                            <i class="mdi mdi-filter mr-2"></i> Filtreler
+                        </button>
+                        <div class="dropdown-menu border-0 shadow">
+                            <a class="dropdown-item" href="/Mail/Inbox?filter=unread"><i class="ti-email mr-2"></i> Okunmamışlar</a>
+                            <a class="dropdown-item" href="/Mail/Inbox?folder=starred"><i class="ti-star mr-2"></i> Yıldızlılar</a>
+                            <a class="dropdown-item" href="/Mail/Inbox?folder=important"><i class="ti-pin-alt mr-2"></i> Önemliler</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="/Mail/Inbox?folder=hasattachment"><i class="ti-clip mr-2"></i> Ekli Dosyalar</a>
+                        </div>
                     </div>
                 </div>
 
-                <div class="flex-grow-1 position-relative search-container">
-                    <div class="position-absolute" style="top: 50%; left: 15px; transform: translateY(-50%); z-index: 5; line-height: 0;">
-                        <i data-feather="search" class="text-muted" style="width: 16px; height: 16px;"></i>
-                    </div>
-
-                    @*search işlemi yapılacak*@                   
-                        <input type="text" class="form-control rounded-pill search-input-box shadow-none"
-                           placeholder="Gönderen, konu veya anahtar kelime ara..."
-                           id="mailSearchInput"
-                           style="padding-left: 40px; padding-right: 40px; height: 40px; border: 1px solid #e0e0e0; transition: all 0.3s ease;">
-
-                    <a href="javascript:void(0)" class="position-absolute text-muted" id="clearSearch"
-                       style="top: 50%; right: 15px; transform: translateY(-50%); z-index: 5; display: none;">
-                        <i class="ti-close" style="font-size: 12px;"></i>
-                    </a>
+                <div class="flex-grow-1 position-relative">
+                    @await Component.InvokeAsync("MailLayoutSearch")
                 </div>
 
                 <div class="ml-auto d-flex align-items-center">
-                    <span class="text-muted mr-3 font-12 d-none d-md-block">1-50 / 2,405</span>
-
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-sm waves-effect text-white shadow-sm"
-                                style="background-color: #f158d0; border: none; border-radius: 8px; width: 32px; height: 32px; padding: 0;">
-                            <i class="ti-angle-left" style="font-weight: bold;"></i>
-                        </button>
-
-                        <button type="button" class="btn btn-sm waves-effect text-white shadow-sm ml-1"
-                                style="background-color: #f158d0; border: none; border-radius: 8px; width: 32px; height: 32px; padding: 0;">
-                            <i class="ti-angle-right" style="font-weight: bold;"></i>
-                        </button>
-                    </div>
+                    @if (ViewBag.TotalCount > 0)
+                    {
+                        <span class="text-muted mr-3 font-12 d-none d-md-block">
+                            @ViewBag.RangeInfo
+                        </span>
+                    }
                 </div>
             </div>
-            <!-- Action part -->
+
+            <style>
+                @@media (max-width: 991px) {
+                    .show-left-part {
+                        position: fixed !important;
+                        left: 15px !important;
+                        top: 80px !important;
+                        z-index: 1060 !important;
+                        width: 40px !important;
+                        height: 40px !important;
+                        border-radius: 50% !important;
+                        background: linear-gradient(135deg, #f158d0 0%, #a335f3 100%) !important;
+                        display: flex !important;
+                        align-items: center;
+                        justify-content: center;
+                        box-shadow: 0 4px 15px rgba(241, 88, 208, 0.4);
+                    }
+
+                        .show-left-part:hover {
+                            transform: scale(1.1);
+                            box-shadow: 0 6px 20px rgba(241, 88, 208, 0.5);
+                        }
+
+                        .show-left-part i {
+                            color: white !important;
+                            font-size: 20px !important;
+                        }
+                }
+
+                @@media (max-width: 576px) {
+                    .show-left-part {
+                        left: 10px !important;
+                        top: 75px !important;
+                        width: 36px !important;
+                        height: 36px !important;
+                    }
+                }
+
+                @@media (max-width: 991px) {
+                    .email-app .left-part .show-left-part {
+                        position: fixed !important;
+                        left: 20px !important;
+                        bottom: 30px !important;
+                        top: auto !important;
+                        width: 55px !important;
+                        height: 55px !important;
+                        border-radius: 50% !important;
+                        background: linear-gradient(135deg, #f158d0 0%, #d136b0 100%) !important;
+                        display: flex !important;
+                        align-items: center;
+                        justify-content: center;
+                        z-index: 9999 !important;
+                        border: 3px solid #fff !important;
+                        box-shadow: 0 4px 15px rgba(0,0,0,0.3) !important;
+                        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                    }
+
+                        .email-app .left-part .show-left-part:active {
+                            transform: scale(0.9);
+                        }
+
+                        .email-app .left-part .show-left-part::before {
+                            content: '\e602';
+                            font-family: 'themify';
+                            color: white !important;
+                            font-size: 22px !important;
+                        }
+
+                    .show-sidebar .show-left-part {
+                        background: #2ecc71 !important;
+                        transform: rotate(90deg);
+                    }
+                }
+
+                @@media (max-width: 576px) {
+                    .email-app .left-part .show-left-part {
+                        width: 50px !important;
+                        height: 50px !important;
+                        left: 15px !important;
+                        bottom: 20px !important;
+                    }
+                }
+            </style>
+
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    const checkAll = document.getElementById('check-all-mail');
+                    // Hem ID hem sınıf üzerinden tüm mail checkboxlarını bul
+                    const getCheckboxes = () => document.querySelectorAll('.mail-checkbox');
+
+                    const deleteBtn = document.getElementById('delete-selected');
+                    const restoreBtn = document.getElementById('restore-selected');
+                    const hardDeleteBtn = document.getElementById('hard-delete-selected');
+                    const restoreFromSpamBtn = document.getElementById('restore-from-spam');
+
+                    function toggleActionButtons() {
+                        const checkedCount = Array.from(getCheckboxes()).filter(cb => cb.checked).length;
+                        const show = checkedCount > 0;
+                        if (deleteBtn) deleteBtn.style.display = show ? 'inline-block' : 'none';
+                        if (restoreBtn) restoreBtn.style.display = show ? 'inline-block' : 'none';
+                        if (hardDeleteBtn) hardDeleteBtn.style.display = show ? 'inline-block' : 'none';
+                        if (restoreFromSpamBtn) restoreFromSpamBtn.style.display = show ? 'inline-block' : 'none';
+                    }
+
+                    if (checkAll) {
+                        checkAll.addEventListener('change', function () {
+                            getCheckboxes().forEach(cb => cb.checked = this.checked);
+                            toggleActionButtons();
+                        });
+                    }
+
+                    // Checkboxlara tıklanınca butonları göster/gizle
+                    document.addEventListener('change', function(e) {
+                        if (e.target.classList.contains('mail-checkbox')) {
+                            toggleActionButtons();
+                        }
+                    });
+
+                    function performAction(url, confirmMsg) {
+                        const selectedElements = Array.from(getCheckboxes()).filter(cb => cb.checked);
+                        const selectedIds = selectedElements.map(cb => cb.value);
+
+                        if (selectedIds.length === 0) return;
+
+                        if (confirm(selectedIds.length + " mesaj seçildi. " + confirmMsg)) {
+                            const formData = new URLSearchParams();
+                            // BURASI KRİTİK: Controller'daki 'selectedIds' ismiyle birebir aynı olmalı
+                            selectedIds.forEach(id => formData.append('selectedIds', id));
+
+                            fetch(url, {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                                body: formData
+                            })
+                            .then(res => res.json())
+                            .then(data => {
+                                if (data.success) {
+                                    location.reload();
+                                } else {
+                                    alert("İşlem gerçekleştirilemedi.");
+                                }
+                            })
+                            .catch(err => {
+                                console.error("Hata:", err);
+                                alert("Sunucu ile iletişim kurulamadı.");
+                            });
+                        }
+                    }
+
+                    // Buton Tıklamaları - Controller'daki isimlerle eşleştirdik
+                    if (deleteBtn) {
+                        deleteBtn.addEventListener('click', () => performAction('/Mail/DeleteSelectedMessages', "Çöp kutusuna taşımak istediğinize emin misiniz?"));
+                    }
+                    if (restoreBtn) {
+                        restoreBtn.addEventListener('click', () => performAction('/Mail/RestoreMessages', "Seçilenler nereden geldilerse oraya geri taşınacak?"));
+                    }
+                    if (hardDeleteBtn) {
+                        hardDeleteBtn.addEventListener('click', () => performAction('/Mail/HardDeleteMessages', "DİKKAT! Bu işlem geri alınamaz. Kalıcı olarak silinsin mi?"));
+                    }
+                    if (restoreFromSpamBtn) {
+                        restoreFromSpamBtn.addEventListener('click', () => performAction('/Mail/RestoreFromSpamMultiple', "Seçili mesajlar spam değil olarak işaretlenecek?"));
+                    }
+                });
+            </script>

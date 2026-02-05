@@ -1,0 +1,27 @@
+﻿<script src="/mendy-admin-template/mendy-admin/package/assets/libs/jquery/dist/jquery.min.js"></script>
+<script src="/mendy-admin-template/mendy-admin/package/assets/libs/popper.js/dist/umd/popper.min.js"></script>
+<script src="/mendy-admin-template/mendy-admin/package/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        // Tüm formlar için ortak submit yakalayıcı
+        $("form").on("submit", function () {
+            var $btn = $(this).find("button[type='submit']");
+            var $text = $btn.find("#btnText");
+            var $loader = $btn.find("#btnLoading");
+
+            if ($text.length > 0) {
+                $text.hide();
+                $loader.show();
+                $btn.attr("disabled", true);
+                $(".preloader").fadeIn();
+            }
+            return true;
+        });
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $(".preloader").fadeOut();
+    });
+</script>

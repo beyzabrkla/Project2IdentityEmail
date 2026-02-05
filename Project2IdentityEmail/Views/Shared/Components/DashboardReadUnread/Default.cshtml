@@ -1,0 +1,36 @@
+﻿<div class="card shadow-sm border-0" style="height: 280px;">
+    <div class="card-body">
+        <h4 class="card-title">Okunma Durumları</h4>
+        <div style="height:210px; position: relative;">
+            <canvas id="okunmaChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Sayfa ve tüm kütüphaneler (Chart.js dahil) yüklendiğinde çalışır
+    window.addEventListener('load', function() {
+        var canvasO = document.getElementById('okunmaChart');
+        if (canvasO && typeof Chart !== 'undefined') {
+            var ctxO = canvasO.getContext('2d');
+            new Chart(ctxO, {
+                type: 'pie',
+                data: {
+                    labels: ['Okundu', 'Okunmadı'],
+                    datasets: [{
+                        data: [@(ViewBag.Read ?? 0), @(ViewBag.Unread ?? 0)],
+                        backgroundColor: ['#6a5acd', '#ff4081'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'bottom' } }
+                }
+            });
+        } else {
+            console.error("Chart.js yüklenemedi veya canvas bulunamadı.");
+        }
+    });
+</script>

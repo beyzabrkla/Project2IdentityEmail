@@ -1,4 +1,6 @@
-﻿<head>
+﻿<!DOCTYPE html>
+<html dir="ltr" lang="en">
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- Tell the browser to be responsive to screen width -->
@@ -14,6 +16,7 @@
     <link href="/mendy-admin-template/mendy-admin/package/assets/libs/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="/mendy-admin-template/mendy-admin/package/dist/css/style.min.css" rel="stylesheet">
+    <link href="/mendy-admin-template/mendy-admin/package/css/mail-custom-responsive.css" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -21,3 +24,92 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
+
+<style>
+    /* 1. Üst Bar Mendy Moru */
+    .topbar, .topbar .top-navbar {
+        background: #ffffff!important;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.2) !important;
+    }
+
+    /* 2. Sidebar'ı her yerden uçur ve içeriği tam genişlik yap */
+    .left-sidebar, .nav-toggler, .sidebartype {
+        display: none !important;
+    }
+
+    .page-wrapper {
+        margin-left: 0 !important;
+        padding-top: 20px;
+        background-color: #f3f3f5 !important;
+        min-height: 100vh;
+    }
+
+    /* 3. Senin meşhur Pembe/Mor Aksiyon Butonun (Genel Sınıf) */
+    .btn-mendy-action {
+        background: linear-gradient(135deg, #6a5acd 0%, #ff4081 100%) !important;
+        border: none !important;
+        color: white !important;
+        border-radius: 50px !important;
+        font-weight: 500;
+        box-shadow: 0 4px 15px rgba(255, 64, 129, 0.3);
+        transition: all 0.3s ease;
+        padding: 8px 20px;
+    }
+
+        .btn-mendy-action:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 64, 129, 0.4);
+            opacity: 0.9;
+        }
+
+    /* 4. Geri Butonu İçin Özel Stil */
+    .btn-back-circle {
+        width: 40px;
+        height: 40px;
+        background: #ff4081;
+        color: white !important;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 15px;
+        box-shadow: 0 3px 10px rgba(255, 64, 129, 0.3);
+    }
+
+    /* 5. Ekmek Kırıntısı (Breadcrumb) ve Başlık Düzenlemesi */
+    .page-breadcrumb {
+        padding: 20px 30px 10px 30px !important;
+        background: transparent !important;
+    }
+
+    .page-title {
+        font-weight: 700 !important;
+        color: ##3e3c59 !important;
+        margin-bottom: 0 !important;
+    }
+    /* Tasarımı sabitleyen kritik CSS dokunuşları */
+    .left-part .list-group-item {
+        padding: 0; /* Boşlukları linklerin içine taşıyoruz ki tüm satır tıklanabilir olsun */
+    }
+
+    .left-part .list-group-item-action {
+        padding: 12px 20px;
+        transition: 0.2s all;
+    }
+        /* Aktif olan menü öğesinin arka planı ve sol çizgisi (Mendy stili) */
+        .left-part .list-group-item-action.active {
+            background-color: #f8f9fa;
+            color: #f158d0 !important;
+            border-left: 3px solid #f158d0;
+        }
+
+        .left-part .list-group-item-action:hover {
+            background-color: #f8f9fa;
+        }
+
+    .left-part .label {
+        border-radius: 4px;
+        padding: 2px 8px;
+        font-size: 11px;
+    }
+</style>

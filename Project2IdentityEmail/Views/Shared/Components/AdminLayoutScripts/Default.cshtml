@@ -1,35 +1,92 @@
 ﻿<script src="/mendy-admin-template/mendy-admin/package/assets/libs/jquery/dist/jquery.min.js"></script>
-<!-- Bootstrap tether Core JavaScript -->
-<script src="/mendy-admin-template/mendy-admin/package/assets/libs/popper.js/dist/umd/popper.min.js"></script>
-<script src="/mendy-admin-template/mendy-admin/package/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- apps -->
+<script src="/mendy-admin-template/mendy-admin/package/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
 <script src="/mendy-admin-template/mendy-admin/package/dist/js/app.min.js"></script>
 <script src="/mendy-admin-template/mendy-admin/package/dist/js/app.init.js"></script>
 <script src="/mendy-admin-template/mendy-admin/package/dist/js/app-style-switcher.js"></script>
-<!-- slimscrollbar scrollbar JavaScript -->
 <script src="/mendy-admin-template/mendy-admin/package/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
-<!--Wave Effects -->
 <script src="/mendy-admin-template/mendy-admin/package/dist/js/waves.js"></script>
-<!--Menu sidebar -->
 <script src="/mendy-admin-template/mendy-admin/package/dist/js/sidebarmenu.js"></script>
 <script src="/mendy-admin-template/mendy-admin/package/dist/js/feather.min.js"></script>
-<!--Custom JavaScript -->
 <script src="/mendy-admin-template/mendy-admin/package/dist/js/custom.min.js"></script>
-<!--This page JavaScript -->
-<!--chartis chart-->
-<script src="/mendy-admin-template/mendy-admin/package/assets/libs/chartist/dist/chartist.min.js"></script>
-<script src="/mendy-admin-template/mendy-admin/package/assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
-<!--c3 charts -->
-<script src="/mendy-admin-template/mendy-admin/package/assets/extra-libs/c3/d3.min.js"></script>
-<script src="/mendy-admin-template/mendy-admin/package/assets/extra-libs/c3/c3.min.js"></script>
+
 <script src="/mendy-admin-template/mendy-admin/package/assets/libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-<script src="/mendy-admin-template/mendy-admin/package/dist/js/pages/dashboards/dashboard1.js"></script>
+<script src="/mendy-admin-template/mendy-admin/package/assets/libs/summernote/dist/summernote-bs4.min.js"></script>
+<script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
+<script src="/mendy-admin-template/mendy-admin/package/assets/libs/chart.js/dist/Chart.min.js"></script>
+<script src="/mendy-admin-template/mendy-admin/package/assets/libs/chartist/dist/chartist.min.js"></script>
+
 <script>
-    $('.datepicker').datepicker({
-        autoclose: true,
-        todayHighlight: true
+    $(document).ready(function() {
+        // --- 1. DROPDOWN FIX (KRİTİK) ---
+        // Dashboard'da basınca açılmama sorununu bu blok çözer.
+        $('body').on('click', '.dropdown-toggle', function (e) {
+            e.preventDefault();
+            var $parent = $(this).parent('.dropdown');
+
+            // Diğer açık menüleri kapat
+            $('.dropdown').not($parent).removeClass('show');
+            $('.dropdown-menu').not($(this).next()).removeClass('show');
+
+            // Mevcut olanı aç/kapat
+            $parent.toggleClass('show');
+            $(this).next('.dropdown-menu').toggleClass('show');
+        });
+
+        // Dışarı tıklandığında menüyü kapat
+        $(document).on('click', function (e) {
+            if (!$(e.target).closest('.dropdown').length) {
+                $('.dropdown, .dropdown-menu').removeClass('show');
+            }
+        });
+
+        // --- 2. FEATHER ICONS ---
+        if (typeof feather !== 'undefined') {
+            feather.replace();
+        }
+
+        // --- 3. SUMMERNOTE (Sadece varsa çalıştır) ---
+        if ($('#summernote').length > 0) {
+            $('#summernote').summernote({
+                placeholder: 'Type your email Here',
+                tabsize: 2,
+                height: 250
+            });
+        }
+
+        // --- 4. CKEDITOR ---
+        if (typeof CKEDITOR !== 'undefined' && $('#editor1').length > 0) {
+            CKEDITOR.replace('editor1', {
+                height: 350,
+                versionCheck: false
+            });
+        }
+
+        // --- 5. DATEPICKER ---
+        if ($('.datepicker').length > 0) {
+            $('.datepicker').datepicker({
+                autoclose: true,
+                todayHighlight: true
+            });
+        }
+
+        // --- 6. SIDEBAR TOGGLER ---
+        $(".nav-toggler, .sidebartoggler").on('click', function () {
+            $("#main-wrapper").toggleClass("show-sidebar");
+        });
     });
-</script>
-<script>
-    feather.replace()
+
+    // Refresh Butonu
+    var refreshBtn = document.getElementById('btn-refresh');
+    if(refreshBtn){
+        refreshBtn.addEventListener('click', function() {
+            location.reload();
+        });
+    }
+
+    function updateFileName(input) {
+        var fileName = input.files[0] ? input.files[0].name : "Dosya seçilmedi";
+        var display = document.getElementById('fileNameDisplay');
+        if(display) display.innerText = fileName;
+    }
 </script>

@@ -1,0 +1,133 @@
+﻿@model Project2IdentityEmail.Entities.UserMessage
+@{
+    ViewData["Title"] = "Mail Detay";
+    Layout = "~/Views/Shared/_MailLayout.cshtml";
+
+    // Eğer Layout veya Sidebar hala 'null' diyorsa, burada garantiye alıyoruz:
+    if (ViewBag.IsCategoryView == null) { ViewBag.IsCategoryView = false; }
+}
+
+<div class="page-wrapper">
+    <div class="page-breadcrumb bg-white p-3 shadow-sm">
+        <div class="row align-items-center">
+            <div class="col-12">
+                <div class="d-flex align-items-center">
+                    <a href="javascript:history.back()" class="mr-3 d-flex align-items-center justify-content-center"
+                       style="width: 40px; height: 40px; background-color: #f3f3f5; border-radius: 50%; transition: 0.3s;"
+                       onmouseover="this.style.backgroundColor='#e9ecef'"
+                       onmouseout="this.style.backgroundColor='#f3f3f5'">
+                        <i class="mdi mdi-chevron-left text-primary" style="font-size: 24px;"></i>
+                    </a>
+
+                    <div class="d-flex flex-column">
+                        <h4 class="page-title mb-0 font-weight-bold" style="color: #3e3c59;">Mail Detay</h4>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb mb-0 p-0 bg-transparent" style="font-size: 12px;">
+                                <li class="breadcrumb-item"><a href="/Dashboard/Index" class="text-muted">Ana Sayfa</a></li>
+                                <li class="breadcrumb-item active text-dark" aria-current="page">Mail Detay</li>
+                            </ol>
+                        </nav>
+                    </div>
+
+                    <div class="ml-auto d-flex align-items-center">
+                        <a href="javascript:location.reload();" class="text-muted mx-2" title="Yenile">
+                            <i class="mdi mdi-refresh font-20"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @await Component.InvokeAsync("MailLayoutSidebar")
+
+
+
+    <div class="card-body border-top border-bottom bg-light">
+        <h4 class="m-b-0 font-weight-bold">@Model.Subject</h4>
+    </div>
+
+    @* GÖNDEREN VE ALICI BİLGİSİ *@
+    <div class="card-body border-bottom">
+        <div class="d-flex no-block align-items-center m-b-40">
+            <div class="m-r-10">
+                @if (Model.Sender != null && !string.IsNullOrEmpty(Model.Sender.ImageUrl))
+                {
+                    <img src="/UserImages/@Model.Sender.ImageUrl" alt="user" class="rounded-circle" width="45" height="45" style="object-fit: cover;">
+                }
+                else
+                {
+                    <div class="rounded-circle d-flex align-items-center justify-content-center text-white font-bold"
+                         style="width: 45px; height: 45px; background-color: #7460ee;">
+                        @(Model.Sender?.Name?[0].ToString().ToUpper() ?? "?")
+                    </div>
+                }
+            </div>
+            <div class="">
+                <h5 class="m-b-0 font-16 font-medium">@Model.Sender?.Name @Model.Sender?.Surname <small> ( @Model.Sender?.Email )</small></h5>
+                <span class="text-muted">
+                    Kime: @Model.Receiver?.Name @Model.Receiver?.Surname (@Model.Receiver?.Email)
+                </span>
+            </div>
+            <div class="ml-auto">
+                <small class="text-muted">@Model.Date.ToString("dd MMMM yyyy HH:mm")</small>
+            </div>
+        </div>
+
+        @* MESAJ İÇERİĞİ *@
+        <div class="mail-details-content p-t-20" style="color: #455a64; line-height: 24px; min-height: 200px;">
+            @Html.Raw(Model.Content)
+        </div>
+
+        @if (!string.IsNullOrEmpty(Model.AttachmentUrl))
+        {
+            <hr />
+            <div class="attachments-container p-3 bg-light rounded shadow-sm">
+                <h6 class="mb-3 text-uppercase font-weight-bold text-muted" style="font-size: 12px;">
+                    <i class="mdi mdi-paperclip mr-1"></i> Ekli Dosyalar
+                </h6>
+
+                <div class="file-box d-flex align-items-center justify-content-between p-2 border rounded bg-white" style="max-width: 350px;">
+                    <div class="d-flex align-items-center overflow-hidden">
+                        @* Dosya İkonu *@
+                        <div class="file-icon bg-info text-white rounded p-2 mr-3">
+                            <i class="mdi mdi-file-download" style="font-size: 24px;"></i>
+                        </div>
+
+                        @* Dosya Adı (GUID kısmını temizleyerek gösterir) *@
+                        <div class="file-details">
+                            <p class="mb-0 text-truncate font-weight-bold" style="max-width: 180px; font-size: 13px;" title="@System.IO.Path.GetFileName(Model.AttachmentUrl)">
+                                @{
+                                    var fullFileName = System.IO.Path.GetFileName(Model.AttachmentUrl);
+                                    // Eğer GUID (36 karakter) + alt tire kullanıyorsan temizle, yoksa direkt ismi bas
+                                    var displayName = fullFileName.Length > 37 ? fullFileName.Substring(37) : fullFileName;
+                                }
+                                @displayName
+                            </p>
+                            <small class="text-muted">@System.IO.Path.GetExtension(Model.AttachmentUrl).ToUpper() Dosyası</small>
+                        </div>
+                    </div>
+
+                    @* İndir Butonu *@
+                    <a href="@Model.AttachmentUrl" download class="btn btn-sm btn-outline-info rounded-circle" title="Dosyayı İndir">
+                        <i class="mdi mdi-download"></i>
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+
+    @* BUTONLAR - YANITLA FONKSİYONU EKLENDİ *@
+    <div class="card-body">
+        <div class="m-t-20">
+            @* Yanıtla butonu bilgileri Compose'a QueryString ile gönderir *@
+            <a href="/Mail/ComposeMail?receiverMail=@Model.Sender?.Email&subject=Re: @Model.Subject" class="btn btn-outline-primary btn-rounded mr-2">
+                <i class="mdi mdi-reply"></i> Yanıtla
+            </a>
+            <button type="button" onclick="history.back()" class="btn btn-outline-secondary btn-rounded">
+                <i class="mdi mdi-arrow-left"></i> Geri Dön
+            </button>
+        </div>
+    </div>
+</div>
+</div>
