@@ -1,4 +1,4 @@
-# 🚀 MENDY ADMIN | IDENTITY & MESSAGING SYSTEM
+# 🚀 MENDY ADMIN | IDENTITY & MESSAGING SYSTEM 
 Bu proje, ASP.NET Core 8.0 kullanılarak geliştirilmiş, gelişmiş kullanıcı yönetim sistemine (Identity) ve gerçek zamanlı e-posta doğrulama mekanizmasına sahip modern bir yönetim panelidir. 
 Kullanıcı deneyimini ön planda tutan AJAX tabanlı doğrulamalar ve kurumsal seviyede bir mesajlaşma altyapısı sunar.
 
