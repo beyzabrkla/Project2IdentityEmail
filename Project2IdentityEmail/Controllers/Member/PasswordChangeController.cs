@@ -1,4 +1,4 @@
-﻿using MailKit.Net.Smtp;
+using MailKit.Net.Smtp;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -62,7 +62,7 @@ namespace Project2IdentityEmail.Controllers.Member
                 using (var client = new SmtpClient())
                 {
                     await client.ConnectAsync("smtp.gmail.com", 587, false);
-                    await client.AuthenticateAsync("beyzailetisimapp@gmail.com", "qrmoackfzratkiky");
+                    await client.AuthenticateAsync("beyzailetisimapp@gmail.com", "");
                     await client.SendAsync(mimeMessage);
                     await client.DisconnectAsync(true);
                 }
