@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Project2IdentityEmail.Entities;
 
@@ -11,6 +11,7 @@ namespace Project2IdentityEmail.Context
         {
             optionsBuilder.UseSqlServer("Data Source=BEYZA\\BEYZA_DEV; Initial Catalog=Project2IdentityDb; Integrated Security=True; Encrypt=False;");
         }
+
 
         public DbSet<UserMessage> UserMessages { get; set; }
         public DbSet<Category> Categories { get; set; }
