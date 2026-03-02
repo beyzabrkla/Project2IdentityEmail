@@ -1,4 +1,4 @@
-﻿namespace Project2IdentityEmail.DTOs
+namespace Project2IdentityEmail.DTOs
 {
     public class ResetPasswordDTO
     {
@@ -7,4 +7,5 @@
         public string Password { get; set; }
         public string ConfirmPassword { get; set; }
     }
+
 }
